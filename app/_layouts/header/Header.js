@@ -3,12 +3,12 @@ import React from "react";
 
 export default function Header({ children }) {
   return (
-    <div>
+    <div className="bg-purple-100 text-blue-700">
       <div
         style={{
           width: "100%",
           height: 40,
-          backgroundColor: "gray",
+          backgroundColor: "yellow",
         }}
       >
         <ul
@@ -23,10 +23,10 @@ export default function Header({ children }) {
             <Link href="/">خانه</Link>
           </li>
           <li>
-            <Link href="/my-service">خدمات من</Link>
+            <Link href="/services">خدمات من</Link>
           </li>
           <li>
-            <Link href="/my-portfolio">نمونه کار ها</Link>
+            <Link href="/portfolio">نمونه کار ها</Link>
           </li>
           <li>
             <Link href="/about">درباره من</Link>

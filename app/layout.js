@@ -1,33 +1,28 @@
-import Header from "./_layouts/header/header";
-import { CacheProvider } from "./_providers/CacheProvider";
+import { preload } from "react-dom";
+import Header from "./_layouts/header/Header";
 import { MainContextProvider } from "./_providers/ContextProvider";
-import { MainThemeProvider } from "./_providers/MainThemeProvider";
-import "./_public/styles/globals.css";
-import localFont from "next/font/local";
-
+import "@/app/_styles/globals.css";
+import { Noto_Sans_Arabic } from "next/font/google";
 export const metadata = {
-  title: "Portfolio Project",
-  description: "Best Portfolio Ever",
+  title: {
+    template: "%s | رسا",
+    default: "صفحه اصلی  |  رسا",
+  },
+  description: "",
 };
-const vazirFont = localFont({
-  src: [
-    { path: "./_public/fonts/Vazir.eot" },
-    { path: "./_public/fonts/Vazir.woff2" },
-    { path: "./_public/fonts/Vazir.eot" },
-    { path: "./_public/fonts/Vazir.ttf" },
-  ],
+const NotoFont = Noto_Sans_Arabic({
+  weight: "600",
+  display: "swap",
+  preload: false,
 });
+
 export default function RootLayout({ children }) {
   return (
-    <html lang="fa" dir="rtl" className={vazirFont.className}>
+    <html lang="fa" dir="rtl" className={NotoFont.className}>
       <body>
-        <CacheProvider>
-          <MainContextProvider>
-            <MainThemeProvider>
-              <Header> {children}</Header>
-            </MainThemeProvider>
-          </MainContextProvider>
-        </CacheProvider>
+        <MainContextProvider>
+          <Header> {children}</Header>
+        </MainContextProvider>
       </body>
     </html>
   );
