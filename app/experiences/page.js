@@ -1,8 +1,30 @@
-import React from "react";
+import Image from "next/image";
+import { getExperiencesCards } from "../_libs/data-services";
 export const metadata = {
   title: "تجربیات من",
   description: "",
 };
-export default function Page() {
-  return <div>My Experience</div>;
+export default async function Page() {
+  const experiences = await getExperiencesCards();
+
+  return (
+    <div className="h-full">
+      {experiences.length > 0 && (
+        <div className="h-full">
+          {experiences.map((exp) => (
+            <div key={exp.id} className="flex flex-col justify-evenly h-full">
+              <Image
+                src={exp.media}
+                width="400"
+                height="300"
+                alt={`تجربه ی ${exp.title}`}
+              />
+              <h1 className="text-4xl">{exp.title}</h1>
+              <p>{exp.description}</p>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
 }

@@ -19,9 +19,12 @@ const NotoFont = Noto_Sans_Arabic({
 export default function RootLayout({ children }) {
   return (
     <html lang="fa" dir="rtl" className={NotoFont.className}>
-      <body>
+      <body className="flex flex-col bg-gray-800  text-gray-200 min-h-screen relative">
         <MainContextProvider>
-          <Header> {children}</Header>
+          <Header />
+          <div className="flex-1 px-8 py-12 grid">
+            <main className="max-w-7xl mx-auto w-full h-full">{children}</main>
+          </div>
         </MainContextProvider>
       </body>
     </html>

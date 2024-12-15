@@ -1,25 +1,14 @@
 import Link from "next/link";
 import React from "react";
 
-export default function Header({ children }) {
+export default function Header() {
   return (
-    <div className="bg-purple-100 text-blue-700">
-      <div
-        style={{
-          width: "100%",
-          height: 40,
-          backgroundColor: "yellow",
-        }}
-      >
-        <ul
-          style={{
-            display: "flex",
-            justifyContent: "start",
-            alignItems: "center",
-            columnGap: 10,
-          }}
-        >
-          <li>
+    <div className="border-b border-gray-700 px-8 py-4">
+      <div className="flex justify-between items-center max-w-7xl mx-auto">
+        <div className="flex items-center gap-4 z-10 text-4xl">LOGO</div>
+        <nav className="z-10 ">
+        <ul className="flex gap-16 items-center">
+          <li className="hover:text-white transition-colors">
             <Link href="/">خانه</Link>
           </li>
           <li>
@@ -35,9 +24,8 @@ export default function Header({ children }) {
             <Link href="/contact">تماس با من </Link>
           </li>
         </ul>
+        </nav>
       </div>
-
-      {children}
     </div>
   );
 }
