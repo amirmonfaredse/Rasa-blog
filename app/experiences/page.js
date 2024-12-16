@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { getExperiencesCards } from "../_libs/data-services";
+import Link from "next/link";
 export const metadata = {
   title: "تجربیات من",
   description: "",
@@ -21,6 +22,7 @@ export default async function Page() {
               />
               <h1 className="text-4xl">{exp.title}</h1>
               <p>{exp.description}</p>
+              <Link href={`/experiences/${exp.id}`}>مشاهده جزئیات</Link>
             </div>
           ))}
         </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import { getSkillsCards } from "../_libs/data-services";
 import Image from "next/image";
+import Link from "next/link";
 export const metadata = {
   title: "مهارت ها",
   description: "",

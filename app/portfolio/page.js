@@ -1,6 +1,7 @@
 import React from "react";
 import { getPortfolioCards } from "../_libs/data-services";
 import Image from "next/image";
+import Link from "next/link";
 export const metadata = {
   title: "نمونه کارها",
   description: "",
@@ -23,6 +24,7 @@ export default async function Page() {
               <div className="flex flex-col justify-evenly">
                 <h1 className="text-4xl">{portfolio.title}</h1>
                 <p>{portfolio.description}</p>
+                <Link href={`/portfolio/${portfolio.id}`}>مشاهده جزئیات</Link>
               </div>
             </div>
           ))}
