@@ -1,4 +1,3 @@
-import { preload } from "react-dom";
 import Header from "./_layouts/header/Header";
 import { MainContextProvider } from "./_providers/ContextProvider";
 import "@/app/_styles/globals.css";

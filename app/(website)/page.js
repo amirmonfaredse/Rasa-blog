@@ -10,7 +10,6 @@ export default function Page() {
       <div className="base-section">نمونه کار ها </div>
       <div className="base-section">تجربیات من</div>
       <div className="base-section">مهارت های من</div>
-      <div className="base-section">تماس با من </div>
     </div>
   );
 }

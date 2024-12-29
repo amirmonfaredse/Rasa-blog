@@ -6,7 +6,6 @@ export const metadata = {
 };
 export default async function Page() {
   const abouts = await getAboutSections();
-  console.log(abouts);
 
   return (
     <div className="h-full">
