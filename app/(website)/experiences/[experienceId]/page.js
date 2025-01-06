@@ -1,7 +1,7 @@
 import {
   getExperiencesCard,
   getExperiencesCards,
-} from "@/app/_libs/data-services";
+} from "@/app/_data/data-services";
 
 export async function generateMetadata({ params }) {
   const { experienceId } = params;

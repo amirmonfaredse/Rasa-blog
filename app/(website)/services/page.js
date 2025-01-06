@@ -1,5 +1,5 @@
 import React from "react";
-import { getServicesSections } from "../_libs/data-services";
+import { getServicesSections } from "../../_data/data-services";
 import Image from "next/image";
 export const metadata = {
   title: "خدمات",

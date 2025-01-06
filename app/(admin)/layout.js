@@ -1,4 +1,4 @@
-import "@/app/_styles/globals.css";
+import "./_styles/styles.css";
 import { Noto_Sans_Arabic } from "next/font/google";
 import Header from "./_layouts/Header";
 import SideLayout from "./_layouts/SideLayout";

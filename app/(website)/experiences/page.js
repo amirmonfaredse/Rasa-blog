@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { getExperiencesCards } from "../_libs/data-services";
+import { getExperiencesCards } from "../../_data/data-services";
 import Link from "next/link";
 export const metadata = {
   title: "تجربیات من",

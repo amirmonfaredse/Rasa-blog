@@ -1,10 +1,6 @@
 import { notFound } from "next/navigation";
 import { supabase } from "./supabase";
 
-
-
-
-
 // @GET DATA
 
 // @ About
@@ -22,6 +18,30 @@ export async function getAboutSection(id) {
     .single();
   if (error) notFound();
   return data;
+}
+
+// @PUT
+export async function updateAbout(id, updatedFields) {
+  const { data, error } = await supabase
+    .from("about")
+    .update(updatedFields)
+    .eq("id", id);
+  // .select("*")
+  // .single();
+  if (error) throw new Error("بروزرسانی  انجام نشد ❌ّ");
+  return data;
+}
+
+// @POST
+export async function createAbout(newAbout) {
+  const { data, error } = await supabase.from("about").insert([newAbout]);
+  if (error) throw new Error("در ایجاد بخش درباره ما مشکلی پیش آمده");
+  return data;
+}
+// @DELETE
+export async function deleteAbout(id) {
+  const { error } = await supabase.from("about").delete().eq("id", String(id));
+  if (error) throw new Error("این بخش حذف نشد");
 }
 // @ Experiences
 //
@@ -77,7 +97,8 @@ export async function getServicesSection(id) {
 //
 export async function getSkillsCards() {
   const { data, error } = await supabase.from("skills").select("*");
-  if (error) throw new Error("مشکلی در دریافت اطلاعات مهارت های من پیش آمده است");
+  if (error)
+    throw new Error("مشکلی در دریافت اطلاعات مهارت های من پیش آمده است");
   return data;
 }
 export async function getSkillsCard(id) {

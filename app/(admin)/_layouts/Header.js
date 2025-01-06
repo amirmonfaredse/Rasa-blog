@@ -1,3 +1,4 @@
+import { signOutAction } from "@/app/_data/actions";
 import Link from "next/link";
 
 export default function Header() {
@@ -8,6 +9,11 @@ export default function Header() {
           <ul className="flex gap-16 items-center">
             <li className=" text-gray-800 text-sm hover:text-gray-500 transition-colors">
               <Link href="/">صفحه اصلی</Link>
+            </li>
+            <li className=" text-gray-800 text-sm hover:text-gray-500 transition-colors">
+              <form action={signOutAction}>
+                <button>خروج</button>
+              </form>
             </li>
           </ul>
         </nav>

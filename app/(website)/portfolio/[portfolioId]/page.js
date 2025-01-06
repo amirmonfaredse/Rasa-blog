@@ -1,4 +1,4 @@
-import { getPortfolioCard, getPortfolioCards } from "@/app/_libs/data-services";
+import { getPortfolioCard, getPortfolioCards } from "@/app/_data/data-services";
 
 export async function generateMetadata({ params }) {
   const { portfolioId } = params;

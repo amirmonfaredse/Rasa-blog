@@ -1,4 +1,4 @@
-import { getAboutSections } from "../_libs/data-services";
+import { getAboutSections } from "../../_data/data-services";
 import Image from "next/image";
 export const metadata = {
   title: "درباره من",

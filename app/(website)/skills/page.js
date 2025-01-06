@@ -1,5 +1,5 @@
 import React from "react";
-import { getSkillsCards } from "../_libs/data-services";
+import { getSkillsCards } from "../../_data/data-services";
 import Image from "next/image";
 import Link from "next/link";
 export const metadata = {
