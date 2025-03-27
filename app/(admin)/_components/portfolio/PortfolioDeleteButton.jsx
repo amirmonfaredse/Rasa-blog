@@ -1,14 +1,14 @@
 "use client";
 
-import { removeAboutAction } from "@/app/_data/actions";
+import { removePortfolioAction } from "@/app/_data/actions";
 
-export default function DeleteButton({ id }) {
+export default function PortfolioDeleteButton({ id }) {
   return (
     <button
       onClick={async () => {
         const confirmed = confirm("مطمئنی؟");
         if (confirmed) {
-          await removeAboutAction(id);
+          await removePortfolioAction(id);
         }
       }}
       className="text-red-600"

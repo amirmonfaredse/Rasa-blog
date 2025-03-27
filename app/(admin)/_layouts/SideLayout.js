@@ -1,5 +1,5 @@
 import Link from "next/link";
-import React from "react";
+import Accordion from "./components/Accordion";
 
 export default function SideLayout() {
   return (
@@ -11,36 +11,16 @@ export default function SideLayout() {
             <div>پنل اصلی</div>
           </div>
         </Link>
-        <Link href="/dashboard/blog">
-          <div className="w-[200px] h-20 bg-slate-400 flex justify-center items-center m-2 rounded-md hover:bg-gray-700 hover:text-gray-200 transition-all duration-500 cursor-pointer">
-            <div className="icon"></div>
-            <div>مدیریت وبلاگ</div>
-          </div>
-        </Link>
-        <Link href="/dashboard/services">
-          <div className="w-[200px] h-20 bg-slate-400 flex justify-center items-center m-2 rounded-md hover:bg-gray-700 hover:text-gray-200 transition-all duration-500 cursor-pointer">
-            <div className="icon"></div>
-            <div>مدیریت خدمات</div>
-          </div>
-        </Link>
-        <Link href="/dashboard/portfolio">
-          <div className="w-[200px] h-20 bg-slate-400 flex justify-center items-center m-2 rounded-md hover:bg-gray-700 hover:text-gray-200 transition-all duration-500 cursor-pointer">
-            <div className="icon"></div>
-            <div>مدیریت نمونه کار ها</div>
-          </div>
-        </Link>
-        <Link href="/dashboard/about">
-          <div className="w-[200px] h-20 bg-slate-400 flex justify-center items-center m-2 rounded-md hover:bg-gray-700 hover:text-gray-200 transition-all duration-500 cursor-pointer">
-            <div className="icon"></div>
-            <div>مدیریت درباره من</div>
-          </div>
-        </Link>
-        <Link href="/dashboard/contact">
-          <div className="w-[200px] h-20 bg-slate-400 flex justify-center items-center m-2 rounded-md hover:bg-gray-700 hover:text-gray-200 transition-all duration-500 cursor-pointer">
-            <div className="icon"></div>
-            <div>مدیریت پیام ها</div>
-          </div>
-        </Link>
+
+        <Accordion
+          subTabs={[
+            { title: "پست جدید", path: "/dashboard/blogs/new" },
+            { title: "همه پست ها", path: "/dashboard/blogs/all" },
+            { title: "تنظیمات", path: "/dashboard/blogs/settings" },
+          ]}
+        >
+          <Link href="/dashboard/blogs">وبلاگ</Link>
+        </Accordion>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { updateAboutAction } from "@/app/_data/actions";
 import { getAboutSections } from "@/app/_data/data-services";
 import Link from "next/link";
-import DeleteButton from "../../_components/about/DeleteButton";
+import AboutDeleteButton from "../../_components/about/AboutDeleteButton";
 
 export default async function Page() {
   const abouts = await getAboutSections();
@@ -17,7 +17,7 @@ export default async function Page() {
           key={about.id}
         >
           <label htmlFor="id"> آیدی : {about.id}</label>
-          <DeleteButton id={about.id} />
+          <AboutDeleteButton id={about.id} />
           <input
             className="w-[500px] border-2  border-transparent my-4 p-2 rounded-md bg-gray-600 outline-none focus:border-gray-500 focus:border-2"
             type="hidden"

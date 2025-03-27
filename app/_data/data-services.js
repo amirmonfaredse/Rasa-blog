@@ -1,9 +1,8 @@
 import { notFound } from "next/navigation";
 import { supabase } from "./supabase";
 
-// @GET DATA
-
 // @ About
+//   - GET
 // About Page will create with several section , each table row pointing into a section of it,
 export async function getAboutSections() {
   const { data, error } = await supabase.from("about").select("*");
@@ -19,8 +18,8 @@ export async function getAboutSection(id) {
   if (error) notFound();
   return data;
 }
-
-// @PUT
+// @ About
+//     -PUT
 export async function updateAbout(id, updatedFields) {
   const { data, error } = await supabase
     .from("about")
@@ -31,36 +30,22 @@ export async function updateAbout(id, updatedFields) {
   if (error) throw new Error("بروزرسانی  انجام نشد ❌ّ");
   return data;
 }
-
-// @POST
+// @ About
+//   - POST
 export async function createAbout(newAbout) {
   const { data, error } = await supabase.from("about").insert([newAbout]);
   if (error) throw new Error("در ایجاد بخش درباره ما مشکلی پیش آمده");
   return data;
 }
-// @DELETE
+// @ About
+//   -DELETE
 export async function deleteAbout(id) {
   const { error } = await supabase.from("about").delete().eq("id", String(id));
   if (error) throw new Error("این بخش حذف نشد");
 }
-// @ Experiences
-//
-export async function getExperiencesCards() {
-  const { data, error } = await supabase.from("expriences").select("*");
-  if (error) throw new Error("مشکلی در دریافت اطلاعات تجربیات پیش آمده است");
-  return data;
-}
-export async function getExperiencesCard(id) {
-  const { data, error } = await supabase
-    .from("expriences")
-    .select("*")
-    .eq("id", id)
-    .single();
-  if (error) notFound();
-  return data;
-}
+
 // @ Portfolio
-//
+//    -GET
 export async function getPortfolioCards() {
   const { data, error } = await supabase.from("portfolio").select("*");
   if (error)
@@ -76,8 +61,53 @@ export async function getPortfolioCard(id) {
   if (error) notFound();
   return data;
 }
+// @ Portfolio
+//    - POST
+export async function createPortfolio(newPortfolio) {
+  const { data, error } = await supabase
+    .from("portfolio")
+    .insert([newPortfolio]);
+  if (error) throw new Error("در ایجاد نمونه کار جدید مشکلی پیش آمده ");
+  return data;
+}
+// @ Portfolio
+//    - PUT
+export async function updatePortfolio(id, updatedFields) {
+  const { data, error } = await supabase
+    .from("portfolio")
+    .update(updatedFields)
+    .eq("id", id);
+
+  if (error) throw new Error("در ویرایش نمونه کار مشکلی پیش آمده");
+  return data;
+}
+// @ Portfolio
+//    - DELETE
+export async function deletePortfolio(id) {
+  const { error } = await supabase
+    .from("portfolio")
+    .delete()
+    .eq("id", String(id));
+  if (error) throw new Error("امکان حذف این نمونه کار وجود ندارد");
+}
+// @ Experiences
+//     - GET
+export async function getExperiencesCards() {
+  const { data, error } = await supabase.from("expriences").select("*");
+  if (error) throw new Error("مشکلی در دریافت اطلاعات تجربیات پیش آمده است");
+  return data;
+}
+export async function getExperiencesCard(id) {
+  const { data, error } = await supabase
+    .from("expriences")
+    .select("*")
+    .eq("id", id)
+    .single();
+  if (error) notFound();
+  return data;
+}
 // @ Services
-//
+//     - GET
 export async function getServicesSections() {
   const { data, error } = await supabase.from("services").select("*");
   if (error) throw new Error("مشکلی در دریافت اطلاعات خدمات من پیش آمده است");
@@ -92,7 +122,33 @@ export async function getServicesSection(id) {
   if (error) notFound();
   return data;
 }
+// @ Services
+//     - POST
+export async function createServicesSection(newService) {
+  const { data, error } = await supabase.from("services").insert([newService]);
+  if (error) throw new Error("در ایجاد خدمات مشکلی پیش آمده است");
+  return data;
+}
+// @ Services
+//     - PUT
+export async function updateServicesSection(id, updatedFileds) {
+  const { data, error } = await supabase
+    .from("services")
+    .update(updatedFileds)
+    .eq("id", id);
 
+  if (error) throw new Error("مشکلی در ویرایش خدمات مورد نظر پیش آمده است");
+  return data;
+}
+// @ Services
+//     - DELETE
+export async function deleteService(id) {
+  const { error } = await supabase
+    .from("services")
+    .delete()
+    .eq("id", String(id));
+  if (error) throw new Error("مشکلی در حذف کردن این خدمات ایجاد شده است");
+}
 // @ Skills
 //
 export async function getSkillsCards() {
@@ -110,3 +166,32 @@ export async function getSkillsCard(id) {
   if (error) notFound();
   return data;
 }
+
+// @ Conatct
+// POST
+export async function sendMessage(newMessage) {
+  const { data, error } = await supabase.from("contact").insert([newMessage]);
+  if (error) throw new Error("در ارسال پیام مشکلی ایجاد شده است");
+  return data;
+}
+
+// @ Conatct
+// GET
+export async function getMessages() {
+  const { data, error } = await supabase.from("contact").select("*");
+  if (error) throw new Error("مشکلی در دریافت پیام ها ایجاد شده است");
+  return data;
+}
+export async function getMessage(id) {
+  const { data, error } = await supabase.from("contact").select().eq("id", id);
+  if (error) throw new Error("مشکلی در دریافت  پیام ایجاد شده است");
+  return data;
+}
+export async function deleteMessage(id) {
+  const { error } = await supabase
+    .from("contact")
+    .delete()
+    .eq("id", String(id));
+  if (error) throw new Error("مشکلی در حذف کردن پیام پیش آمده");
+}
+

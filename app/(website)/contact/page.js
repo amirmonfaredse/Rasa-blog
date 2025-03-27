@@ -1,3 +1,4 @@
+import { sendContactMessageAction } from "@/app/_data/actions";
 import React from "react";
 export const metadata = {
   title: "تماس با من",
@@ -6,7 +7,7 @@ export const metadata = {
 export default function Page() {
   return (
     <div>
-      <form className="flex flex-col">
+      <form action={sendContactMessageAction} className="flex flex-col">
         <label htmlFor="fullName">نام و نام خانوادگی : </label>
         <input
           className="w-[500px] border-2  border-transparent my-4 p-2 rounded-md bg-gray-600 outline-none focus:border-gray-500 focus:border-2"
@@ -20,10 +21,10 @@ export default function Page() {
           type="email"
           name="email"
         />
-        <label htmlFor="textArea">متن پیام : </label>
+        <label htmlFor="message">متن پیام : </label>
         <textarea
           className="w-[500px] border-2  border-transparent my-4 p-2 rounded-md bg-gray-600 outline-none focus:border-gray-500 focus:border-2 resize-none"
-          name="textArea"
+          name="message"
           rows={10}
         />
         <input
