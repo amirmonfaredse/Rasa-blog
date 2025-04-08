@@ -1,8 +1,8 @@
-import { getBlogs } from "@/app/_data/data-services";
+import { serviceGetBlogs } from "@/app/_data/blogService/blogServices";
 import Link from "next/link";
 
 export default async function Page() {
-  const blogs = await getBlogs();
+  const blogs = await serviceGetBlogs();
   return (
     <div className=" w-full p-5">
       <div className="my-4">

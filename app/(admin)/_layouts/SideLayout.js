@@ -17,6 +17,7 @@ export default function SideLayout() {
             { title: "پست جدید", path: "/dashboard/blogs/new" },
             { title: "همه پست ها", path: "/dashboard/blogs/all" },
             { title: "تنظیمات", path: "/dashboard/blogs/settings" },
+            { title: "دسته بندی ها ", path: "/dashboard/blogs/categories" },
           ]}
         >
           <Link href="/dashboard/blogs">وبلاگ</Link>

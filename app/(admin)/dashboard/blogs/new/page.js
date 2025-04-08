@@ -1,9 +1,11 @@
 import Editor from "@/app/(admin)/_components/Editor";
-import { createBlogPostAction } from "@/app/_data/actions";
+import { actionCreateBlog } from "@/app/_data/blogService/blogActions";
+import { serviceGetCategories } from "@/app/_data/blogService/blogServices";
 
-function Page() {
+export default async function Page() {
+  const categories = await serviceGetCategories();
   return (
-    <form action={createBlogPostAction} className="py-5">
+    <form action={actionCreateBlog} className="py-5">
       <div className="flex flex-col gap-5">
         <label className="flex flex-col gap-3">
           <h2 className="text-gray-300">عنوان:</h2>
@@ -16,40 +18,22 @@ function Page() {
           <h2 className="text-gray-300">دسته بندی ها:</h2>
           <div className="w-full max-w-sm min-w-[200px]">
             <div className="relative">
-              <select 
-              name="blogCategory"
-              className="w-full h-[50px] bg-transparent placeholder:text-gray-100 text-slate-100 text-sm border border-slate-200 rounded p-2 py-1.5 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-100 shadow-sm focus:shadow-md appearance-none cursor-pointer">
-                <option
-                  className="text-gray-100 hover:bg-gray-600 bg-gray-600"
-                  value="programming"
-                >
-                  برنامه نویسی
-                </option>
-                <option
-                  className="text-gray-100  bg-gray-600"
-                  value="programming"
-                >
-                  برنامه نویسی
-                </option>
-                <option
-                  className="text-gray-100  bg-gray-600"
-                  value="programming"
-                >
-                  برنامه نویسی
-                </option>
-                <option
-                  className="text-gray-100  bg-gray-600"
-                  value="programming"
-                >
-                  برنامه نویسی
-                </option>
-                <option
-                  className="text-gray-100  bg-gray-600"
-                  value="programming"
-                >
-                  برنامه نویسی
-                </option>
-              </select>
+              <div className="w-full h-auto bg-transparent placeholder:text-gray-100 text-slate-100 text-sm border border-slate-200 rounded p-2 py-1.5 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-100 shadow-sm focus:shadow-md appearance-none cursor-pointer">
+                {categories.map((cat, index) => (
+                  <label
+                    key={`${index}-${cat.id}`}
+                    className="flex  justify-start align-center"
+                  >
+                    {cat.title}
+                    <input
+                      type="checkbox"
+                      className="flex m-2 text-gray-100 hover:bg-gray-600 bg-gray-600"
+                      value={cat.name}
+                      name="blogCategory"
+                    />
+                  </label>
+                ))}
+              </div>
             </div>
           </div>
         </label>
@@ -63,5 +47,3 @@ function Page() {
     </form>
   );
 }
-
-export default Page;

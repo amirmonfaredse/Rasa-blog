@@ -11,6 +11,15 @@ const authConfig = {
     authorized({ auth, request }) {
       return !!auth?.user;
     },
+    async signIn({ user, account, profile }) {
+      if (!process.env.ALLOWED_EMAILS) {
+        console.log("لیست ایمیل های مجاز تعریف نشده است");
+        return false;
+      }
+      const allowedEmails = process.env.ALLOWED_EMAILS.split(",");
+      const isUserValid = allowedEmails.some((email) => user.email === email);
+      return isUserValid;
+    },
   },
   pages: {
     signIn: "/login",
