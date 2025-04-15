@@ -4,17 +4,17 @@ import React from "react";
 export default function Header() {
   return (
     <div className="border-b border-gray-700 px-8 py-4">
-      <div className="flex justify-between items-center max-w-7xl mx-auto">
-        <div className="flex items-center gap-4 z-10 text-4xl">LOGO</div>
+      <div className="flex justify-start items-center max-w-7xl mx-auto">
+        <div className="flex items-center w-[300px] gap-4 z-10 text-4xl">LOGO</div>
         <nav className="z-10 ">
-          <ul className="flex gap-16 items-center">
+          <ul className="flex gap-16 items-center ">
             <li className="hover:text-white transition-colors">
               <Link href="/">خانه</Link>
             </li>
             <li className="hover:text-white transition-colors">
               <Link href="/blogs">وبلاگ</Link>
             </li>
-            <li>
+            {/* <li>
               <Link href="/services">خدمات من</Link>
             </li>
             <li>
@@ -25,7 +25,7 @@ export default function Header() {
             </li>
             <li>
               <Link href="/contact">تماس با من </Link>
-            </li>
+            </li> */}
           </ul>
         </nav>
       </div>

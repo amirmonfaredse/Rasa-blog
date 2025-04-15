@@ -12,7 +12,7 @@ import {
   serviceUpdateCategory,
 } from "./blogServices";
 import { auth } from "../auth";
-import { redirect } from "next/dist/server/api-utils";
+import { redirect } from 'next/navigation'
 
 async function secureAccess() {
   const session = await auth();
@@ -46,8 +46,9 @@ export async function actionUpdateBlog(formData) {
   const blogId = Number(formData.get("id"));
   const blog = await serviceGetBlog(blogId);
   if (!blogId) throw new Error("پست مورد نظر وجود ندارد");
+  if (!blog) throw new Error("پست مورد نظر وجود ندارد");
   const updatedFields = {
-    id: String(blogId),
+    id: blogId,
     author: "امیررضا منفرد",
     categories: formData.get("blogCategory"),
     title: formData.get("blogTitle"),
@@ -57,13 +58,13 @@ export async function actionUpdateBlog(formData) {
   revalidatePath("dashboard/blogs");
   revalidatePath("dashboard/blogs/new");
   revalidatePath("dashboard/blogs/all");
-  redirect("dashboard/blogs/all");
+  redirect("/dashboard/blogs/all");
 }
 // ACTION for DELETE / Delete Post
 
 export async function actionDeleteBlog(id) {
   await secureAccess();
-  const blog = await serviceGetBlog(id);
+  const blog = await serviceGetBlog(Number(id));
   if (!blog) throw new Error("این پست وجود ندارد");
   await serviceDeleteBlog(blog.id);
   revalidatePath("dashboard/blogs");

@@ -20,7 +20,11 @@ export async function serviceGetBlog(id) {
     .select()
     .single()
     .eq("id", String(id));
-  if (error) throw new Error("مشکلی در دریافت  بلاگ ایجاد شده است");
+  if (error) {
+    console.log(error)
+    throw new Error("مشکلی در دریافت  بلاگ ایجاد شده است");
+  }
+
   return data;
 }
 
@@ -69,7 +73,7 @@ export async function serviceUpdateCategory(updatedFields, id) {
   const { data, error } = await supabase
     .from("blogs-categories")
     .update(updatedFields)
-    .eq("id", id);
+    .eq("id", String(id));
   if (error) throw new Error("دسته بندی ویرایش نشد");
 
   return data;

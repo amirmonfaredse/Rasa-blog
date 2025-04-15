@@ -1,4 +1,4 @@
-import Editor from "../../_components/Editor";
+import Editor from "./_components/TextEditorCreateBlog";
 
 export default function Page() {
   return (

@@ -1,5 +1,6 @@
 import { serviceGetBlogs } from "@/app/_data/blogService/blogServices";
 import Link from "next/link";
+import DeleteButtonBlog from "../_components/DeleteButtonBlog";
 
 export default async function Page() {
   const blogs = await serviceGetBlogs();
@@ -45,12 +46,7 @@ export default async function Page() {
                   >
                     ویرایش
                   </Link>
-                  <Link
-                    href="/dashboard/blogs/edit"
-                    className="text-xs  text-red-600"
-                  >
-                    حذف
-                  </Link>
+                  <DeleteButtonBlog blogId={blog.id} />
                 </td>
               </tr>
             </tbody>

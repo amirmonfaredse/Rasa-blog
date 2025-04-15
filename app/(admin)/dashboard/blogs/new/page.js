@@ -1,4 +1,4 @@
-import Editor from "@/app/(admin)/_components/Editor";
+import TextEditorCreateBlog from "@/app/(admin)/dashboard/blogs/_components/TextEditorCreateBlog";
 import { actionCreateBlog } from "@/app/_data/blogService/blogActions";
 import { serviceGetCategories } from "@/app/_data/blogService/blogServices";
 
@@ -38,7 +38,7 @@ export default async function Page() {
           </div>
         </label>
       </div>
-      <Editor />
+      <TextEditorCreateBlog />
       <div className="w-full h-[100px] flex items-center justify-start">
         <button className="w-[50%] h-[40px] flex items-center justify-center rounded  bg-gray-400 hover:bg-gray-700 hover:text-gray-100 transition duration-400">
           انتشار

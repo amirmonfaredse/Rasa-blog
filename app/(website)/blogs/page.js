@@ -1,12 +1,16 @@
-import { getBlogs } from "@/app/_data/data-services";
+import {
+  serviceGetBlogs,
+  serviceGetCategories,
+} from "@/app/_data/blogService/blogServices";
+import FilterBlogs from "./_components/FilterBlogs";
 
 export default async function Page() {
-  const blogs = await getBlogs();
+  const blogs = await serviceGetBlogs();
+  const categories = await serviceGetCategories();
+
   return (
-    <div>
-      {blogs.map((blog) => (
-        <h1 key={blog.id}>{blog.title}</h1>
-      ))}
+    <div className="w-full h-full flex justify-between ">
+      <FilterBlogs blogs={blogs} categories={categories} />
     </div>
   );
 }

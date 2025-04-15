@@ -1,10 +1,10 @@
 "use client";
 import dynamic from "next/dynamic";
-import { useDebugValue, useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-export default function Editor({ defaultContent }) {
+export default function TextEditorCreateBlog() {
   const editor = useRef(null);
   const [content, setContent] = useState("");
   const config = useMemo(
@@ -16,12 +16,7 @@ export default function Editor({ defaultContent }) {
     }),
     []
   );
-  useEffect(() => {
-    if (defaultContent) {
-      setContent(defaultContent);
-      console.log(editor.current);
-    }
-  }, [defaultContent]);
+
   const handleChange = (value) => {
     setContent(value);
   };
@@ -32,7 +27,6 @@ export default function Editor({ defaultContent }) {
         <JoditEditor
           ref={editor}
           name="textEditor"
-          defaultValue={content}
           config={config}
           onChange={handleChange}
           className="w-full h-[70%] mt-10 bg-white"
