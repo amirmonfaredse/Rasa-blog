@@ -12,7 +12,11 @@ import {
   serviceUpdateCategory,
 } from "./blogServices";
 import { auth } from "../auth";
-import { redirect } from 'next/navigation'
+import { redirect } from "next/navigation";
+import {
+  sanitizeHTMLOnServer,
+  sanitizeTextOnServer,
+} from "@/app/utility/jsDOM";
 
 async function secureAccess() {
   const session = await auth();
@@ -25,14 +29,19 @@ async function secureAccess() {
   );
   if (!isUserValid) throw new Error("شما مجاز به انجام این اقدام نیستید");
 }
+
 // ACTION for POST / New Post
 export async function actionCreateBlog(formData) {
   await secureAccess();
+  const categories = formData.getAll("blogCategory");
+  const securedCategories = await categories.map((cat) => {
+    return sanitizeTextOnServer(cat);
+  });
   const newBlogFields = {
     author: "امیررضا منفرد",
-    categories: formData.getAll("blogCategory"),
-    title: formData.get("blogTitle"),
-    content: formData.get("textEditor"),
+    categories: securedCategories,
+    title: sanitizeTextOnServer(formData.get("blogTitle")),
+    content: sanitizeHTMLOnServer(formData.get("textEditor")),
   };
   await serviceCreateBlog(newBlogFields);
   revalidatePath("dashboard/blogs");
@@ -47,12 +56,16 @@ export async function actionUpdateBlog(formData) {
   const blog = await serviceGetBlog(blogId);
   if (!blogId) throw new Error("پست مورد نظر وجود ندارد");
   if (!blog) throw new Error("پست مورد نظر وجود ندارد");
+  const categories = formData.getAll("blogCategory");
+  const securedCategories = await categories.map((cat) => {
+    return sanitizeTextOnServer(cat);
+  });
   const updatedFields = {
     id: blogId,
     author: "امیررضا منفرد",
-    categories: formData.get("blogCategory"),
-    title: formData.get("blogTitle"),
-    content: formData.get("textEditor"),
+    categories: securedCategories,
+    title: sanitizeTextOnServer(formData.get("blogTitle")),
+    content: sanitizeHTMLOnServer(formData.get("textEditor")),
   };
   await serviceUpdateBlog(blogId, updatedFields);
   revalidatePath("dashboard/blogs");
@@ -74,8 +87,8 @@ export async function actionDeleteBlog(id) {
 export async function actionCreateCategory(formData) {
   await secureAccess();
   const newCategoryFields = {
-    title: formData.get("categoryTitle"),
-    name: formData.get("categoryValue"),
+    title: sanitizeTextOnServer(formData.get("categoryTitle")),
+    name: sanitizeTextOnServer(formData.get("categoryValue")),
     root: "",
     subCategories: "",
   };
@@ -90,8 +103,8 @@ export async function actionUpdateCategory(formData) {
   const category = serviceGetCategory(categoryId);
   if (!category) throw new Error("دسته بندی مورد نظر وجود ندارد");
   const updatedFields = {
-    title: formData.get("categoryTitle"),
-    name: formData.get("categoryValue"),
+    title: sanitizeTextOnServer(formData.get("categoryTitle")),
+    name: sanitizeTextOnServer(formData.get("categoryValue")),
     root: "",
     subCategories: "",
   };

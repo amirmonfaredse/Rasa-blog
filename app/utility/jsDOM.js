@@ -13,3 +13,11 @@ export function extractTextFromHTML(html, maxLength = 550) {
   const text = dom.window.document.body.textContent || "";
   return text.trim().slice(0, maxLength) + "...";
 }
+
+export function sanitizeTextOnServer(dirty) {
+  const sanitized = DOMPurify.sanitize(dirty, {
+    ALLOWED_TAGS: [],
+    ALLOWED_ATTR: [],
+  });
+  return sanitized.replace(/[^a-zA-Zآ-ی0-9۰-۹ .,!?؟؛،:()\[\]{}'"«»\-]/g, "");
+}
