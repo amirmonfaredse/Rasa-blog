@@ -9,7 +9,7 @@ export default async function Page() {
   const categories = await serviceGetCategories();
 
   return (
-    <div className="w-full h-full flex justify-between ">
+    <div className="w-full  h-full flex flex-col sm:flex-row justify-between">
       <FilterBlogs blogs={blogs} categories={categories} />
     </div>
   );

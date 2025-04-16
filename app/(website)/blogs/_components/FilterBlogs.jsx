@@ -39,7 +39,7 @@ export default function FilterBlogs({ blogs, categories }) {
   }, [searchInputValue, checkedCategories, blogs]);
   return (
     <>
-      <div className="w-[25%]  h-fit border border-sm rounded-lg p-2">
+      <div className="w-full sm:w-[30%] md:w-[25%] h-fit  border border-sm rounded-lg p-2 mb-10">
         <div className="w-full h-fit flex flex-col justify-evenly my-5 gap-2">
           <label className="text-sm ">جستجو :</label>
           <input
@@ -71,27 +71,25 @@ export default function FilterBlogs({ blogs, categories }) {
           )}
         </div>
       </div>
-      <div className="w-[70%]  h-full flex flex-col ">
+      <div className="w-full sm:w-[65%] md:w-[70%] h-full flex flex-col ">
         {filteredBlogs.length > 0 ? (
           filteredBlogs.map((blog, index) => (
             <div
               key={`${index}-${blog.id}`}
-              className="min-h-[400px] border mb-8 border-gray-100 rounded-xl"
+              className="h-fit border mb-8 border-gray-100 rounded-xl"
             >
-              <div className="flex flex-col items-start justify-start mx-6 mt-4 h-[50px]">
+              <div className="h-fit sm:h-[50px]flex flex-col items-start justify-start sm:mx-6 mt-2 sm:mt-4 ">
                 <h1 className="text-2xl p-4">{blog.title}</h1>
               </div>
-              <div>
-                <div className="mx-6 my-8  h-[200px] text-sm  leading-10 text-gray-300 ">
+              <div className="mx-3 my-3">
+                <div className="h-[200px] w-full line-clamp-5  text-sm leading-10 text-gray-300 ">
                   {/* CONTENT  */}
-                  {htmlToText(blog.content.slice(0, 550) + "...")}
+                  {htmlToText(blog.content)}
                 </div>
-                <div className="flex justify-between mx-10">
-                  <div>
-                    <span className="text-xs mx-2 text-gray-400">
-                      نوشته شده توسط :{" "}
-                    </span>
-                    <span className="text-xs">{blog.author}</span>
+                <div className="flex justify-between mt-5">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                    <span className="text-xs mx-2 text-gray-400">توسط : </span>
+                    <span className="text-xs text-center">{blog.author}</span>
                   </div>
                   <Link
                     href={`/blogs/${blog.id}`}

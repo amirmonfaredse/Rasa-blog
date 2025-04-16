@@ -1,11 +1,14 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-
+import Logo from "@/Logo.svg";
 export default function Header() {
   return (
     <div className="border-b border-gray-700 px-8 py-4">
       <div className="flex justify-start items-center max-w-7xl mx-auto">
-        <div className="flex items-center w-[300px] gap-4 z-10 text-4xl">LOGO</div>
+        <div className="flex items-center w-[300px] gap-4 z-10 text-4xl">
+          <Image src={Logo} alt="وبلاگ رسا" />
+        </div>
         <nav className="z-10 ">
           <ul className="flex gap-16 items-center ">
             <li className="hover:text-white transition-colors">
