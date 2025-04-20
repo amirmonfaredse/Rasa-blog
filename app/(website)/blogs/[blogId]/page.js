@@ -1,4 +1,4 @@
-import { serviceGetBlog } from "@/app/_data/blogService/blogServices";
+import { serviceGetBlog } from "@/app/_data/blog/blogServices";
 import { sanitizeHTMLOnServer } from "@/app/utility/jsDOM";
 import React from "react";
 

@@ -35,7 +35,7 @@ export default function RootLayout({ children }) {
       <body className="flex flex-col bg-gray-800  text-gray-200 min-h-screen relative">
         <MainContextProvider>
           <Header />
-          <div className="flex-1 px-8 py-12 grid">
+          <div className="m-2 md:mx-8 md:my-4">
             <main className="max-w-7xl mx-auto w-full h-full">{children}</main>
           </div>
         </MainContextProvider>

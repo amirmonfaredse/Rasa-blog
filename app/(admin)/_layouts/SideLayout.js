@@ -22,6 +22,9 @@ export default function SideLayout() {
         >
           <Link href="/dashboard/blogs">وبلاگ</Link>
         </Accordion>
+        <Accordion>
+          <Link href="/dashboard/contact">تماس با ما</Link>
+        </Accordion>
       </div>
     </div>
   );

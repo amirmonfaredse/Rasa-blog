@@ -1,25 +1,21 @@
 "use server";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { signIn, signOut } from "./auth";
 import {
   createAbout,
-  createBlogPost,
   createPortfolio,
   createServicesSection,
   deleteAbout,
-  deleteMessage,
   deletePortfolio,
   deleteService,
   getAboutSection,
-  getMessage,
   getPortfolioCard,
   getServicesSection,
-  sendMessage,
   updateAbout,
   updatePortfolio,
-  updateServicesSection,
+  updateServicesSection
 } from "./data-services";
-import { redirect } from "next/navigation";
 //  @ Auth Actions
 export async function signInAction() {
   await signIn("google", { redirectTo: "/dashboard" });
@@ -136,20 +132,4 @@ export async function removeServiceAction(id) {
   revalidatePath("/dashboard/services");
 }
 
-// @ Contact Actions
-export async function sendContactMessageAction(formData) {
-  const messageFields = {
-    fullName: formData.get("fullName"),
-    email: formData.get("email"),
-    message: formData.get("message"),
-  };
-  await sendMessage(messageFields);
-  revalidatePath("/contact");
-}
-export async function removeContactMessageAction(id) {
-  const contact = await getMessage(id);
-  if (!contact) throw new Error("امکان حذف این پیام وجود ندارد");
-  await deleteMessage(id);
-  revalidatePath("/dashboard/contact");
-}
 

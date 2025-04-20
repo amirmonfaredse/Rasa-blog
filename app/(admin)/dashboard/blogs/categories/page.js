@@ -1,5 +1,5 @@
-import { actionCreateCategory } from "@/app/_data/blogService/blogActions";
-import { serviceGetCategories } from "@/app/_data/blogService/blogServices";
+import { actionCreateCategory } from "@/app/_data/blog/blogActions";
+import { serviceGetCategories } from "@/app/_data/blog/blogServices";
 import Link from "next/link";
 import DeleteButtonCategory from "../_components/DeleteButtonCategory";
 

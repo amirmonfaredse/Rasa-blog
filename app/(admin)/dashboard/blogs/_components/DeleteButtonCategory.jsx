@@ -1,6 +1,6 @@
 "use client";
 
-import { actionDeleteCategory } from "@/app/_data/blogService/blogActions";
+import { actionDeleteCategory } from "@/app/_data/blog/blogActions";
 
 function DeleteButtonCategory({ catId }) {
   return (

@@ -1,4 +1,4 @@
-import { serviceGetBlogs } from "@/app/_data/blogService/blogServices";
+import { serviceGetBlogs } from "@/app/_data/blog/blogServices";
 import Link from "next/link";
 import DeleteButtonBlog from "../_components/DeleteButtonBlog";
 

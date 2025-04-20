@@ -167,31 +167,3 @@ export async function getSkillsCard(id) {
   return data;
 }
 
-// @ Conatct
-// POST
-export async function sendMessage(newMessage) {
-  const { data, error } = await supabase.from("contact").insert([newMessage]);
-  if (error) throw new Error("در ارسال پیام مشکلی ایجاد شده است");
-  return data;
-}
-
-// @ Conatct
-// GET
-export async function getMessages() {
-  const { data, error } = await supabase.from("contact").select("*");
-  if (error) throw new Error("مشکلی در دریافت پیام ها ایجاد شده است");
-  return data;
-}
-export async function getMessage(id) {
-  const { data, error } = await supabase.from("contact").select().eq("id", id);
-  if (error) throw new Error("مشکلی در دریافت  پیام ایجاد شده است");
-  return data;
-}
-export async function deleteMessage(id) {
-  const { error } = await supabase
-    .from("contact")
-    .delete()
-    .eq("id", String(id));
-  if (error) throw new Error("مشکلی در حذف کردن پیام پیش آمده");
-}
-

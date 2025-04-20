@@ -1,5 +1,5 @@
-import { actionUpdateCategory } from "@/app/_data/blogService/blogActions";
-import { serviceGetCategory } from "@/app/_data/blogService/blogServices";
+import { actionUpdateCategory } from "@/app/_data/blog/blogActions";
+import { serviceGetCategory } from "@/app/_data/blog/blogServices";
 import Link from "next/link";
 
 export default async function Page({ params }) {

@@ -1,9 +1,9 @@
 import {
   serviceGetBlog,
   serviceGetCategories,
-} from "@/app/_data/blogService/blogServices";
+} from "@/app/_data/blog/blogServices";
 import TextEditorEditBlog from "../_components/TextEditorEditBlog";
-import { actionUpdateBlog } from "@/app/_data/blogService/blogActions";
+import { actionUpdateBlog } from "@/app/_data/blog/blogActions";
 
 export default async function Page({ params }) {
   const { blogId } = await params;

@@ -34,11 +34,7 @@ const nextConfig = {
         destination: "/blogs",
         permanent: false,
       },
-      {
-        source: "/contact",
-        destination: "/blogs",
-        permanent: false,
-      },
+
       {
         source: "/services",
         destination: "/blogs",

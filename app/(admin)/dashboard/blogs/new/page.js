@@ -1,6 +1,6 @@
 import TextEditorCreateBlog from "@/app/(admin)/dashboard/blogs/_components/TextEditorCreateBlog";
-import { actionCreateBlog } from "@/app/_data/blogService/blogActions";
-import { serviceGetCategories } from "@/app/_data/blogService/blogServices";
+import { actionCreateBlog } from "@/app/_data/blog/blogActions";
+import { serviceGetCategories } from "@/app/_data/blog/blogServices";
 
 export default async function Page() {
   const categories = await serviceGetCategories();

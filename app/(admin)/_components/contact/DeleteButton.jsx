@@ -1,14 +1,13 @@
 "use client";
-
-import { removeContactMessageAction } from "@/app/_data/actions";
+import { actionRemoveMessage } from "@/app/_data/contact/contactAction";
 
 export default function DeleteButton({ id }) {
   return (
     <button
-      className="text-red-500"
+      className="w-[100px] rounded-lg p-2 mt-5 bg-red-500 "
       onClick={async () => {
         const confirmed = confirm("مطمئنی ؟");
-        if (confirmed) removeContactMessageAction(id);
+        if (confirmed) actionRemoveMessage(id);
       }}
     >
       حذف پیام
