@@ -1,7 +1,7 @@
 import Script from "next/script";
 import Header from "./_layouts/header/Header";
 import { MainContextProvider } from "./_providers/ContextProvider";
-import "@/app/_styles/globals.css";
+import "@/styles/globals.css";
 import { Noto_Sans_Arabic } from "next/font/google";
 export const metadata = {
   title: {

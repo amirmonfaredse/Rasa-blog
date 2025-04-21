@@ -12,7 +12,7 @@ export default function Page() {
       <div className="w-[90%]  md:w-[50%] mt-5 md:mt-2 md:px-7 flex flex-col justify-center items-center">
         <h1 className="flex items-center text-3xl h-32">تماس با ما</h1>
         <div className="my-4 flex flex-col justify-center items-center ">
-          <h3 className="flex text-center px-2 md:px-0 mb-4 md:mb-0 text-lg md:text-xl text-gray-300">
+          <h3 className="flex text-center px-2 md:px-0 mb-4 md:mb-0 text-lg md:text-xl text-gray-300 ">
             با ما در شبکه های اجتماعی در ارتباط باشید{" "}
           </h3>
           <div className="flex flex-col md:flex-row justify-center gap-10 py-4">

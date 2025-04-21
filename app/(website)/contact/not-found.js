@@ -12,12 +12,10 @@ export default function NotFound() {
       />
       <p className="text-2xl my-5">صفحه مورد نظر وجود ندارد</p>
       <div className="flex gap-5">
-      <Link href="/blogs" className="bg-gray-50 text-gray-800 rounded-lg p-3">
-        بازگشت به وبلاگ
-      </Link>
-      <Link href="/" className="bg-gray-50 text-gray-800 rounded-lg p-3">
-        بازگشت به خانه
-      </Link>
+        
+        <Link href="/" className="bg-gray-50 text-gray-800 rounded-lg p-3">
+          بازگشت به خانه
+        </Link>
       </div>
     </div>
   );

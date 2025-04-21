@@ -1,5 +1,6 @@
 // POST / Posts
 
+import { notFound } from "next/navigation";
 import { supabase } from "../supabase";
 
 export async function serviceCreateBlog(newBlog) {
@@ -20,11 +21,10 @@ export async function serviceGetBlog(id) {
     .select()
     .single()
     .eq("id", String(id));
+  if (data === null) notFound();
   if (error) {
-    console.log(error)
     throw new Error("مشکلی در دریافت  بلاگ ایجاد شده است");
   }
-
   return data;
 }
 
