@@ -11,7 +11,16 @@ export default async function Page() {
           <h2 className="text-gray-300">عنوان:</h2>
           <input
             name="blogTitle"
+            type="text"
             className="w-[1000px] h-[50px] rounded-md bg-gray-500 p-2 text-xl text-gray-100"
+          />
+        </label>
+        <label className="flex flex-col gap-3">
+          <h2 className="text-gray-300">تصویر اصلی:</h2>
+          <input
+            type="file"
+            name="blogImage"
+            className="w-fit h-[50px] rounded-md text-gray-100"
           />
         </label>
         <label className="flex flex-col gap-3">

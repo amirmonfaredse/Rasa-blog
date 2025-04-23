@@ -1,7 +1,13 @@
 "use server";
-
-import { revalidatePath } from "next/cache";
 import {
+  sanitizeHTMLOnServer,
+  sanitizeTextOnServer,
+} from "@/app/utility/jsDOM";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import { auth } from "../auth";
+import {
+  getImageFileURL,
   serviceCreateBlog,
   serviceCreateCategory,
   serviceDeleteBlog,
@@ -10,13 +16,8 @@ import {
   serviceGetCategory,
   serviceUpdateBlog,
   serviceUpdateCategory,
+  uploadImageFile,
 } from "./blogServices";
-import { auth } from "../auth";
-import { redirect } from "next/navigation";
-import {
-  sanitizeHTMLOnServer,
-  sanitizeTextOnServer,
-} from "@/app/utility/jsDOM";
 
 async function secureAccess() {
   const session = await auth();
@@ -30,24 +31,54 @@ async function secureAccess() {
   if (!isUserValid) throw new Error("شما مجاز به انجام این اقدام نیستید");
 }
 
+async function uploadingImage(image) {
+  try {
+    if (
+      image.type !== "image/png" &&
+      image.type !== "image/jpeg" &&
+      image.type !== "image/jpg"
+    )
+      return {
+        error: "unavaible format",
+        message: "فرمت مجاز تصویر png , jpeg است",
+      };
+    if (image.size > 1_048_576)
+      return {
+        error: "unavaible size",
+        message: "حداکثر حجم فایل باید کمتر از 1 مگابایت باشد",
+      };
+    image.name.replace(/[^a-zA-Z0-9.\-_]/g, "");
+    image.name = `${Math.floor(Math.random() * 1000)}-${image.name}`;
+    const arrayBuffer = await image.arrayBuffer();
+    const bufferImage = Buffer.from(arrayBuffer);
+    const result = await uploadImageFile(image.name, bufferImage);
+    return result;
+  } catch (error) {
+    throw new Error("مشکلی در فرایند آپلود فایل ایجاد شده است مجددا تلاش کنید");
+  }
+}
 // ACTION for POST / New Post
 export async function actionCreateBlog(formData) {
   await secureAccess();
-  const categories = formData.getAll("blogCategory");
-  const securedCategories = await categories.map((cat) => {
+  const securedCategories = await formData.getAll("blogCategory").map((cat) => {
     return sanitizeTextOnServer(cat);
   });
+  let image = formData.get("blogImage");
+  if (image.size > 0) image = await uploadingImage(image);
+  const imageURL = image ? await getImageFileURL(image.name) : "";
+  // Change | Give image to a function and
   const newBlogFields = {
     author: "امیررضا منفرد",
     categories: securedCategories,
     title: sanitizeTextOnServer(formData.get("blogTitle")),
     content: sanitizeHTMLOnServer(formData.get("textEditor")),
+    image: imageURL,
   };
   await serviceCreateBlog(newBlogFields);
   revalidatePath("dashboard/blogs");
   revalidatePath("dashboard/blogs/new");
   revalidatePath("dashboard/blogs/all");
-  redirect("dashboard/");
+  redirect("/dashboard/blogs/all");
 }
 // ACTION for PUT / Edit Post
 export async function actionUpdateBlog(formData) {
