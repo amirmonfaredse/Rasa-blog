@@ -4,21 +4,26 @@ import {
   sanitizeTextOnServer,
 } from "@/app/utility/jsDOM";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 import { auth } from "../auth";
 import {
-  getImageFileURL,
   serviceCreateBlog,
   serviceCreateCategory,
   serviceDeleteBlog,
   serviceDeleteCategory,
   serviceGetBlog,
   serviceGetCategory,
+  serviceGetImageFileURL,
   serviceUpdateBlog,
   serviceUpdateCategory,
-  uploadImageFile,
+  serviceUploadFile,
 } from "./blogServices";
 
+const allowedImageTypes = ["image/png", "image/jpeg", "image/jpg"];
+
+
+async function secureAList(list) {
+  return list.map((item) => sanitizeTextOnServer(item));
+}
 async function secureAccess() {
   const session = await auth();
   if (!session)
@@ -30,67 +35,65 @@ async function secureAccess() {
   );
   if (!isUserValid) throw new Error("شما مجاز به انجام این اقدام نیستید");
 }
-
+// return Result
 async function uploadingImage(image) {
   try {
-    if (
-      image.type !== "image/png" &&
-      image.type !== "image/jpeg" &&
-      image.type !== "image/jpg"
-    )
+    if (!allowedImageTypes.includes(image.type))
       return {
-        error: "unavaible format",
-        message: "فرمت مجاز تصویر png , jpeg است",
+        status: "error",
+        message: "فرمت مجاز تصاویر png , jpg , jpeg است",
       };
     if (image.size > 1_048_576)
       return {
-        error: "unavaible size",
+        status: "error",
         message: "حداکثر حجم فایل باید کمتر از 1 مگابایت باشد",
       };
     image.name.replace(/[^a-zA-Z0-9.\-_]/g, "");
-    image.name = `${Math.floor(Math.random() * 1000)}-${image.name}`;
     const arrayBuffer = await image.arrayBuffer();
     const bufferImage = Buffer.from(arrayBuffer);
-    const result = await uploadImageFile(image.name, bufferImage);
-    return result;
+    await serviceUploadFile(image.name, bufferImage);
+    return await serviceGetImageFileURL(image.name);
   } catch (error) {
+    console.log(error);
     throw new Error("مشکلی در فرایند آپلود فایل ایجاد شده است مجددا تلاش کنید");
   }
 }
+
 // ACTION for POST / New Post
-export async function actionCreateBlog(formData) {
+export async function actionCreateBlog(_, formData) {
   await secureAccess();
-  const securedCategories = await formData.getAll("blogCategory").map((cat) => {
-    return sanitizeTextOnServer(cat);
-  });
-  let image = formData.get("blogImage");
-  if (image.size > 0) image = await uploadingImage(image);
-  const imageURL = image ? await getImageFileURL(image.name) : "";
-  // Change | Give image to a function and
+  const categories = formData.getAll("blogCategory");
+  const securedCategories = await secureAList(categories);
+  const image = formData.get("blogImage");
+  const uploadResult = image.size > 0 && (await uploadingImage(image));
+  if (uploadResult.status) return uploadResult;
   const newBlogFields = {
     author: "امیررضا منفرد",
     categories: securedCategories,
     title: sanitizeTextOnServer(formData.get("blogTitle")),
     content: sanitizeHTMLOnServer(formData.get("textEditor")),
-    image: imageURL,
+    image: uploadResult ?? "",
   };
   await serviceCreateBlog(newBlogFields);
   revalidatePath("dashboard/blogs");
   revalidatePath("dashboard/blogs/new");
   revalidatePath("dashboard/blogs/all");
-  redirect("/dashboard/blogs/all");
+  return {
+    status: "success",
+    message: "پست جدید با موفقیت ایجاد شد",
+  };
 }
 // ACTION for PUT / Edit Post
-export async function actionUpdateBlog(formData) {
+export async function actionUpdateBlog(_,formData) {
   await secureAccess();
   const blogId = Number(formData.get("id"));
   const blog = await serviceGetBlog(blogId);
   if (!blogId) throw new Error("پست مورد نظر وجود ندارد");
   if (!blog) throw new Error("پست مورد نظر وجود ندارد");
-  const categories = formData.getAll("blogCategory");
-  const securedCategories = await categories.map((cat) => {
-    return sanitizeTextOnServer(cat);
-  });
+  const securedCategories = await secureAList(formData.getAll("blogCategory"));
+  const image = formData.get("blogImage");
+  const uploadResult = image.size > 0 && (await uploadingImage(image));
+  if (uploadResult.message) return uploadResult;
   const updatedFields = {
     id: blogId,
     author: "امیررضا منفرد",
@@ -98,11 +101,15 @@ export async function actionUpdateBlog(formData) {
     title: sanitizeTextOnServer(formData.get("blogTitle")),
     content: sanitizeHTMLOnServer(formData.get("textEditor")),
   };
+  if (uploadResult) updatedFields.image = uploadResult;
   await serviceUpdateBlog(blogId, updatedFields);
   revalidatePath("dashboard/blogs");
   revalidatePath("dashboard/blogs/new");
   revalidatePath("dashboard/blogs/all");
-  redirect("/dashboard/blogs/all");
+  return {
+    status: "success",
+    message: "پست با موفقیت ویرایش شد",
+  };
 }
 // ACTION for DELETE / Delete Post
 
@@ -112,6 +119,10 @@ export async function actionDeleteBlog(id) {
   if (!blog) throw new Error("این پست وجود ندارد");
   await serviceDeleteBlog(blog.id);
   revalidatePath("dashboard/blogs");
+  return {
+    status: "success",
+    message: "پست با موفقیت حذف شد",
+  };
 }
 
 // ACTION for POST / New Category
@@ -126,6 +137,10 @@ export async function actionCreateCategory(formData) {
   await serviceCreateCategory(newCategoryFields);
   revalidatePath("dashboard/blogs");
   revalidatePath("dashboard/blogs/categories");
+  return {
+    status: "success",
+    message: "دسته بندی با موفقیت ایجاد شد",
+  };
 }
 // ACTION for PUT / Edit Category
 export async function actionUpdateCategory(formData) {
@@ -144,7 +159,10 @@ export async function actionUpdateCategory(formData) {
   revalidatePath("dashboard/blogs/all");
   revalidatePath("dashboard/blogs/new");
   revalidatePath("dashboard/blogs/categories");
-  redirect("/dashboard/blogs/categories");
+  return {
+    status: "success",
+    message: "دسته بندی با موفقیت ویرایش شد ",
+  };
 }
 // ACTION for DELETE / Delete Category
 export async function actionDeleteCategory(id) {
@@ -156,4 +174,8 @@ export async function actionDeleteCategory(id) {
   revalidatePath("dashboard/blogs/all");
   revalidatePath("dashboard/blogs/new");
   revalidatePath("dashboard/blogs/categories");
+  return {
+    status: "success",
+    message: "دسته بندی با موفقیت حذف شد ",
+  };
 }

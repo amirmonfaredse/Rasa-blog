@@ -4,9 +4,9 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-export default function TextEditorEditBlog({ defaultContent }) {
+export default function TextEditorEditBlog({ defaultContent, formState }) {
   const editor = useRef(null);
-  const [value, setValue] = useState(() => defaultContent);
+  const [content, setContent] = useState(() => defaultContent);
   const config = useMemo(
     () => ({
       direction: "rtl",
@@ -19,12 +19,14 @@ export default function TextEditorEditBlog({ defaultContent }) {
     []
   );
   useEffect(() => {
-     
-    setValue(defaultContent); 
+    setContent(defaultContent);
   }, [defaultContent]);
+  useEffect(() => {
+    if (formState.status === "success") setContent("");
+  }, [formState]);
 
   const handleChange = (value) => {
-    setValue(value);
+    setContent(value);
   };
 
   return (
@@ -35,7 +37,7 @@ export default function TextEditorEditBlog({ defaultContent }) {
           name="textEditor"
           config={config}
           onBlur={handleChange}
-          value={value}
+          value={content}
           className="w-full h-[70%] mt-10 bg-white"
         />
         <style>{`.jodit-wysiwyg{height:300px !important}`}</style>
