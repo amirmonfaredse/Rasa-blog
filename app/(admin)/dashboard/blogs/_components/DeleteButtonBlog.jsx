@@ -8,7 +8,7 @@ export default function DeleteButtonBlog({ blogId }) {
         const confirmed = confirm("آیا مطمئنی میخاهی این بلاگ را حذف کنی؟");
         if (confirmed) actionDeleteBlog(blogId);
       }}
-      className="text-xs  text-red-600"
+      className="text-xs text-red-600 hover:bg-gray-50 p-2 rounded-lg"
     >
       حذف
     </button>

@@ -4,6 +4,7 @@ import { actionCreateBlog } from "@/app/_data/blog/blogActions";
 import { useActionState, useEffect } from "react";
 import TextEditorCreateBlog from "../_components/TextEditorCreateBlog";
 import { Bounce, toast, ToastContainer } from "react-toastify";
+import SpinnerLoader from "@/app/utility/SpinnerLoader";
 
 export default function NewPostForm({ categories }) {
   const [state, formAction, pending] = useActionState(actionCreateBlog, {
@@ -81,7 +82,7 @@ export default function NewPostForm({ categories }) {
           disabled={pending}
           className="w-[50%] h-[40px] flex items-center justify-center rounded  bg-gray-400 hover:bg-gray-700 hover:text-gray-100 transition duration-400"
         >
-          انتشار
+          {pending ? <SpinnerLoader /> : "انتشار"}
         </button>
       </div>
     </form>

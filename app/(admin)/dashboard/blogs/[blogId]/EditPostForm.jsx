@@ -1,12 +1,14 @@
 "use client";
 import { actionUpdateBlog } from "@/app/_data/blog/blogActions";
-import TextEditorEditBlog from "../_components/TextEditorEditBlog";
-import { useActionState, useEffect } from "react";
-import { Bounce, toast, ToastContainer } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { Suspense, useActionState, useEffect, useState } from "react";
+import { Bounce, toast, ToastContainer } from "react-toastify";
+import TextEditorEditBlog from "../_components/TextEditorEditBlog";
+import SpinnerLoader from "@/app/utility/SpinnerLoader";
 
 export default function EditPostForm({ categories, blog }) {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const [state, formAction, pending] = useActionState(actionUpdateBlog, {
     status: "",
     message: "",
@@ -83,7 +85,7 @@ export default function EditPostForm({ categories, blog }) {
           disabled={pending}
           className="w-[50%] h-[40px] flex items-center justify-center rounded  bg-gray-400 hover:bg-gray-700 hover:text-gray-100 transition duration-400"
         >
-          ویرایش
+          {pending ? <SpinnerLoader /> : "ویرایش"}
         </button>
       </div>
     </form>

@@ -4,7 +4,6 @@ import { useState } from "react";
 
 function Accordion({ children, subTabs }) {
   const [isOpen, setIsOpen] = useState(false);
-
   return (
     <div className="w-[200px] h-fit  bg-slate-400 flex justify-center items-center m-2 rounded-md hover:bg-gray-700 hover:text-gray-200 transition-all duration-500 cursor-pointer">
       <button

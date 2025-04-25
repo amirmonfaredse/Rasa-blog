@@ -34,8 +34,9 @@ const NavigationHeader = () => {
       />
       {isMobileMode ? (
         <ul
-          style={{ 
-            top: drawerOpen ? "20px" : "-250px" }}
+          style={{
+            top: drawerOpen ? "20px" : "-250px",
+          }}
           className="w-fit h-[50%] flex flex-col justify-start items-center gap-2 fixed left-4 transition-all duration-300"
         >
           <div className="w-full flex justify-end mb-2 ">
@@ -60,6 +61,7 @@ const NavigationHeader = () => {
           </Link> */}
 
           <Link
+            prefetch={true}
             href="/blogs"
             className="w-24 h-12 mb-2 flex justify-center items-center bg-gray-50 px-3 py-1 rounded-lg  text-gray-600"
           >
@@ -67,6 +69,7 @@ const NavigationHeader = () => {
           </Link>
 
           <Link
+            prefetch={true}
             href="/contact"
             className=" w-24 h-12 mb-2 flex justify-center items-center bg-gray-50 px-3 py-1 rounded-lg text-gray-600"
           >
