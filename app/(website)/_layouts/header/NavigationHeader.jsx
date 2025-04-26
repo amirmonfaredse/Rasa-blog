@@ -75,15 +75,20 @@ const NavigationHeader = () => {
           >
             تماس {isMobileMode ? "" : "با ما"}{" "}
           </Link>
+          <Link
+            prefetch={true}
+            href="/about"
+            className=" w-24 h-12 mb-2 flex justify-center items-center bg-gray-50 px-3 py-1 rounded-lg text-gray-600"
+          >
+            درباره {isMobileMode ? "" : "ما"}{" "}
+          </Link>
           {/* <li>
             <Link href="/services">خدمات من</Link>
           </li>
           <li>
             <Link href="/portfolio">نمونه کار ها</Link>
           </li>
-          <li>
-            <Link href="/about">درباره من</Link>
-          </li>
+          
           */}
         </ul>
       ) : (
@@ -100,10 +105,11 @@ const NavigationHeader = () => {
             <li>
               <Link href="/portfolio">نمونه کار ها</Link>
             </li>
-            <li>
-              <Link href="/about">درباره من</Link>
-            </li>
+           
             */}
+          <li>
+            <Link href="/about">درباره ما</Link>
+          </li>
           <li>
             <Link href="/contact">تماس با ما </Link>
           </li>

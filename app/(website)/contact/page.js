@@ -1,4 +1,4 @@
-import { actionSendMessage } from "@/app/_data/contact/contactAction";
+import { actionContactSendMessage } from "@/app/_data/messages/messageActions";
 import Image from "next/image";
 import Link from "next/link";
 export const metadata = {
@@ -61,7 +61,7 @@ export default function Page() {
         </div>
       </div>
       <form
-        action={actionSendMessage}
+        action={actionContactSendMessage}
         className="w-full md:w-[50%] flex flex-col items-center px-2 md:px-0 mt-5 md:mt-2 md:mx-auto "
       >
         <label htmlFor="fullName" className="w-full">

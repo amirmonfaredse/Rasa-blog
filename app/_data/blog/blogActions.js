@@ -17,24 +17,12 @@ import {
   serviceUpdateCategory,
   serviceUploadFile,
 } from "./blogServices";
+import { secureAccess, secureAList } from "../utility";
 
 const allowedImageTypes = ["image/png", "image/jpeg", "image/jpg"];
 
 
-async function secureAList(list) {
-  return list.map((item) => sanitizeTextOnServer(item));
-}
-async function secureAccess() {
-  const session = await auth();
-  if (!session)
-    throw new Error("برای انجام این اقدام باید وارد اکانت خود شوید");
-  const allowedEmails = process.env.ALLOWED_EMAILS?.split(",");
-  if (!allowedEmails) throw new Error("تنظیمات سرور ناقص است");
-  const isUserValid = allowedEmails.some(
-    (email) => session.user.email === email
-  );
-  if (!isUserValid) throw new Error("شما مجاز به انجام این اقدام نیستید");
-}
+
 // return Result
 async function uploadingImage(image) {
   try {
@@ -43,10 +31,10 @@ async function uploadingImage(image) {
         status: "error",
         message: "فرمت مجاز تصاویر png , jpg , jpeg است",
       };
-    if (image.size > 1_048_576)
+    if (image.size > 5_242_880)
       return {
         status: "error",
-        message: "حداکثر حجم فایل باید کمتر از 1 مگابایت باشد",
+        message: "حداکثر حجم فایل باید کمتر از5 مگابایت باشد",
       };
     image.name.replace(/[^a-zA-Z0-9.\-_]/g, "");
     const arrayBuffer = await image.arrayBuffer();

@@ -15,6 +15,7 @@ const nextConfig = {
         search: "",
       },
     ],
+    // https://pzbdncisbmytfhydqojl.supabase.co/storage/v1/object/public/blogs-images/mainImage-1-blogs-min.jpg
   },
   headers: () => [
     {
@@ -29,11 +30,7 @@ const nextConfig = {
   ],
   async redirects() {
     return [
-      {
-        source: "/about",
-        destination: "/blogs",
-        permanent: false,
-      },
+      
       {
         source: "/",
         destination: "/blogs",

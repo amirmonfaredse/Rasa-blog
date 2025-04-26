@@ -1,4 +1,3 @@
-
 import { notFound } from "next/navigation";
 import { supabase } from "../supabase";
 
@@ -136,6 +135,5 @@ export async function serviceGetImageFileURL(filePath) {
     console.log(error);
     throw new Error("مشکلی ایجاد شده است  مجددا تلاش کنید");
   }
-
-  return data;
+  return data.publicUrl;
 }

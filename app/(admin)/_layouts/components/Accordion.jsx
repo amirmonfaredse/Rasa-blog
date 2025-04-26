@@ -21,9 +21,14 @@ function Accordion({ children, subTabs }) {
             subTabs.map((subTab, index) => (
               <div
                 key={index}
-                className="w-full h-[45px] flex items-center p-2 hover:bg-slate-600"
+                className="w-full h-[45px] flex items-center hover:bg-slate-600"
               >
-                <Link href={subTab.path}>{subTab.title}</Link>
+                <Link
+                  className="w-full h-full flex justify-start  p-2"
+                  href={subTab.path}
+                >
+                  {subTab.title}
+                </Link>
               </div>
             ))}
         </div>
