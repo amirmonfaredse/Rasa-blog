@@ -21,12 +21,13 @@ export default function TextEditorCreateBlog({ formState }) {
     setContent(value);
   };
   useEffect(() => {
-    if (formState.status === "success") setContent("");
+    if (formState?.status === "success") setContent("");
   }, [formState]);
   return (
     <div className="h-fit w-fit flex items-center justify-center ">
       <div className="w-[1000px] h-fit">
         <JoditEditor
+        
           ref={editor}
           name="textEditor"
           config={config}

@@ -21,6 +21,7 @@ export default function SideLayout() {
             { title: "همه پست ها", path: "/dashboard/blogs/all" },
             { title: "پست جدید", path: "/dashboard/blogs/new" },
             { title: "دسته بندی ها ", path: "/dashboard/blogs/categories" },
+            { title: "برچسب ها ", path: "/dashboard/blogs/tags" },
           ]}
         >
           <div>وبلاگ</div>

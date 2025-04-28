@@ -4,7 +4,7 @@ import { sanitizeTextOnServer } from "../utility/jsDOM";
 import { auth } from "./auth";
 
 export async function secureAList(list) {
-  return list.map((item) => sanitizeTextOnServer(item));
+  return list.map((item) => sanitizeTextOnServer(item).trim());
 }
 export async function secureAccess() {
   const session = await auth();
@@ -16,4 +16,13 @@ export async function secureAccess() {
     (email) => session.user.email === email
   );
   if (!isUserValid) throw new Error("شما مجاز به انجام این اقدام نیستید");
+}
+
+export async function secureTagList(list) {
+  return list.map((item) => {
+    return {
+      title: sanitizeTextOnServer(item.title),
+      slug: sanitizeTextOnServer(item.slug),
+    };
+  });
 }

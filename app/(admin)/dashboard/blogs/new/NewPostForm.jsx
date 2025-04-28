@@ -1,12 +1,14 @@
 "use client";
 
 import { actionCreateBlog } from "@/app/_data/blog/blogActions";
+import CustomToastContainer from "@/app/utility/CustomToastContainer";
 import { useActionState, useEffect } from "react";
+import { toast } from "react-toastify";
+import TagInput from "../_components/TagInput";
 import TextEditorCreateBlog from "../_components/TextEditorCreateBlog";
-import { Bounce, toast, ToastContainer } from "react-toastify";
-import SpinnerLoader from "@/app/utility/SpinnerLoader";
+import ReleaseButton from "./ReleaseButton";
 
-export default function NewPostForm({ categories }) {
+export default function NewPostForm({ categories, tagList }) {
   const [state, formAction, pending] = useActionState(actionCreateBlog, {
     status: "",
     message: "",
@@ -21,25 +23,22 @@ export default function NewPostForm({ categories }) {
   }, [state]);
   return (
     <form action={formAction} className="py-5">
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop
-        closeOnClick
-        rtl
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-        transition={Bounce}
-      />
-
+      <CustomToastContainer />
       <div className="flex flex-col gap-5">
         <label className="flex flex-col gap-3">
           <h2 className="text-gray-300">عنوان:</h2>
           <input
+            required
             name="blogTitle"
+            type="text"
+            className="w-[1000px] h-[50px] rounded-md bg-gray-500 p-2 text-xl text-gray-100"
+          />
+        </label>
+        <label className="flex flex-col gap-3">
+          <h2 className="text-gray-300">توضیحات :</h2>
+          <input
+            required
+            name="blogDescription"
             type="text"
             className="w-[1000px] h-[50px] rounded-md bg-gray-500 p-2 text-xl text-gray-100"
           />
@@ -52,6 +51,7 @@ export default function NewPostForm({ categories }) {
             className="w-fit h-[50px] rounded-md text-gray-100"
           />
         </label>
+
         <label className="flex flex-col gap-3">
           <h2 className="text-gray-300">دسته بندی ها:</h2>
           <div className="w-full max-w-sm min-w-[200px]">
@@ -77,14 +77,8 @@ export default function NewPostForm({ categories }) {
         </label>
       </div>
       <TextEditorCreateBlog formState={state} />
-      <div className="w-full h-[100px] flex items-center justify-start">
-        <button
-          disabled={pending}
-          className="w-[50%] h-[40px] flex items-center justify-center rounded  bg-gray-400 hover:bg-gray-700 hover:text-gray-100 transition duration-400"
-        >
-          {pending ? <SpinnerLoader /> : "انتشار"}
-        </button>
-      </div>
+      <TagInput tagList={tagList} />
+      <ReleaseButton pending={pending} />
     </form>
   );
 }

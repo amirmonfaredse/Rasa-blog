@@ -7,7 +7,7 @@ export default async function Page() {
   const abouts = await getAboutSections();
   return (
     <div>
-      <Link className="text-gray-200 " href={`/dashboard/about/create`}>
+      {/* <Link className="text-gray-200 " href={`/dashboard/about/create`}>
         ایجاد +{" "}
       </Link>
       {abouts.map((about) => (
@@ -52,7 +52,7 @@ export default async function Page() {
             value="ویرایش"
           />
         </form>
-      ))}
+      ))} */}
     </div>
   );
 }

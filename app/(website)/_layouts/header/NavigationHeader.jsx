@@ -96,23 +96,38 @@ const NavigationHeader = () => {
           {/* <li className="hover:text-white transition-colors">
             <Link href="/">خانه</Link>
           </li> */}
-          <li className="hover:text-white transition-colors">
-            <Link href="/blogs">وبلاگ</Link>
+          <li className="w-[80px] h-[40px]  hover:text-white transition-colors">
+            <Link
+              className="w-full h-full flex items-center justify-center"
+              href="/blogs"
+            >
+              وبلاگ
+            </Link>
           </li>
-          {/* <li>
+          <li className="w-[80px] h-[40px]  hover:text-white transition-colors">
+            <Link
+              className="w-full h-full flex items-center justify-center"
+              href="/about"
+            >
+              درباره ما
+            </Link>
+          </li>
+          <li className="w-[80px] h-[40px]  hover:text-white transition-colors">
+            <Link
+              className="w-full h-full flex items-center justify-center"
+              href="/contact"
+            >
+              تماس با ما{" "}
+            </Link>
+          </li>
+          {/* <li className="w-[80px] h-[40px]  hover:text-white transition-colors">
               <Link href="/services">خدمات من</Link>
             </li>
-            <li>
+            <li className="w-[80px] h-[40px]  hover:text-white transition-colors">
               <Link href="/portfolio">نمونه کار ها</Link>
             </li>
            
             */}
-          <li>
-            <Link href="/about">درباره ما</Link>
-          </li>
-          <li>
-            <Link href="/contact">تماس با ما </Link>
-          </li>
         </ul>
       )}
     </nav>

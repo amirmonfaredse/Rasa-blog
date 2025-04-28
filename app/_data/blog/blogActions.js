@@ -4,24 +4,25 @@ import {
   sanitizeTextOnServer,
 } from "@/app/utility/jsDOM";
 import { revalidatePath } from "next/cache";
-import { auth } from "../auth";
+import { secureAccess, secureAList, secureTagList } from "../utility";
 import {
   serviceCreateBlog,
   serviceCreateCategory,
+  serviceCreateTag,
   serviceDeleteBlog,
   serviceDeleteCategory,
+  serviceDeleteTag,
   serviceGetBlog,
   serviceGetCategory,
   serviceGetImageFileURL,
+  serviceGetTag,
+  serviceTagListManager,
   serviceUpdateBlog,
   serviceUpdateCategory,
   serviceUploadFile,
 } from "./blogServices";
-import { secureAccess, secureAList } from "../utility";
 
 const allowedImageTypes = ["image/png", "image/jpeg", "image/jpg"];
-
-
 
 // return Result
 async function uploadingImage(image) {
@@ -50,17 +51,20 @@ async function uploadingImage(image) {
 // ACTION for POST / New Post
 export async function actionCreateBlog(_, formData) {
   await secureAccess();
-  const categories = formData.getAll("blogCategory");
-  const securedCategories = await secureAList(categories);
+  const categories = await secureAList(formData.getAll("blogCategory"));
   const image = formData.get("blogImage");
   const uploadResult = image.size > 0 && (await uploadingImage(image));
   if (uploadResult.status) return uploadResult;
+  const getTags = JSON.parse(formData.get("blogTags"));
+  const tags = await secureTagList(getTags);
   const newBlogFields = {
     author: "امیررضا منفرد",
-    categories: securedCategories,
-    title: sanitizeTextOnServer(formData.get("blogTitle")),
+    title: sanitizeTextOnServer(formData.get("blogTitle")).trim(),
+    description: sanitizeTextOnServer(formData.get("blogDescription").trim()),
+    categories,
     content: sanitizeHTMLOnServer(formData.get("textEditor")),
-    image: uploadResult ?? "",
+    image: uploadResult || "",
+    tags: JSON.stringify(tags),
   };
   await serviceCreateBlog(newBlogFields);
   revalidatePath("dashboard/blogs");
@@ -72,7 +76,7 @@ export async function actionCreateBlog(_, formData) {
   };
 }
 // ACTION for PUT / Edit Post
-export async function actionUpdateBlog(_,formData) {
+export async function actionUpdateBlog(_, formData) {
   await secureAccess();
   const blogId = Number(formData.get("id"));
   const blog = await serviceGetBlog(blogId);
@@ -82,12 +86,17 @@ export async function actionUpdateBlog(_,formData) {
   const image = formData.get("blogImage");
   const uploadResult = image.size > 0 && (await uploadingImage(image));
   if (uploadResult.message) return uploadResult;
+
+  const getTags = JSON.parse(formData.get("blogTags"));
+  const tags = await secureTagList(getTags);
   const updatedFields = {
     id: blogId,
     author: "امیررضا منفرد",
+    description: sanitizeTextOnServer(formData.get("blogDescription").trim()),
     categories: securedCategories,
     title: sanitizeTextOnServer(formData.get("blogTitle")),
     content: sanitizeHTMLOnServer(formData.get("textEditor")),
+    tags: JSON.stringify(tags),
   };
   if (uploadResult) updatedFields.image = uploadResult;
   await serviceUpdateBlog(blogId, updatedFields);
@@ -106,6 +115,7 @@ export async function actionDeleteBlog(id) {
   const blog = await serviceGetBlog(Number(id));
   if (!blog) throw new Error("این پست وجود ندارد");
   await serviceDeleteBlog(blog.id);
+
   revalidatePath("dashboard/blogs");
   return {
     status: "success",
@@ -117,8 +127,8 @@ export async function actionDeleteBlog(id) {
 export async function actionCreateCategory(formData) {
   await secureAccess();
   const newCategoryFields = {
-    title: sanitizeTextOnServer(formData.get("categoryTitle")),
-    name: sanitizeTextOnServer(formData.get("categoryValue")),
+    title: sanitizeTextOnServer(formData.get("categoryTitle").trim()),
+    name: sanitizeTextOnServer(formData.get("categoryValue").trim()),
     root: "",
     subCategories: "",
   };
@@ -137,8 +147,8 @@ export async function actionUpdateCategory(formData) {
   const category = serviceGetCategory(categoryId);
   if (!category) throw new Error("دسته بندی مورد نظر وجود ندارد");
   const updatedFields = {
-    title: sanitizeTextOnServer(formData.get("categoryTitle")),
-    name: sanitizeTextOnServer(formData.get("categoryValue")),
+    title: sanitizeTextOnServer(formData.get("categoryTitle").trim()),
+    name: sanitizeTextOnServer(formData.get("categoryValue").trim()),
     root: "",
     subCategories: "",
   };
@@ -165,5 +175,54 @@ export async function actionDeleteCategory(id) {
   return {
     status: "success",
     message: "دسته بندی با موفقیت حذف شد ",
+  };
+}
+export async function actionCreateTag(formData) {
+  await secureAccess();
+  const newField = {
+    title: sanitizeHTMLOnServer(formData.get("tagTitle")),
+    slug: sanitizeHTMLOnServer(formData.get("tagSlug")),
+  };
+  await serviceCreateTag(newField);
+  revalidatePath("dashboard/blogs");
+  revalidatePath("dashboard/blogs/tags");
+  return {
+    status: "success",
+    message: "برچسب با موفقیت ایجاد شد",
+  };
+}
+
+export async function actionUpdateTag(formData) {
+  await secureAccess();
+  const tagId = Number(formData.get("id"));
+  const tag = serviceGetTag(tagId);
+  if (!tag) throw new Error("برچسب مورد نظر وجود ندارد");
+  const updatedFields = {
+    title: sanitizeTextOnServer(formData.get("tagTitle")),
+    slug: sanitizeTextOnServer(formData.get("tagSlug")),
+  };
+  await serviceUpdateCategory(updatedFields, tagId);
+  revalidatePath("dashboard/blogs");
+  revalidatePath("dashboard/blogs/all");
+  revalidatePath("dashboard/blogs/new");
+  revalidatePath("dashboard/blogs/tags");
+  return {
+    status: "success",
+    message: "برچسب با موفقیت ویرایش شد",
+  };
+}
+
+export async function actionDeleteTag(slug) {
+  await secureAccess();
+  const tag = await serviceGetTag(slug);
+  if (!tag) throw new Error("برچسب مورد نظر وجود ندارد");
+  await serviceDeleteTag(slug);
+  revalidatePath("dashboard/blogs");
+  revalidatePath("dashboard/blogs/all");
+  revalidatePath("dashboard/blogs/new");
+  revalidatePath("dashboard/blogs/tags");
+  return {
+    status: "success",
+    message: "برچسب با موفقیت حذف شد ",
   };
 }
