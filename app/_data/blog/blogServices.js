@@ -120,26 +120,7 @@ export async function serviceDeleteCategory(id) {
   }
 }
 
-export async function serviceUploadFile(filePath, bufferedImage) {
-  const { data, error } = await supabase.storage
-    .from("blogs-images")
-    .upload(filePath, bufferedImage);
-  if (error) {
-    console.log(error);
-    throw new Error("مشکلی ایجاد شده است لطفا مجددا تلاش کنید");
-  }
-  return data;
-}
-export async function serviceGetImageFileURL(filePath) {
-  const { data, error } = supabase.storage
-    .from("blogs-images")
-    .getPublicUrl(filePath);
-  if (error) {
-    console.log(error);
-    throw new Error("مشکلی ایجاد شده است  مجددا تلاش کنید");
-  }
-  return data.publicUrl;
-}
+
 
 export async function serviceCreateTag(newTag) {
   const { status, error } = await supabase.from("tags").insert([newTag]);

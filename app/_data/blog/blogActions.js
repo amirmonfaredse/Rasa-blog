@@ -22,31 +22,8 @@ import {
   serviceUploadFile,
 } from "./blogServices";
 
-const allowedImageTypes = ["image/png", "image/jpeg", "image/jpg"];
 
 // return Result
-async function uploadingImage(image) {
-  try {
-    if (!allowedImageTypes.includes(image.type))
-      return {
-        status: "error",
-        message: "فرمت مجاز تصاویر png , jpg , jpeg است",
-      };
-    if (image.size > 5_242_880)
-      return {
-        status: "error",
-        message: "حداکثر حجم فایل باید کمتر از5 مگابایت باشد",
-      };
-    image.name.replace(/[^a-zA-Z0-9.\-_]/g, "");
-    const arrayBuffer = await image.arrayBuffer();
-    const bufferImage = Buffer.from(arrayBuffer);
-    await serviceUploadFile(image.name, bufferImage);
-    return await serviceGetImageFileURL(image.name);
-  } catch (error) {
-    console.log(error);
-    throw new Error("مشکلی در فرایند آپلود فایل ایجاد شده است مجددا تلاش کنید");
-  }
-}
 
 // ACTION for POST / New Post
 export async function actionCreateBlog(_, formData) {

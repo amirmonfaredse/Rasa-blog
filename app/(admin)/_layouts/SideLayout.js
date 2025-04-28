@@ -18,8 +18,8 @@ export default function SideLayout() {
         </Accordion>
         <Accordion
           subTabs={[
-            { title: "همه پست ها", path: "/dashboard/blogs/all" },
             { title: "پست جدید", path: "/dashboard/blogs/new" },
+            { title: "همه پست ها", path: "/dashboard/blogs/all" },
             { title: "دسته بندی ها ", path: "/dashboard/blogs/categories" },
             { title: "برچسب ها ", path: "/dashboard/blogs/tags" },
           ]}
@@ -33,6 +33,13 @@ export default function SideLayout() {
           ]}
         >
           <div>ارتباط با مخاطبین</div>
+        </Accordion>
+        <Accordion
+          subTabs={[
+            { title: "آپلود فایل", path: "/dashboard/media/upload" },
+          ]}
+        >
+          <div>فایل و رسانه</div>
         </Accordion>
       </div>
     </div>
