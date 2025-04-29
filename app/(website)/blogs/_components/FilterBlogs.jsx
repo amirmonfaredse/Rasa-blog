@@ -76,7 +76,6 @@ export default function FilterBlogs({ blogs, categories }) {
       <div className="w-full sm:w-[65%] md:w-[70%] h-full flex flex-col ">
         {filteredBlogs.length > 0 ? (
           filteredBlogs.map((blog, index) => {
-            console.log(blog);
             return (
               <div
                 key={`${index}-${blog.id}`}

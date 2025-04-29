@@ -7,6 +7,7 @@ export async function serviceCreateBlog(newBlog) {
     .insert([newBlog])
     .select();
   if (error) {
+    console.log(error)
     throw new Error(
       "مشکلی در فرایند ایجاد پست به وجود آمده است  مجددا تلاش کنید"
     );

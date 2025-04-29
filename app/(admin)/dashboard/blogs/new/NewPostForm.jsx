@@ -44,11 +44,11 @@ export default function NewPostForm({ categories, tagList }) {
           />
         </label>
         <label className="flex flex-col gap-3">
-          <h2 className="text-gray-300">تصویر اصلی:</h2>
+          <h2 className="text-gray-300">آدرس تصویر اصلی:</h2>
           <input
-            type="file"
+            type="text"
             name="blogImage"
-            className="w-fit h-[50px] rounded-md text-gray-100"
+            className="w-[1000px] h-[50px] rounded-md bg-gray-500 p-2 text-xl text-gray-100"
           />
         </label>
 

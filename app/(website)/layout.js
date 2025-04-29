@@ -8,8 +8,7 @@ export const metadata = {
     template: "%s | رسا",
     default: "صفحه اصلی  |  رسا",
   },
-  description:
-    "یک وبسایت  در زمینه طراحی سایت  هستیم ، که با استفاده از تکنولوژی های به روز وبسایت های داینامیک و وب اپلیکیشن طراحی میکنیم",
+  description: "هفته نامه آموزشی و خبری درخصوص برنامه نویسی وب و طراحی سایت ",
 };
 const NotoFont = Noto_Sans_Arabic({
   weight: "600",
@@ -34,7 +33,7 @@ export default function RootLayout({ children }) {
           defer
         />
       </head>
-      <body className="flex flex-col bg-gray-800  text-gray-200 min-h-screen relative">
+      <body className="flex flex-col bg-ghost-100  text-ghost-1000 min-h-screen relative">
         <MainContextProvider>
           <Header />
           <div className="m-2 md:mx-8 md:my-4">

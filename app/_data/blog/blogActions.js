@@ -1,4 +1,6 @@
 "use server";
+import persianDate from "persian-date";
+
 import {
   sanitizeHTMLOnServer,
   sanitizeTextOnServer,
@@ -14,33 +16,37 @@ import {
   serviceDeleteTag,
   serviceGetBlog,
   serviceGetCategory,
-  serviceGetImageFileURL,
   serviceGetTag,
-  serviceTagListManager,
   serviceUpdateBlog,
   serviceUpdateCategory,
-  serviceUploadFile,
 } from "./blogServices";
 
-
 // return Result
-
+async function validateUrl(image) {
+  try {
+    new URL(image);
+    return true;
+  } catch (error) {
+    throw new Error("لینک تصویر مجاز نیست");
+  }
+}
 // ACTION for POST / New Post
 export async function actionCreateBlog(_, formData) {
+  const created_at = new persianDate(new Date()).format("YYYY,MMMM,D");
   await secureAccess();
   const categories = await secureAList(formData.getAll("blogCategory"));
-  const image = formData.get("blogImage");
-  const uploadResult = image.size > 0 && (await uploadingImage(image));
-  if (uploadResult.status) return uploadResult;
+  const image = encodeURI(formData.get("blogImage"));
+  await validateUrl(image);
   const getTags = JSON.parse(formData.get("blogTags"));
   const tags = await secureTagList(getTags);
   const newBlogFields = {
+    created_at,
     author: "امیررضا منفرد",
     title: sanitizeTextOnServer(formData.get("blogTitle")).trim(),
     description: sanitizeTextOnServer(formData.get("blogDescription").trim()),
     categories,
     content: sanitizeHTMLOnServer(formData.get("textEditor")),
-    image: uploadResult || "",
+    image,
     tags: JSON.stringify(tags),
   };
   await serviceCreateBlog(newBlogFields);
@@ -60,9 +66,8 @@ export async function actionUpdateBlog(_, formData) {
   if (!blogId) throw new Error("پست مورد نظر وجود ندارد");
   if (!blog) throw new Error("پست مورد نظر وجود ندارد");
   const securedCategories = await secureAList(formData.getAll("blogCategory"));
-  const image = formData.get("blogImage");
-  const uploadResult = image.size > 0 && (await uploadingImage(image));
-  if (uploadResult.message) return uploadResult;
+  const image = encodeURI(formData.get("blogImage"));
+  await validateUrl(image);
 
   const getTags = JSON.parse(formData.get("blogTags"));
   const tags = await secureTagList(getTags);
@@ -74,8 +79,9 @@ export async function actionUpdateBlog(_, formData) {
     title: sanitizeTextOnServer(formData.get("blogTitle")),
     content: sanitizeHTMLOnServer(formData.get("textEditor")),
     tags: JSON.stringify(tags),
+    image,
   };
-  if (uploadResult) updatedFields.image = uploadResult;
+
   await serviceUpdateBlog(blogId, updatedFields);
   revalidatePath("dashboard/blogs");
   revalidatePath("dashboard/blogs/new");

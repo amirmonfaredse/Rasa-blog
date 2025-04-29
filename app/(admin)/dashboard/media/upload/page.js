@@ -7,7 +7,6 @@ import Image from "next/image";
 
 export default async function Page() {
   const images = await serviceGetFilesFieldsFromURLList();
-  console.log(images);
   return (
     <div className="w-full h-full flex justify-start items-start">
       <div className="w-[100%] md:w-[50%] h-auto md:h-full  p-5">
