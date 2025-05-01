@@ -1,7 +1,7 @@
 import { updateAboutAction } from "@/app/_data/actions";
 import { getAboutSections } from "@/app/_data/data-services";
 import Link from "next/link";
-import AboutDeleteButton from "../../_components/about/AboutDeleteButton";
+import AboutDeleteButton from "../../_components/AboutDeleteButton";
 
 export default async function Page() {
   const abouts = await getAboutSections();

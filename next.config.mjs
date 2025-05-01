@@ -28,37 +28,6 @@ const nextConfig = {
       ],
     },
   ],
-  async redirects() {
-    return [
-      
-      {
-        source: "/",
-        destination: "/blogs",
-        permanent: false,
-      },
-
-      {
-        source: "/services",
-        destination: "/blogs",
-        permanent: false,
-      },
-      {
-        source: "/experiences",
-        destination: "/blogs",
-        permanent: false,
-      },
-      {
-        source: "/skills",
-        destination: "/blogs",
-        permanent: false,
-      },
-      {
-        source: "/portfolio",
-        destination: "/blogs",
-        permanent: false,
-      },
-    ];
-  },
 };
 
 export default nextConfig;

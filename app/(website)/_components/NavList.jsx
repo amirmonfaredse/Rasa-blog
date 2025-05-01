@@ -16,7 +16,7 @@ function NavLink({ src, alt, title, href = "/" }) {
   );
 }
 
-function NavList({ drawerOpen ,isMobileMode}) {
+function NavList({ drawerOpen, isMobileMode }) {
   return (
     <ul
       style={{

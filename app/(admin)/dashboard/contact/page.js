@@ -1,5 +1,5 @@
 import { serviceContactGetMessages } from "@/app/_data/messages/messageServices";
-import DeleteButton from "../../_components/contact/DeleteButton";
+import DeleteButton from "../../_components/DeleteButton";
 
 export default async function Page() {
   const messages = await serviceContactGetMessages();
