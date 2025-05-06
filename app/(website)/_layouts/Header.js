@@ -18,7 +18,7 @@ function SearchButton() {
 
 export default function Header() {
   return (
-    <div className="w-full h-fit md:h-72 flex flex-col items-center justify-center px-4">
+    <div className="w-full h-fit md:h-72 flex flex-col items-center justify-center px-4 z-50">
       <div className="w-full md:w-[85%] h-fit md:h-32 flex flex-col-reverse  md:flex-row items-center justify-center md:justify-start">
         <SocialBox>
           <IconImage

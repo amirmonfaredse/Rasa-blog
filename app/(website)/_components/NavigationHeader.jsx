@@ -27,8 +27,8 @@ const NavigationHeader = () => {
     setShowSearch(!showSearch);
   };
   return (
-    <nav className="flex flex-col-reverse  md:flex-row md:h-16 px-3 fixed bottom-0 left-0 md:relative ">
-      <div className="w-full h-fit flex md:hidden justify-end items-center z-50">
+    <nav className="flex flex-col-reverse  md:flex-row md:h-16 px-3 fixed bottom-0 left-0 md:relative">
+      <div className="w-full h-fit flex md:hidden justify-end items-center">
         <div className="w-fit h-fit flex flex-col gap-2 pb-2 items-center justify-center">
           <div
             onClick={handleDrawer}

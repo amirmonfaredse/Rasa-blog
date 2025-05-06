@@ -8,7 +8,7 @@ import TextEditorEditBlog from "../_components/TextEditorEditBlog";
 import EditButton from "./EditButton";
 
 export default function EditPostForm({ categories, blog, tagList }) {
-  const [blogTags, setBlogTags] = useState(JSON.parse(blog.tags));
+  // const [blogTags, setBlogTags] = useState(JSON.parse(blog.tags));
   const [state, formAction, pending] = useActionState(actionUpdateBlog, {
     status: "",
     message: "",
@@ -22,6 +22,12 @@ export default function EditPostForm({ categories, blog, tagList }) {
       }
     }
   }, [state]);
+  useEffect(() => {
+    async function fetchData() {
+      await serviceGetCategorizeds(blog.id);
+    }
+    fetchData();
+  }, []);
   return (
     <form action={formAction} className="py-5">
       <CustomToastContainer />
@@ -84,7 +90,7 @@ export default function EditPostForm({ categories, blog, tagList }) {
         </label>
       </div>
       <TextEditorEditBlog formState={state} defaultContent={blog.content} />
-      <TagInput tagList={tagList} blogTags={blogTags} />
+      {/* <TagInput tagList={tagList} blogTags={blogTags} /> */}
       <EditButton pending={pending} />
     </form>
   );

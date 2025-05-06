@@ -1,4 +1,3 @@
-import IconImage from "./IconImage";
 
 export default function SocialBox({ children }) {
   return (

@@ -24,18 +24,17 @@ function Slide({}) {
               بخوانید
             </span>
           </p>
-          <h1 className="w-fit text-ghost-1000 text-4xl leading-[50px] px-12">
+          <h1 className="w-fit text-ghost-1000 text-2xl lg:text-4xl lg:leading-[50px] md:px-12 mt-16 md:mt-0">
             5 ویژگی شگفت انگیز شبکه های اجتماعی برای کسب و کار شما
           </h1>
         </div>
-        <div className="w-1/2 h-full flex items-center justify-end pl-10">
-          <div className="flex justify-center items-center w-[250px] h-[250px] border border-ghost-1000 z-50">
-            <div className="w-[240px] h-[240px] border border-ghost-1000 absolute"></div>
+        <div className="w-[90%] md:w-1/2 h-fit flex items-center justify-center md:justify-end md:pl-10 mt-5 md:mt-0">
+          <div className="w-[250px] h-[250px] flex justify-center items-center relative border border-ghost-1000 ">
+            <div className="w-full md:w-[240px] h-[240px] border border-ghost-1000 absolute"></div>
             <Image
-              className=" "
+              className=""
               src="/slider/social.jpg"
-              width={250}
-              height={250}
+              fill
               alt="5 برتری اصلی سوشیال مدیا برای کسب و کار شما"
             />
           </div>
@@ -58,13 +57,13 @@ function MainSlider() {
       navigation={true}
       slidesPerView={1}
       centeredSlides={true}
-      className="w-full h-full mySwiper shadow-[0px_1px_31px_-16px_#000000] "
+      className="w-full h-fit flex flex-col md:flex-row shadow-[0px_1px_31px_-16px_#000000] mySwiper"
       pagination={{
         clickable: true,
       }}
       modules={[Pagination, Autoplay, Navigation]}
       loop={true}
-      autoplay={{ delay: 5000, disableOnInteraction: false }}
+      // autoplay={{ delay: 5000, disableOnInteraction: false }}
     >
       <SwiperSlide className="w-full h-full ">
         <Slide />

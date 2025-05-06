@@ -66,7 +66,7 @@ export default function NewPostForm({ categories, tagList }) {
                     <input
                       type="checkbox"
                       className="flex m-2 text-gray-100 hover:bg-gray-600 bg-gray-600"
-                      value={cat.name}
+                      value={cat.id}
                       name="blogCategory"
                     />
                   </label>

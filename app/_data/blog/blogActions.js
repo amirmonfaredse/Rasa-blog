@@ -8,6 +8,7 @@ import {
 import { revalidatePath } from "next/cache";
 import { secureAccess, secureAList, secureTagList } from "../utility";
 import {
+  serviceCategorizing,
   serviceCreateBlog,
   serviceCreateCategory,
   serviceCreateTag,
@@ -30,29 +31,58 @@ async function validateUrl(image) {
     throw new Error("لینک تصویر مجاز نیست");
   }
 }
+
+function uuId() {
+  return Math.floor(Math.random() * 10000);
+}
+function getPersianDate() {
+  return new persianDate(new Date()).format("YYYY,M,D");
+}
 // ACTION for POST / New Post
 export async function actionCreateBlog(_, formData) {
-  const created_at = new persianDate(new Date()).format("YYYY,MMMM,D");
   await secureAccess();
-  const categories = await secureAList(formData.getAll("blogCategory"));
+  const created_at = await getPersianDate();
   const image = encodeURI(formData.get("blogImage"));
   await validateUrl(image);
-  const getTags = JSON.parse(formData.get("blogTags"));
-  const tags = await secureTagList(getTags);
+  const blogId = uuId();
   const newBlogFields = {
+    id: blogId,
     created_at,
     author: "امیررضا منفرد",
     title: sanitizeTextOnServer(formData.get("blogTitle")).trim(),
     description: sanitizeTextOnServer(formData.get("blogDescription").trim()),
-    categories,
     content: sanitizeHTMLOnServer(formData.get("textEditor")),
     image,
-    tags: JSON.stringify(tags),
   };
-  await serviceCreateBlog(newBlogFields);
+  const createdBlog = await serviceCreateBlog(newBlogFields);
+
   revalidatePath("dashboard/blogs");
   revalidatePath("dashboard/blogs/new");
   revalidatePath("dashboard/blogs/all");
+  const categories = await secureAList(formData.getAll("blogCategory"));
+  if (createdBlog) {
+    try {
+      const tasks = categories.map(async (cat) => {
+        await serviceGetCategory(cat);
+        const newCategorizingField = {
+          categoryId: Number(cat),
+          blogId,
+        };
+        return await serviceCategorizing(newCategorizingField);
+      });
+      await Promise.all(tasks);
+    } catch (error) {
+      return {
+        status: "error",
+        message:
+          "پست جدید اضافه شد، اضافه کردن دسته بندی با مشکل همراه شده است",
+      };
+    }
+  }
+
+  const getTags = JSON.parse(formData.get("blogTags"));
+  const tags = await secureTagList(getTags);
+
   return {
     status: "success",
     message: "پست جدید با موفقیت ایجاد شد",
