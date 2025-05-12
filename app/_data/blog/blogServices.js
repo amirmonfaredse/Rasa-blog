@@ -173,8 +173,8 @@ export async function serviceCategorizing(newField) {
 export async function serviceGetCategorizeds(blogId) {
   const { data, error } = await supabase
     .from("categorizing-blogs")
-    .select()
-    .eq("blogId", blogId);
+    .select('*')
+    // .eq("blogId", blogId);
   if (error) {
     console.log(error);
     throw new Error("مشکلی در دریافت دسته بندی ها ایجاد شده است");

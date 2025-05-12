@@ -36,7 +36,7 @@ function uuId() {
   return Math.floor(Math.random() * 10000);
 }
 function getPersianDate() {
-  return new persianDate(new Date()).format("YYYY,M,D");
+  return new persianDate(new Date()).format("MMMM,D");
 }
 // ACTION for POST / New Post
 export async function actionCreateBlog(_, formData) {
@@ -62,10 +62,10 @@ export async function actionCreateBlog(_, formData) {
   const categories = await secureAList(formData.getAll("blogCategory"));
   if (createdBlog) {
     try {
-      const tasks = categories.map(async (cat) => {
-        await serviceGetCategory(cat);
+      const tasks = categories.map(async (catId) => {
+        await serviceGetCategory(catId);
         const newCategorizingField = {
-          categoryId: Number(cat),
+          categoryId: Number(catId),
           blogId,
         };
         return await serviceCategorizing(newCategorizingField);
@@ -190,6 +190,7 @@ export async function actionDeleteCategory(id) {
     message: "دسته بندی با موفقیت حذف شد ",
   };
 }
+
 export async function actionCreateTag(formData) {
   await secureAccess();
   const newField = {

@@ -23,23 +23,27 @@ export function MainCard({ children, className }) {
   );
 }
 
-export default function PostCard() {
+export default function PostCard({
+  title,
+  author,
+  created_at,
+  image,
+  content,
+}) {
   return (
-    <article className="w-full h-fit sm:h-fit sm:flex-row border-ghost-800 rounded-3xl sm:rounded-[50px] overflow-hidden">
+    <article className="w-full h-fit sm:h-fit min-h-[500px] sm:flex-row border-ghost-800 rounded-3xl sm:rounded-[50px] overflow-hidden">
       <Container className="w-full h-full flex flex-col items-center justify-between gap-1">
         <HeaderCard className="w-full h-2/5 sm:h-fit sm:p-3 flex flex-col sm:flex-row relative bg-cles-100">
           <ColHead className="w-full sm:w-2/6 lg:w-1/6 h-[200px] sm:h-[130px] relative">
             <Image
               className="object-contain p-4 sm:p-0"
               fill
-              src="/posts/post-1.svg"
+              src={image}
               alt="مهم ترین مزیت های کسب و کار انلاین"
             />
           </ColHead>
           <ColHead className="w-full sm:w-3/6 lg:w-4/6 h-fit sm:h-full flex flex-col justify-center items-start   px-3 sm:p-5 ">
-            <h1 className="text-2xl sm:text-3xl mb-4 sm:mb-0">
-              از مشکلات کسب و کار آنلاین بیشتر بدانید
-            </h1>
+            <h1 className="text-2xl sm:text-3xl mb-4 sm:mb-0">{title}</h1>
             <div className="h-fit sm:h-fit flex flex-col sm:flex-row sm:flex-wrap  justify-evenly items-start sm:items gap-2 lg:gap-5 text-xs my-3 sm:my-2 mr-3 sm:mr-0 text-white">
               <ColInfo>
                 <span>
@@ -50,7 +54,7 @@ export default function PostCard() {
                     height={11}
                   />
                 </span>
-                <p className="pt-1">نویسنده : امیررضا منفرد</p>
+                <p className="pt-1">نویسنده : {author}</p>
               </ColInfo>
               <ColInfo>
                 <span>
@@ -61,7 +65,7 @@ export default function PostCard() {
                     height={15}
                   />
                 </span>
-                <p className="pt-1">24 مرداد</p>
+                <p className="pt-1">{created_at}</p>
               </ColInfo>
               <ColInfo>
                 <span>
@@ -89,19 +93,10 @@ export default function PostCard() {
           </ColHead>
         </HeaderCard>
         <MainCard className="w-full h-4/5 sm:h-fit flex flex-col justify-between">
-          <ParagraphContainer className="w-full h-[260px] sm:h-2/3 flex justify-center items-start p-3">
+          <ParagraphContainer className="w-full min-h-[240px] h-[260px] sm:h-2/3 flex justify-center items-start p-3">
             <div className="w-[90%] h-full">
               <p className="w-full h-fit leading-10 line-clamp-6 sm:line-clamp-4 text-justify">
-                خیلی عالی ، بهترین نتیجه ای که می‌توان انتظار داشت، اما به دست
-                آوردنش به این آسانی ها نیست ، مشکل همین است که زمان دست به کار
-                شدن که می‌رسد کم کم ایده های عالی گم می‌شوند چون عالی نیستند ،
-                برای همین لازم است گه گاهی از این و آن ایده بگیریم زمانی که با
-                کسب و کار آنلاین رو به رو می‌شویم به به و چه چه ها بلند و رسا
-                است اما نمی‌شود به راهی که هیچ مشکلی ندارد اعتماد کرد ، بالاخره
-                همه راه ها مشکلاتی دارند صرفا عنوان نکردن آن ها، مشکلات را از سر
-                راه بر نمی‌دارد برای اینکه نگرش شفاف تری در خصوص یک کسب و کار
-                آنلاین داشته باشید لازم است کمی دیدگاه از پیش ساخته شده را به
-                چالش بکشید
+                {content}
               </p>
             </div>
           </ParagraphContainer>

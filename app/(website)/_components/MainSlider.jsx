@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import "swiper/css";
 import "swiper/css/effect-creative";
 import Image from "next/image";
-function Slide({}) {
+function Slide() {
   return (
     <div className="w-full h-full border bg-red-50 p-2">
       <div className="w-full h-full flex flex-col md:flex-row justify-between items-center">
@@ -24,7 +24,7 @@ function Slide({}) {
               بخوانید
             </span>
           </p>
-          <h1 className="w-fit text-ghost-1000 text-2xl lg:text-4xl lg:leading-[50px] md:px-12 mt-16 md:mt-0">
+          <h1 className="w-fit text-ghost-1000 text-2xl lg:text-3xl lg:leading-[50px] md:px-12 mt-16 md:mt-0">
             5 ویژگی شگفت انگیز شبکه های اجتماعی برای کسب و کار شما
           </h1>
         </div>

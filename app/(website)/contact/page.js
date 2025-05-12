@@ -9,10 +9,10 @@ export const metadata = {
 export default function Page() {
   return (
     <div className="flex flex-col justify-center items-center md:flex-row">
-      <div className="w-[90%]  md:w-[50%] mt-5 md:mt-2 md:px-7 flex flex-col justify-center items-center">
-        <h1 className="flex items-center text-3xl h-32">تماس با ما</h1>
+      <div className="w-[90%]  md:w-[50%] mt-5 md:mt-2 md:px-7 flex flex-col justify-center items-center shadow-xl mx-10">
+        <h1 className="flex items-center text-3xl h-24">تماس با ما</h1>
         <div className="my-4 flex flex-col justify-center items-center ">
-          <h3 className="flex text-center px-2 md:px-0 mb-4 md:mb-0 text-lg md:text-xl text-gray-300 ">
+          <h3 className="flex text-center px-2 md:px-0 mb-4 md:mb-0 text-lg md:text-xl text-ghost-500 ">
             با ما در شبکه های اجتماعی در ارتباط باشید{" "}
           </h3>
           <div className="flex flex-col md:flex-row justify-center gap-10 py-4">
@@ -23,10 +23,10 @@ export default function Page() {
               className=""
             >
               <Image
-                src="/svg/telegram.svg"
+                src="/header/social/telegram.svg"
                 alt="لینک تلگرام"
-                width={45}
-                height={45}
+                width={60}
+                height={60}
               />
             </Link>
             <Link
@@ -35,10 +35,10 @@ export default function Page() {
               href="https://instagram.com/a.reza.m.s"
             >
               <Image
-                src="/svg/instagram.svg"
+                src="/header/social/instagram.svg"
                 alt="لینک اینستاگرام"
-                width={45}
-                height={45}
+                width={60}
+                height={60}
               />
             </Link>
             {/* <Link href="">
@@ -51,11 +51,11 @@ export default function Page() {
             </Link> */}
           </div>
         </div>
-        <div className="flex flex-col md:flex-row  gap-4 my-4">
+        <div className="flex flex-col md:flex-row p-2 px-4 shadow-lg shadow-ghost-300  bg-ghost-600 text-ghost-100 my-2">
           <h3>شماره تماس : </h3>
           <h4>09220395434</h4>
         </div>
-        <div className="flex flex-col md:flex-row my-4 gap-4">
+        <div className="flex flex-col md:flex-row p-2 px-4 shadow-lg shadow-ghost-300  bg-ghost-600 text-ghost-100 my-2 mb-5">
           <h3>ایمیل : </h3>
           <h4>monfared.dev@gmail.com</h4>
         </div>
@@ -68,7 +68,7 @@ export default function Page() {
           نام و نام خانوادگی :{" "}
         </label>
         <input
-          className="w-full border-2  border-transparent my-4 p-2 rounded-md bg-gray-600 outline-none focus:border-gray-500 focus:border-2"
+          className="w-full border-2 my-4 p-2  border-ghost-600 bg-ghost-100 shadow-xl outline-none"
           type="text"
           name="fullName"
           required
@@ -77,7 +77,7 @@ export default function Page() {
           ایمیل :{" "}
         </label>
         <input
-          className="w-full border-2  border-transparent my-4 p-2 rounded-md bg-gray-600 outline-none focus:border-gray-500 focus:border-2"
+          className="w-full border-2 my-4 p-2  border-ghost-600 bg-ghost-100 shadow-xl outline-none"
           type="email"
           name="email"
         />
@@ -85,12 +85,12 @@ export default function Page() {
           متن پیام :{" "}
         </label>
         <textarea
-          className="w-full border-2  border-transparent my-4 p-2 rounded-md bg-gray-600 outline-none focus:border-gray-500 focus:border-2 resize-none"
+          className="w-full border-2 my-4 p-2  border-ghost-600 bg-ghost-100 shadow-xl outline-none"
           name="message"
           rows={10}
         />
         <input
-          className="w-full md:w-[200px] bg-gray-400 text-gray-800  py-2 px-4 my-4 rounded-md cursor-pointer hover:bg-gray-600 transition-colors duration-400"
+          className="w-full md:w-[300px] bg-ghost-800 text-ghost-100 py-4  my-4 rounded-md cursor-pointer hover:bg-ghost-600 transition-colors duration-400"
           type="submit"
           value="ارسال پیام"
         />

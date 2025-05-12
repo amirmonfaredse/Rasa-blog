@@ -34,7 +34,7 @@ export default function RootLayout({ children }) {
           defer
         />
       </head>
-      <body className="flex flex-col bg-ghost-100  text-ghost-1000 min-h-screen relative">
+      <body className="flex flex-col bg-ghost-100  text-ghost-1000 min-h-screen relative overflow-x-hidden">
         <MainContextProvider>
           <Header />
           <div className="m-2 md:mx-8 md:my-4">

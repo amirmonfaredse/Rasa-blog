@@ -2,23 +2,11 @@ import Image from "next/image";
 import IconImage from "../_components/IconImage";
 import NavigationLoader from "../_components/NavigationLoader";
 import SocialBox from "../_components/SocialBox";
-
-function SearchButton() {
-  return (
-    <div className="w-[50px] h-[50px] flex justify-center items-center cursor-pointer hover:scale-110 duration-300">
-      <Image
-        src="/header/search/search.svg"
-        alt="جستجو در مجله رسا"
-        width={40}
-        height={40}
-      />
-    </div>
-  );
-}
+import SearchButton from "../_components/SearchButton";
 
 export default function Header() {
   return (
-    <div className="w-full h-fit md:h-72 flex flex-col items-center justify-center px-4 z-50">
+    <div className="w-full h-fit md:h-72 flex flex-col items-center justify-center px-4 z-10 ">
       <div className="w-full md:w-[85%] h-fit md:h-32 flex flex-col-reverse  md:flex-row items-center justify-center md:justify-start">
         <SocialBox>
           <IconImage
@@ -27,15 +15,15 @@ export default function Header() {
           />
           <IconImage
             src="/header/social/linkedin.svg"
-            alt="لینک ورود به اینستاگرام رسا"
+            alt="لینک ورود به لینکدین رسا"
           />
           <IconImage
             src="/header/social/whatsup.svg"
-            alt="لینک ورود به اینستاگرام رسا"
+            alt="لینک ورود به واتساپ رسا"
           />
           <IconImage
-            src="/header/social/youtube.svg"
-            alt="لینک ورود به اینستاگرام رسا"
+            src="/header/social/telegram.svg"
+            alt="لینک ورود به تلگرام رسا"
           />
         </SocialBox>
         <div className="w-full md:w-1/3 h-28 md:h-full flex items-center justify-center">

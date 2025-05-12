@@ -5,20 +5,8 @@ export const metadata = {
 };
 export default async function Page() {
   return (
-    <div className="w-full h-full">
-      <div className="w-full h-32 flex justify-center items-center">
-        <h1 className=" text-[30px] flex gap-2">
-          درباره
-          <Image
-            src="/svg/Logo.svg"
-            alt="لوگو اصلی رسا"
-            width={58}
-            height={45}
-            className="mb-2"
-          />
-        </h1>
-      </div>
-      <div className="w-full h-fit bg-gray-700 rounded-md py-6 px-4">
+    <div className="w-full h-full flex flex-col justify-center items-center gap-8">
+      <div className="w-full h-fit bg-ghost-100 shadow-xl py-6 px-4">
         <p className="p-2 px-5 text-lg leading-10 text-justify ">
           رسا از فروردین 1404 با هدف آشنایی صاحبان کسب و کار با ساز و کار
           اینترنت و شبکه های اجتماعی شروع به کار کرده است. هدف نهایی رسا، ایجاد
@@ -38,8 +26,8 @@ export default async function Page() {
         </p>
       </div>
       <div className=" my-10">
-        <h2 className="text-2xl text-center">تیم رسا </h2>
-        <div className="flex items-center gap-4 mt-10 mx-2 bg-gray-700 p-5 rounded-md">
+        <h2 className="text-3xl text-center ">تیم رسا </h2>
+        <div className="flex items-center gap-4 mt-10 mx-2 bg-ghost-100 p-5 shadow-md">
           <div className="my-2">
             <Image
               width={100}
@@ -51,11 +39,11 @@ export default async function Page() {
           <div className="flex flex-col gap-4">
             <div className="flex gap-2 items-center">
               <p className="text-md text-gray-400">نام : </p>
-              <p className="text-xl">امیررضا منفرد </p>
+              <p className="text-md">امیررضا منفرد </p>
             </div>
             <div className="flex gap-2 items-center">
               <p className="text-md text-gray-400">تخصص : </p>
-              <p className="text-lg">
+              <p className="text-md">
                 {" "}
                 توسعه دهنده Full Stack ، متخصص تولید محتوا، طراح تجربه کاربری
                 متخصص سئو{" "}

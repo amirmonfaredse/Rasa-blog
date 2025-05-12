@@ -53,7 +53,7 @@ export default function Footer() {
           <IconImage
             width={60}
             height={60}
-            src="/header/social/youtube.svg"
+            src="/header/social/telegram.svg"
             alt="لینک ورود به اینستاگرام رسا"
           />
         </div>

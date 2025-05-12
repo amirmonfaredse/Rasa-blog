@@ -1,15 +1,6 @@
-
-
 export function Container({ children, className }) {
-  return (
-    <div
-      className={`${className}`}
-    >
-      {children}
-    </div>
-  );
+  return <div className={`${className}`}>{children}</div>;
 }
-
 
 export function ColHead({ children, className }) {
   return <div className={`${className}`}>{children}</div>;
@@ -24,7 +15,7 @@ export function ColInfo({ children, className }) {
 
 export function Reaction({ children, className }) {
   return (
-    <div className={`cursor-pointer duration-300${className}`}>{children}</div>
+    <div className={`cursor-pointer duration-300 ${className}`}>{children}</div>
   );
 }
 export function LiTag({ children, className }) {
