@@ -14,6 +14,13 @@ const nextConfig = {
         pathname: "/storage/v1/object/public/**",
         search: "",
       },
+       {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        port: "",
+        pathname: "/a/**",
+        search: "",
+      },
     ],
     // https://pzbdncisbmytfhydqojl.supabase.co/storage/v1/object/public/blogs-images/mainImage-1-blogs-min.jpg
   },

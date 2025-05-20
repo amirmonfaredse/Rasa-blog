@@ -69,7 +69,7 @@ export async function serviceCreateCategory(newCategory) {
     .from("blog-categories")
     .insert([newCategory]);
   if (error) {
-    console.log(err);
+    console.log(error);
     throw new Error("مشکلی ایجاد شده است مجددا تلاش کنید");
   }
   return data;

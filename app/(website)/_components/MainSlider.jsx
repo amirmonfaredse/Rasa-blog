@@ -63,7 +63,7 @@ function MainSlider() {
       }}
       modules={[Pagination, Autoplay, Navigation]}
       loop={true}
-      // autoplay={{ delay: 5000, disableOnInteraction: false }}
+      autoplay={{ delay: 5000, disableOnInteraction: false }}
     >
       <SwiperSlide className="w-full h-full ">
         <Slide />

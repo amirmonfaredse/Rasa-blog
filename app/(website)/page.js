@@ -1,3 +1,4 @@
+import { serviceGetBlogs } from "../_data/blog/blogServices";
 import MainSlider from "./_components/MainSlider";
 import PostCard from "./_components/cards/PostCard";
 
@@ -32,10 +33,12 @@ export function PostContainer({ children, className }) {
   return <div className={`${className}`}>{children}</div>;
 }
 
-export default function Page() {
+export default async function Page() {
+  const blogs = await serviceGetBlogs();
+
   return (
     <div className="flex flex-col justify-start items-center ">
-      <TagsContainer className="w-full h-fit sm:h-24 my-10 sm:my-0 ">
+      {/* <TagsContainer className="w-full h-fit sm:h-24 my-10 sm:my-0 ">
         <ul className="flex justify-center flex-wrap">
           <HashTag className="bg-cles-600">برنامه نویسی</HashTag>
           <HashTag className="bg-folly-600">وبسایت فروشگاهی</HashTag>
@@ -46,7 +49,7 @@ export default function Page() {
           <HashTag className="bg-cles-900">وردپرس</HashTag>
           <HashTag className="bg-folly-900">سئو</HashTag>
         </ul>
-      </TagsContainer>
+      </TagsContainer> */}
       <SliderContainer className="w-full sm:w-[90%] h-fit">
         <MainSlider />
       </SliderContainer>
@@ -55,8 +58,20 @@ export default function Page() {
         className="w-full h-32 flex items-center gap-4 mt-8"
       />
       <PostContainer className="w-full sm:w-[90%] h-fit flex flex-col  items-start justify-start gap-10 sm:gap-16 mb-10">
-        <PostCard />
-        <PostCard />
+        {blogs.length > 0 ? (
+          blogs?.map((blog, index) => (
+            <PostCard
+              title={blog.title}
+              author={blog.author}
+              created_at={blog.created_at}
+              image={blog.image}
+              content={blog.content}
+              key={`blog-${blog.id}-${index}`}
+            />
+          ))
+        ) : (
+          <div>پستی وجود ندارد ...</div>
+        )}
       </PostContainer>
     </div>
   );

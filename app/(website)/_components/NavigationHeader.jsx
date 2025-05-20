@@ -41,7 +41,7 @@ const NavigationHeader = () => {
               height={30}
             />
           </div>
-          {!showSearch && (
+          {/* {!showSearch && (
             <div
               onClick={handleSearchBox}
               className="w-12 h-12 relative flex items-center justify-center bg-ghost-100 rounded-full shadow transition-all duration-300"
@@ -73,7 +73,7 @@ const NavigationHeader = () => {
                 />
               </div>
             </div>
-          )}
+          )} */}
         </div>
       </div>
       <NavList drawerOpen={drawerOpen} isMobileMode={isMobileMode} />

@@ -32,6 +32,7 @@ function NavList({ drawerOpen, isMobileMode }) {
       >
         <NavLink
           title="خانه"
+          href="/"
           src="/header/navigation/home.svg"
           alt="لینک بازگشت به خانه"
         />
@@ -42,6 +43,7 @@ function NavList({ drawerOpen, isMobileMode }) {
       >
         <NavLink
           title="بلاگ"
+          href="/blogs"
           src="/header/navigation/blog.svg"
           alt="لینک ورود به وبلاگ"
         />
@@ -51,6 +53,7 @@ function NavList({ drawerOpen, isMobileMode }) {
         className="w-24 h-12 relative bg-ghost-100 shadow md:shadow-none duration-300 delay-150"
       >
         <NavLink
+          href="/about"
           title="درباره"
           src="/header/navigation/about.svg"
           alt="لینک ورود به صفحه درباره ما"
@@ -61,6 +64,7 @@ function NavList({ drawerOpen, isMobileMode }) {
         className="w-24 h-12 relative bg-ghost-100 shadow md:shadow-none duration-300 delay-200"
       >
         <NavLink
+          href="/contact"
           title="تماس"
           src="/header/navigation/contact.svg"
           alt="لینک ورود به صفحه تماس"

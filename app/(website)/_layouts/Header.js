@@ -10,18 +10,23 @@ export default function Header() {
       <div className="w-full md:w-[85%] h-fit md:h-32 flex flex-col-reverse  md:flex-row items-center justify-center md:justify-start">
         <SocialBox>
           <IconImage
+            href="https://instagram.com/a.reza.m.s"
             src="/header/social/instagram.svg"
             alt="لینک ورود به اینستاگرام رسا"
           />
-          <IconImage
+
+          {/* <IconImage
+          href='https://t.me/devravesh'
             src="/header/social/linkedin.svg"
             alt="لینک ورود به لینکدین رسا"
-          />
-          <IconImage
+          /> */}
+          {/* <IconImage
+          href='https://t.me/devravesh'
             src="/header/social/whatsup.svg"
             alt="لینک ورود به واتساپ رسا"
-          />
+          /> */}
           <IconImage
+            href="https://t.me/devravesh"
             src="/header/social/telegram.svg"
             alt="لینک ورود به تلگرام رسا"
           />
@@ -37,9 +42,9 @@ export default function Header() {
           </div>
         </div>
         <div className="w-full md:w-1/3 h-20 md:h-full hidden md:flex items-center">
-          <div className="w-full h-fit flex items-center justify-end">
+          {/* <div className="w-full h-fit flex items-center justify-end">
             <SearchButton />
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="w-full md:w-[60%] md:h-24 flex items-center justify-center">
