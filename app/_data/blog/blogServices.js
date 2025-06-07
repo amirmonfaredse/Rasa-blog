@@ -15,6 +15,18 @@ export async function serviceCreateBlog(newBlog) {
   }
   return data;
 }
+// GET / Posts : Row Range
+export async function serviceGetSomeBlog(from, to) {
+  const { data, error } = await supabase
+    .from("blog")
+    .select("*")
+    .range(from, to);
+  if (error) {
+    console.log(error);
+    throw new Error("مشکلی در دریافت تعدادی از بلاگ ها ایجاد شده است");
+  }
+  return data;
+}
 // GET / Posts
 export async function serviceGetBlogs() {
   const { data, error } = await supabase.from("blog").select("*");
@@ -171,10 +183,8 @@ export async function serviceCategorizing(newField) {
 }
 
 export async function serviceGetCategorizeds(blogId) {
-  const { data, error } = await supabase
-    .from("categorizing-blogs")
-    .select('*')
-    // .eq("blogId", blogId);
+  const { data, error } = await supabase.from("categorizing-blogs").select("*");
+  // .eq("blogId", blogId);
   if (error) {
     console.log(error);
     throw new Error("مشکلی در دریافت دسته بندی ها ایجاد شده است");

@@ -1,18 +1,20 @@
 "use client";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 
-const NavigationContext = createContext();
-export function NavigationContextProvider({ children }) {
+const SliderContext = createContext();
+export function SliderContextProvider({ children }) {
+  const [sliderList, setSliderList] = useState([]);
+
   return (
-    <NavigationContext.Provider value={{}}>
+    <SliderContext.Provider value={{ sliderList, setSliderList }}>
       {children}
-    </NavigationContext.Provider>
+    </SliderContext.Provider>
   );
 }
 
-export function useNavigationContext() {
-  const context = useContext(NavigationContext);
+export function useSliderContext() {
+  const context = useContext(SliderContext);
   if (context === undefined)
-    throw new Error("Navigation Context Used Outside Of Provider");
+    throw new Error("Slider Context Used Outside Of Provider");
   return context;
 }

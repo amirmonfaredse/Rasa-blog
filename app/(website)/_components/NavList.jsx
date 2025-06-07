@@ -1,21 +1,31 @@
 "use client";
-
-import Image from "next/image";
-import Link from "next/link";
-
-function NavLink({ src, alt, title, href = "/" }) {
-  return (
-    <Link
-      href={href}
-      className="w-full h-full mb-2 flex justify-center items-center gap-2  md:shadow hover:shadow-2xl hover:rounded-3xl transition-all duration-500"
-    >
-      <Image alt={alt} src={src} width={25} height={25} className=" " />
-
-      <h1 className="text-md">{title}</h1>
-    </Link>
-  );
-}
-
+import NavLink from "./NavLink";
+const navList = [
+  {
+    title: "خانه",
+    href: "/",
+    src: "/header/navigation/home.svg",
+    alt: " بازگشت به خانه",
+  },
+  {
+    title: "بلاگ",
+    href: "/blogs",
+    src: "/header/navigation/blog.svg",
+    alt: "ورود به وبلاگ",
+  },
+  {
+    title: "درباره",
+    href: "/about",
+    src: "/header/navigation/about.svg",
+    alt: "ورود به درباره ما ",
+  },
+  {
+    title: "تماس",
+    href: "/contact",
+    src: "/header/navigation/contact.svg",
+    alt: "ورود به تماس با ما",
+  },
+];
 function NavList({ drawerOpen, isMobileMode }) {
   return (
     <ul
@@ -26,50 +36,20 @@ function NavList({ drawerOpen, isMobileMode }) {
       }}
       className="flex flex-col md:flex md:flex-row relative bg-opacity-5 md:bg-opacity-0 px-2 py-4 md:bg-none md:p-0 justify-start md:justify-center gap-3 md:gap-10 items-center transition-all duration-300 delay-150"
     >
-      <li
-        style={{ left: isMobileMode && (drawerOpen ? 0 : "-200px") }}
-        className="w-24 h-12 relative bg-ghost-100 shadow md:shadow-none duration-300"
-      >
-        <NavLink
-          title="خانه"
-          href="/"
-          src="/header/navigation/home.svg"
-          alt="لینک بازگشت به خانه"
-        />
-      </li>
-      <li
-        style={{ left: isMobileMode && (drawerOpen ? 0 : "-200px") }}
-        className="w-24 h-12 relative bg-ghost-100 shadow md:shadow-none duration-300 delay-100"
-      >
-        <NavLink
-          title="بلاگ"
-          href="/blogs"
-          src="/header/navigation/blog.svg"
-          alt="لینک ورود به وبلاگ"
-        />
-      </li>
-      <li
-        style={{ left: isMobileMode && (drawerOpen ? 0 : "-200px") }}
-        className="w-24 h-12 relative bg-ghost-100 shadow md:shadow-none duration-300 delay-150"
-      >
-        <NavLink
-          href="/about"
-          title="درباره"
-          src="/header/navigation/about.svg"
-          alt="لینک ورود به صفحه درباره ما"
-        />
-      </li>
-      <li
-        style={{ left: isMobileMode && (drawerOpen ? 0 : "-200px") }}
-        className="w-24 h-12 relative bg-ghost-100 shadow md:shadow-none duration-300 delay-200"
-      >
-        <NavLink
-          href="/contact"
-          title="تماس"
-          src="/header/navigation/contact.svg"
-          alt="لینک ورود به صفحه تماس"
-        />
-      </li>
+      {navList.map((link, index) => (
+        <li
+          key={`${index}-${Math.floor(Math.random() * 1000)}`}
+          style={{ left: isMobileMode && (drawerOpen ? 0 : "-200px") }}
+          className="w-24 h-12 relative bg-ghost-100 shadow md:shadow-none duration-300"
+        >
+          <NavLink
+            title={link.title}
+            href={link.href}
+            src={link.src}
+            alt={link.alt}
+          />
+        </li>
+      ))}
     </ul>
   );
 }

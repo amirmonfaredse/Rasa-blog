@@ -20,14 +20,10 @@ export default function SideLayout() {
   return (
     <div className="w-fit h-full bg-transparent">
       <ul className="flex flex-col justify-start items-start p-2 pe-5">
-        <SideTab href="/dashboard/pages" title="صفحات" subs={pagesSubLinks} />
-        <SideTab href="/dashboard/blog" title="وبلاگ" subs={blogSubLinks} />
-        <SideTab
-          href="/dashboard/messages"
-          title="پیام ها"
-          subs={messagesSubLinks}
-        />
-        <SideTab href="/dashboard/media" title="رسانه"  />
+        <SideTab href="" title="صفحات" subs={pagesSubLinks} />
+        <SideTab href="" title="وبلاگ" subs={blogSubLinks} />
+        <SideTab href="" title="پیام ها" subs={messagesSubLinks} />
+        <SideTab href="/dashboard/media" title="رسانه" />
       </ul>
     </div>
   );

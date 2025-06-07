@@ -5,8 +5,7 @@ import { useBlogContext } from "../../_providers/BlogProvider";
 
 function BlogList({ blogs }) {
   const [filteredBlogs, setFilteredBlogs] = useState(blogs);
-  const { searchInputValue, categorizedBlogs, checkedList, setCheckedList } =
-    useBlogContext();
+  const { searchInputValue, categorizedBlogs, checkedList } = useBlogContext();
   useEffect(() => {
     if (checkedList.length > 0) {
       setFilteredBlogs(

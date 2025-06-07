@@ -1,9 +1,7 @@
-import Script from "next/script";
-import Header from "./_layouts/Header";
-import { MainContextProvider } from "./_providers/ContextProvider";
 import "@/styles/globals.css";
 import { Noto_Sans_Arabic } from "next/font/google";
 import Footer from "./_layouts/Footer";
+import Header from "./_layouts/Header";
 export const metadata = {
   title: {
     template: "%s | رسا",
@@ -21,13 +19,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="fa" dir="rtl" className={NotoFont.className}>
       <body className="flex flex-col bg-ghost-100  text-ghost-1000 min-h-screen relative overflow-x-hidden">
-        <MainContextProvider>
-          <Header />
-          <div className="m-2 md:mx-8 md:my-4">
-            <main className="max-w-7xl mx-auto w-full h-full">{children}</main>
-          </div>
-          <Footer />
-        </MainContextProvider>
+        <Header />
+        <div className="m-2 md:mx-8 md:my-4">
+          <main className="max-w-7xl mx-auto w-full h-full">{children}</main>
+        </div>
+        <Footer />
       </body>
     </html>
   );

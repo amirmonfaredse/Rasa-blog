@@ -4,7 +4,7 @@ import { Chewy } from "next/font/google";
 
 import Header from "./_layouts/Header";
 import SideLayout from "./_layouts/SideLayout";
-import { NavigationContextProvider } from "./_providers/NavigationProvider";
+import { SliderContextProvider } from "./_providers/NavigationProvider";
 export const metadata = {
   title: {
     template: "%s | رسا",
@@ -26,13 +26,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="fa" dir="rtl" className={`${NotoFont.className}`}>
       <body className="w-full h-screen bg-white overflow-x-hidden">
-        <NavigationContextProvider>
+        <SliderContextProvider>
           <Header />
           <div className="flex w-full h-[95%]">
             <SideLayout />
             {children}
           </div>
-        </NavigationContextProvider>
+        </SliderContextProvider>
       </body>
     </html>
   );

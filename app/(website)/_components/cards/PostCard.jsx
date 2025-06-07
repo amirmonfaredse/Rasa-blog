@@ -11,17 +11,8 @@ import {
 import ShareSvg from "./svg/ShareSvg";
 import SaveSvg from "./svg/SaveSvg";
 import HeartSvg from "./svg/HeartSvg";
-
-export function HeaderCard({ children, className }) {
-  return <div className={`${className}`}>{children}</div>;
-}
-export function MainCard({ children, className }) {
-  return (
-    <div style={{ backgroundColor: `#BEDBED${50}` }} className={`${className}`}>
-      {children}
-    </div>
-  );
-}
+import MainCard from "./MainCard";
+import HeaderCard from "./HeaderCard";
 
 export default function PostCard({
   title,
