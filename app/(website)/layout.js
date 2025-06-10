@@ -2,10 +2,7 @@ import "@/styles/globals.css";
 import { Noto_Sans_Arabic } from "next/font/google";
 import Footer from "./_layouts/Footer";
 import Header from "./_layouts/Header";
-import Clarity from "@microsoft/clarity";
 import Script from "next/script";
-
-Clarity.init(process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID);
 
 export const metadata = {
   title: {
