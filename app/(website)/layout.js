@@ -1,7 +1,6 @@
 import "@/styles/globals.css";
 import { Noto_Sans_Arabic } from "next/font/google";
 import Head from "next/head";
-import LoadClarity from "../utility/LoadClarity";
 import Footer from "./_layouts/Footer";
 import Header from "./_layouts/Header";
 
