@@ -26,52 +26,50 @@ export default function NewPostForm({ categories, tagList }) {
       <CustomToastContainer />
       <div className="flex flex-col gap-5">
         <label className="flex flex-col gap-3">
-          <h2 className="text-gray-300">عنوان:</h2>
+          <h2 className="text-ghost-900">عنوان:</h2>
           <input
             required
             name="blogTitle"
             type="text"
-            className="w-[1000px] h-[50px] rounded-md bg-gray-500 p-2 text-xl text-gray-100"
+            className="w-full border-2 border-ghost-1000 text-ghost-900 h-12 rounded-sm p-2"
           />
         </label>
         <label className="flex flex-col gap-3">
-          <h2 className="text-gray-300">توضیحات :</h2>
+          <h2 className="text-ghost-900">توضیحات :</h2>
           <input
             required
             name="blogDescription"
             type="text"
-            className="w-[1000px] h-[50px] rounded-md bg-gray-500 p-2 text-xl text-gray-100"
+            className="w-full border-2 border-ghost-1000 text-ghost-900 h-12 rounded-sm p-2"
           />
         </label>
         <label className="flex flex-col gap-3">
-          <h2 className="text-gray-300">آدرس تصویر اصلی:</h2>
+          <h2 className="text-ghost-900">آدرس تصویر اصلی:</h2>
           <input
             type="text"
             name="blogImage"
-            className="w-[1000px] h-[50px] rounded-md bg-gray-500 p-2 text-xl text-gray-100"
+            className="w-full border-2 border-ghost-1000 text-ghost-900 h-12 rounded-sm p-2"
           />
         </label>
 
         <label className="flex flex-col gap-3">
-          <h2 className="text-gray-300">دسته بندی ها:</h2>
+          <h2 className="text-ghost-900">دسته بندی ها:</h2>
           <div className="w-full max-w-sm min-w-[200px]">
-            <div className="relative">
-              <div className="w-full h-auto bg-transparent placeholder:text-gray-100 text-slate-100 text-sm border border-slate-200 rounded p-2 py-1.5 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-100 shadow-sm focus:shadow-md appearance-none cursor-pointer">
-                {categories.map((cat, index) => (
-                  <label
-                    key={`${index}-${cat.id}`}
-                    className="flex  justify-start align-center"
-                  >
-                    {cat.title}
-                    <input
-                      type="checkbox"
-                      className="flex m-2 text-gray-100 hover:bg-gray-600 bg-gray-600"
-                      value={cat.id}
-                      name="blogCategory"
-                    />
-                  </label>
-                ))}
-              </div>
+            <div className="w-full h-36 flex flex-col gap-1 overflow-y-scroll text-ghost-900 text-sm border-2 border-ghost-1000 rounded p-2 py-1.5  ">
+              {categories.map((cat, index) => (
+                <label
+                  key={`${index}-${cat.id}`}
+                  className="flex bg-ghost-100 items-center justify-start px-2 cursor-pointer"
+                >
+                  {cat.title}
+                  <input
+                    type="checkbox"
+                    className="flex m-2"
+                    value={cat.id}
+                    name="blogCategory"
+                  />
+                </label>
+              ))}
             </div>
           </div>
         </label>

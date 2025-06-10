@@ -8,7 +8,6 @@ export const blogSubLinks = [
 ];
 export const pagesSubLinks = [
   { title: "خانه", path: "/dashboard/pages/home" },
-  { title: "درباره ما", path: "/dashboard/pages/about" },
 ];
 
 export const messagesSubLinks = [

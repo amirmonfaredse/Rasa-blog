@@ -1,19 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import SlideManager from "./SlideManager";
-import { useSliderContext } from "@/app/(admin)/_providers/NavigationProvider";
-import SliderItem from "./SliderItem";
+import { useState } from "react";
 
-function Accordion({ title, sliders }) {
-  const { sliderList, setSliderList } = useSliderContext();
+function Accordion({ title = "Default", children }) {
   const [openAcc, setOpenAcc] = useState(true);
   function onOpenAcc() {
     setOpenAcc(!openAcc);
   }
-  useEffect(() => {
-    setSliderList(sliders);
-  }, [sliderList, setSliderList, sliders]);
+
   return (
     <div className="w-full flex flex-col">
       <div
@@ -37,24 +31,7 @@ function Accordion({ title, sliders }) {
           />
         </svg>
       </div>
-      {openAcc && (
-        <div className="h-full flex items-start justify-center gap-5 ">
-          <SlideManager />
-          <div className="w-full h-full flex flex-col items-start justify-start gap-2 my-5">
-            {sliderList?.length > 0 ? (
-              sliderList.map((slide, index) => (
-                <SliderItem
-                  slide={slide}
-                  index={index}
-                  key={`${index}-${Math.floor(Math.random() * 100)}`}
-                />
-              ))
-            ) : (
-              <div className="text-avocado-900">اسلایدی وجود ندارد</div>
-            )}
-          </div>
-        </div>
-      )}
+      {openAcc && children}
     </div>
   );
 }

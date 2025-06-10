@@ -11,40 +11,42 @@ export default async function Page() {
         action={actionCreateCategory}
         className="py-5 px-2 flex flex-col gap-2"
       >
-        <h2 className="text-xl text-gray-50 mb-5">ایجاد دسته بندی</h2>
+        <h2 className="text-lg text-ghost-900 border border-ghost-700 px-5 py-2 rounded-md mb-4">
+          ایجاد دسته بندی
+        </h2>
 
-        <label className="text-gray-50">عنوان دسته بندی : </label>
-
+        <label className="text-folly-900">عنوان دسته بندی : </label>
         <input
           name="categoryTitle"
-          className="w-[400px]  bg-gray-600 text-gray-100 h-9 rounded-sm p-2"
+          className="w-[400px] border-2 border-ghost-1000 text-ghost-900 h-12 rounded-sm p-2"
           type="text"
         />
-        <label className="text-gray-50">مقدار قابل ذخیره دسته بندی : </label>
-
+        <label className="text-folly-900">مقدار یکتا : </label>
         <input
           name="categoryValue"
-          className="w-[400px] bg-gray-600 text-gray-100 h-9 rounded-sm p-2"
+          className="w-[400px] border-2 border-ghost-1000 text-ghost-900 h-12 rounded-sm p-2"
           type="text"
         />
-        <button className="bg-gray-200 w-[100px] mt-5 p-2 rounded">
+        <button className="w-full bg-folly-900 text-white  mt-5 p-2 rounded">
           اضافه کن
         </button>
       </form>
       <div className="w-[50%] py-5 px-2 flex flex-col gap-5">
-        <h2 className="text-xl text-gray-50 mb-4">همه دسته بندی ها :</h2>
+        <h2 className="text-lg text-ghost-900 border border-ghost-700 px-5 py-2 rounded-md ">
+          همه دسته بندی ها :
+        </h2>
         {categories.map((cat, index) => (
           <div
-            className="w-[500px] h-[30px] bg-gray-200 rounded-sm flex items-center justify-between px-2 "
+            className="w-full h-[35px] flex items-center justify-between border-2 border-folly-200 rounded-sm  px-2"
             key={`${index}-${cat.id}`}
           >
-            <p className="bg-gray-800 text-gray-300 p-1 text-sm rounded-full">
+            <p className="text-ghost-900 p-1 text-sm rounded-full">
               {index + 1}
             </p>
-            <h4 className="flex justify-start">{cat.title}</h4>
+            <h4 className="flex justify-start text-ghost-900">{cat.title}</h4>
             <div>
               <Link
-                href={`/dashboard/blogs/categories/${cat.id}`}
+                href={`/dashboard/blog/categories/${cat.id}`}
                 className="text-xs mx-2 "
               >
                 ویرایش

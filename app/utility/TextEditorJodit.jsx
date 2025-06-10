@@ -1,10 +1,10 @@
 "use client";
 import dynamic from "next/dynamic";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-export default function TextEditorCreateBlog({ formState }) {
+export default function TextEditorJodit() {
   const editor = useRef(null);
   const [content, setContent] = useState("");
   const config = useMemo(
@@ -20,9 +20,7 @@ export default function TextEditorCreateBlog({ formState }) {
   const handleChange = (value) => {
     setContent(value);
   };
-  useEffect(() => {
-    if (formState?.status === "success") setContent("");
-  }, [formState]);
+
   return (
     <div className="h-fit w-fit flex items-center justify-center ">
       <div className="w-[1000px] h-fit">

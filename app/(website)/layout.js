@@ -2,6 +2,9 @@ import "@/styles/globals.css";
 import { Noto_Sans_Arabic } from "next/font/google";
 import Footer from "./_layouts/Footer";
 import Header from "./_layouts/Header";
+import Clarity from "@microsoft/clarity";
+const projectId = "r51f3tkzdw";
+Clarity.init(projectId);
 export const metadata = {
   title: {
     template: "%s | رسا",

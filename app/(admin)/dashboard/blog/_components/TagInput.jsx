@@ -1,14 +1,18 @@
 "use client";
 
-import { actionDeleteTag } from "@/app/_data/blog/blogActions";
 import Image from "next/image";
 import { useState } from "react";
 
-function TagInput({ tagList, blogTags = [] }) {
+function TagInput({ tagList, tagged = [] }) {
   const [tags, setTags] = useState(tagList);
   const [filteredTags, setFilteredTags] = useState([]);
-  const [confirmedTags, setConfirmedTags] = useState(blogTags);
+  console.log(tagged)
 
+  const idsInTagged = new Set(tagged.map((tag) => tag.tagId));
+
+  const [confirmedTags, setConfirmedTags] = useState(() =>
+    tagList.filter((tag) => idsInTagged.has(tag.id))
+  );
   const [inpFocused, setInpFocused] = useState(true);
   function handleSearchTag(e) {
     if (e.target.value !== "") {
@@ -22,11 +26,12 @@ function TagInput({ tagList, blogTags = [] }) {
       e.preventDefault();
     }
   }
-  function onAddToConfirmedTag(title, slug) {
+  function onAddToConfirmedTag(title, slug, id) {
     if (!confirmedTags?.some((tag) => tag.title === title.trim())) {
       setConfirmedTags([
         ...confirmedTags,
         {
+          id: Number(id),
           title: title.trim(),
           slug: slug.trim(),
         },
@@ -42,7 +47,7 @@ function TagInput({ tagList, blogTags = [] }) {
     <>
       <label className="flex flex-col gap-3 mt-5">
         <div className="flex gap-4 ">
-          <h2 className=" text-gray-300">برچسب ها :</h2>
+          <h2 className=" text-ghost-900">برچسب ها :</h2>
         </div>
         <input
           hidden
@@ -54,42 +59,42 @@ function TagInput({ tagList, blogTags = [] }) {
         <input
           onChange={handleSearchTag}
           onKeyDown={handleEnter}
-          // onFocus={() => setInpFocused(true)}
-          // onBlur={() => setInpFocused(false)}
           type="text"
-          className="w-[1000px] h-[50px]  bg-gray-500 p-2 text-md text-gray-100 focus:outline-none rounded-t-md "
+          className="w-full border-2 border-ghost-1000 text-ghost-900 h-12 rounded-sm p-2 "
         />
       </label>
       {inpFocused && (
-        <div className="w-full min-h-[80px] h-auto overflow-auto no-scrollbar bg-gray-50 rounded-b-md">
+        <div className="w-full  min-h-[80px] h-auto flex flex-wrap gap-1 overflow-auto no-scrollbar p-1">
           {filteredTags.length > 0 ? (
             filteredTags.map((tag, index) => (
               <div
-                className="w-full h-[35px] flex items-center px-2 bg-gray-400 text-gray-800 cursor-pointer border-b border-gray-600"
+                className="w-fit h-[35px] flex items-center bg-cles-500 px-2 cursor-pointer rounded-full"
                 key={`${tag.id}-${index}`}
                 onClick={() => {
-                  onAddToConfirmedTag(tag.title, tag.slug);
+                  onAddToConfirmedTag(tag.title, tag.slug, tag.id);
                 }}
               >
-                <div className="bg-gray-800 text-gray-50 rounded-full px-1 mx-2">
-                  {index}
+                <div className=" text-white rounded-full pl-2">
+                  {index + 1}-
                 </div>
-                <div>{tag.title}</div>
+                <div className="text-white text-sm">{tag.title}</div>
               </div>
             ))
           ) : (
-            <div className="m-2">برچسب مشابه وجود ندارد</div>
+            <div className="text-sm text-ghost-900 m-2">
+              برچسب مشابه وجود ندارد
+            </div>
           )}
         </div>
       )}
       {confirmedTags?.length > 0 && (
         <div className="w-full">
-          <h3 className="text-gray-200 my-2">لیست برچسب ها</h3>
+          <h3 className="text-sm text-ghost-900 my-2">انتخاب شده ها:</h3>
           <div className="flex gap-2">
             {confirmedTags?.map((tag, index) => (
               <div
                 key={`${tag.slug}-${index}`}
-                className="w-fit h-[30px] flex items-center text-gray-800  bg-gray-200 px-2  hover:bg-gray-700 hover:text-gray-50 rounded-xl  cursor-pointer"
+                className="w-fit h-[30px] flex items-center text-white text-sm bg-ghost-900 px-2 rounded-md cursor-pointer"
               >
                 {tag.title}
                 <Image
@@ -97,10 +102,10 @@ function TagInput({ tagList, blogTags = [] }) {
                     handleRemoveTagFromList(tag.slug);
                   }}
                   src="/svg/close.svg"
-                  width={20}
-                  height={20}
+                  width={18}
+                  height={18}
                   alt="حذف"
-                  className="mx-2"
+                  className="mr-1"
                 />
               </div>
             ))}

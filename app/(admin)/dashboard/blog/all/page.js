@@ -46,7 +46,7 @@ export default async function Page() {
                     مشاهده
                   </Link>
                   <Link
-                    href={`/dashboard/blogs/${blog.id}`}
+                    href={`/dashboard/blog/${blog.id}`}
                     className="text-xs text-green-600 hover:bg-gray-50 p-2 rounded-lg"
                   >
                     ویرایش

@@ -5,7 +5,7 @@ function EditButton({ pending }) {
     <div className="w-full h-[100px] flex items-center justify-start">
       <button
         disabled={pending}
-        className="w-[50%] h-[40px] flex items-center justify-center rounded  bg-gray-400 hover:bg-gray-700 hover:text-gray-100 transition duration-400"
+        className="w-full h-[40px] flex items-center justify-center rounded text-white  bg-folly-600 hover:bg-folly-900  transition duration-400"
       >
         {pending ? <SpinnerLoader /> : "ویرایش"}
       </button>

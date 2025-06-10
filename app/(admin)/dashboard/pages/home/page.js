@@ -1,6 +1,7 @@
 import { SliderContextProvider } from "@/app/(admin)/_providers/NavigationProvider";
 import Accordion from "./_components/Accordion";
 import { serviceGetSliders } from "@/app/_data/pages/pages.services";
+import SliderContainer from "./_components/SliderContainer";
 
 export default async function Page() {
   const sliders = await serviceGetSliders();
@@ -8,7 +9,9 @@ export default async function Page() {
     <div className="w-full max-h-screen flex flex-col items-start justify-start p-5">
       <div className="w-full flex items-start justify-start gap-4">
         <SliderContextProvider>
-          <Accordion title="مدیریت اسلاید شو" sliders={sliders} />
+          <Accordion title="مدیریت اسلاید شو">
+            <SliderContainer sliders={sliders} />
+          </Accordion>
         </SliderContextProvider>
       </div>
     </div>

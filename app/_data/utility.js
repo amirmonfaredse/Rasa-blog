@@ -21,6 +21,7 @@ export async function secureAccess() {
 export async function secureTagList(list) {
   return list.map((item) => {
     return {
+      id: Number(item.id),
       title: sanitizeTextOnServer(item.title),
       slug: sanitizeTextOnServer(item.slug),
     };

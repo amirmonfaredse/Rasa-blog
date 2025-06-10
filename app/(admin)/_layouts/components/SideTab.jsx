@@ -28,7 +28,7 @@ export default function SideTab({ title, href = "", subs }) {
                 top: 0,
                 transition: { delay: 0.09 + index / 100 },
               }}
-              className="w-3/4 h-10 my-1"
+              className="w-full h-10 my-1"
               key={`${index}-${Math.floor(Math.random() * 100)}`}
             >
               <Link

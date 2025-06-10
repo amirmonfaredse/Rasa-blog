@@ -15,18 +15,7 @@ export async function serviceCreateBlog(newBlog) {
   }
   return data;
 }
-// GET / Posts : Row Range
-export async function serviceGetSomeBlog(from, to) {
-  const { data, error } = await supabase
-    .from("blog")
-    .select("*")
-    .range(from, to);
-  if (error) {
-    console.log(error);
-    throw new Error("مشکلی در دریافت تعدادی از بلاگ ها ایجاد شده است");
-  }
-  return data;
-}
+
 // GET / Posts
 export async function serviceGetBlogs() {
   const { data, error } = await supabase.from("blog").select("*");
@@ -42,7 +31,7 @@ export async function serviceGetBlog(id) {
     .from("blog")
     .select()
     .single()
-    .eq("id", String(id));
+    .eq("id", Number(id));
   if (data === null) notFound();
   if (error) {
     console.log(error);
@@ -55,7 +44,8 @@ export async function serviceUpdateBlog(id, updatedFields) {
   const { data, error } = await supabase
     .from("blog")
     .update(updatedFields)
-    .eq("id", String(id));
+    .eq("id", Number(id))
+    .select();
   if (error) {
     console.log(error);
     throw new Error(
@@ -108,6 +98,9 @@ export async function serviceGetCategory(id) {
 
   return data;
 }
+export async function serviceGetRelationalBlogsBasedTags(blogId) {
+  const { data, error } = await supabase.from("blog");
+}
 // PUT / Category
 export async function serviceUpdateCategory(updatedFields, id) {
   const { data, error } = await supabase
@@ -143,12 +136,12 @@ export async function serviceGetTags() {
   return data;
 }
 
-export async function serviceGetTag(slug) {
+export async function serviceGetTag(id) {
   const { data, error } = await supabase
     .from("tags")
     .select()
     .single()
-    .eq("slug", slug);
+    .eq("id", Number(id));
   if (error) {
     console.log(error);
     throw new Error("مشکلی در دریافت  برچسب ایجاد شده است");
@@ -156,19 +149,16 @@ export async function serviceGetTag(slug) {
   return data;
 }
 
-export async function serviceUpdateTag(updatedField, slug) {
+export async function serviceUpdateTag(updatedField, id) {
   const { status, error } = await supabase
     .from("tags")
     .update(updatedField)
-    .eq("slug", String(slug));
+    .eq("id", Number(id));
   if (error) throw new Error("مشکلی در بروزرسانی  برچسب ایجاد شده است");
   return status;
 }
-export async function serviceDeleteTag(slug) {
-  const { error } = await supabase
-    .from("tags")
-    .delete()
-    .eq("slug", String(slug));
+export async function serviceDeleteTag(id) {
+  const { error } = await supabase.from("tags").delete().eq("id", Number(id));
   if (error) throw new Error("در حذف برچسب مشکلی ایجاد شده است");
 }
 
@@ -182,12 +172,61 @@ export async function serviceCategorizing(newField) {
   }
 }
 
-export async function serviceGetCategorizeds(blogId) {
+export async function serviceGetCategorizeds() {
   const { data, error } = await supabase.from("categorizing-blogs").select("*");
-  // .eq("blogId", blogId);
   if (error) {
     console.log(error);
     throw new Error("مشکلی در دریافت دسته بندی ها ایجاد شده است");
+  }
+  return data;
+}
+export async function serviceDeleteRelationalCategorizeds(blogId) {
+  const { error } = await supabase
+    .from("categorizing-blogs")
+    .delete()
+    .eq("blogId", Number(blogId));
+  if (error) {
+    console.log(error);
+    throw new Error(
+      "مشکلی در حذف مقادیر از جدول دسته بندی شده ها ایجاد شده است"
+    );
+  }
+}
+export async function serviceTagging(newField) {
+  const { error } = await supabase.from("tagging-blogs").insert([newField]);
+  if (error) {
+    console.log(error);
+    throw new Error("مشکلی در فرآیند تگ زدن ایجاد شده است");
+  }
+}
+export async function serviceDeleteRelationalTagged(blogId) {
+  const { error } = await supabase
+    .from("tagging-blogs")
+    .delete()
+    .eq("blogId", Number(blogId));
+  if (error) {
+    console.log(error);
+    throw new Error("مشکلی در حذف مقادیر تگ شده ها ایجاد شده است");
+  }
+}
+export async function serviceGetTaggeds() {
+  const { data, error } = await supabase.from("tagging-blogs").select("*");
+  if (error) {
+    console.log(error);
+    throw new Error("مشکلی در دریافت تگ ها ایجاد شده است");
+  }
+  return data;
+}
+
+export async function serviceGetTagBySlug(slug) {
+  const { data, error } = await supabase
+    .from("tags")
+    .select()
+    .single()
+    .eq("slug", slug);
+  if (error) {
+    console.log(error);
+    throw new Error("مشکلی در دریافت تگ ایجاد شده است");
   }
   return data;
 }
