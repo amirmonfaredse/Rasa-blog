@@ -20,7 +20,7 @@ const NotoFont = Noto_Sans_Arabic({
 export default function RootLayout({ children }) {
   return (
     <html lang="fa" dir="rtl" className={NotoFont.className}>
-      <head>
+      {/* <head>
         <Script id="clarity-rasa-script" type="text/javascript">
           {(function (c, l, a, r, i, t, y) {
             c[a] =
@@ -35,7 +35,7 @@ export default function RootLayout({ children }) {
             y.parentNode.insertBefore(t, y);
           })(window, document, "clarity", "script", "r51f3tkzdw")}
         </Script>
-      </head>
+      </head> */}
       <body className="flex flex-col bg-ghost-100  text-ghost-1000 min-h-screen relative overflow-x-hidden">
         <Header />
         <div className="m-2 md:mx-8 md:my-4">
