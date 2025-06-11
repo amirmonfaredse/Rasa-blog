@@ -1,10 +1,8 @@
 import "@/styles/globals.css";
 import { Noto_Sans_Arabic } from "next/font/google";
-import Head from "next/head";
+import LoadClarity from "../utility/LoadClarity";
 import Footer from "./_layouts/Footer";
 import Header from "./_layouts/Header";
-import { clarity } from "react-microsoft-clarity";
-import LoadClarity from "../utility/LoadClarity";
 export const metadata = {
   title: {
     template: "%s | رسا",
@@ -21,9 +19,9 @@ const NotoFont = Noto_Sans_Arabic({
 export default function RootLayout({ children }) {
   return (
     <html lang="fa" dir="rtl" className={NotoFont.className}>
-      <Head>
+      <head>
         <LoadClarity />
-      </Head>
+      </head>
       <body className="flex flex-col bg-ghost-100  text-ghost-1000 min-h-screen relative overflow-x-hidden">
         <Header />
         <div className="m-2 md:mx-8 md:my-4">
