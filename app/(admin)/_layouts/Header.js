@@ -19,9 +19,9 @@ export default async function Header() {
             height={30}
           />
           <span className="text-folly-800">{user.name.split(" ")[0]}</span>
-          <span>خوش آمدید!</span>
+          <span className="hidden md:flex">خوش آمدید!</span>
         </div>
-        <div className="w-fit text-sm text-ghost-1000 cursor-default">
+        <div className="hidden md:flex w-fit text-sm text-ghost-1000 cursor-default">
           {date}
         </div>
         <ul className="flex gap-5 items-center">
