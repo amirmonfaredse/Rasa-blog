@@ -43,7 +43,7 @@ function FileUploader() {
     <form action={formAction} className="w-full h-full gap-5 flex flex-col ">
       <CustomToastContainer />
       <div
-        className="w-full h-[250px] flex flex-col items-center justify-center relative bg-gray-50 text-gray-200 rounded-lg p-2"
+        className="w-full h-[250px] flex flex-col items-center justify-center relative bg-gray-50 text-ghost-900 rounded-lg p-2"
         {...getRootProps()}
       >
         <Image fill src="/svg/upload.svg" alt="آپلود فایل" />
@@ -53,21 +53,21 @@ function FileUploader() {
           accept="image/png, image/gif, image/jpeg, image/jpg"
         />
         {isDragActive ? (
-          <p className="absolute top-5 bg-gray-200 p-2 rounded-lg z-20 text-gray-600">
+          <p className="absolute top-5 bg-gray-200 p-2 rounded-lg z-20 text-ghost-600">
             فایل را اینجا رها کنید
           </p>
         ) : (
           <>
-            <p className="absolute top-5 bg-gray-200 p-2 rounded-lg z-20 text-gray-600">
+            <p className="absolute top-5 bg-gray-100 p-2 rounded-lg z-20 text-ghost-600">
               برای آپلود اینجا کلیک کنید و یا فایل خود را به اینجا بکشید
             </p>
-            <p className="absolute bottom-5 bg-gray-200 p-2 rounded-lg z-20 text-gray-600">
+            <p className="absolute bottom-5 bg-gray-100 p-2 rounded-lg z-20 text-ghost-600">
               {fileName !== "" && `نام فایل : ${fileName}`}
             </p>
           </>
         )}
       </div>
-      <div className="w-full h-[250px] flex flex-col items-center justify-center relative bg-gray-300 text-gray-200 rounded-lg  p-2">
+      <div className="w-full h-[250px] flex flex-col items-center justify-center relative bg-avocado-100 text-ghost-900 rounded-lg  p-2">
         {preview && (
           <Image
             src={preview}
@@ -79,7 +79,7 @@ function FileUploader() {
       </div>
       <button
         disabled={pending}
-        className="w-full h-[50px] flex justify-center items-center bg-green-500 text-gray-200 rounded-lg hover:bg-green-800 transition duration-300"
+        className="w-full h-[50px] flex justify-center items-center bg-avocado-400 text-white rounded-lg hover:bg-avocado-800 transition duration-300"
       >
         {pending ? <SpinnerLoader /> : "آپلود"}
       </button>

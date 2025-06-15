@@ -10,7 +10,7 @@ export default function SliderContainer({ sliders }) {
     setSliderList(sliders);
   }, [sliderList, setSliderList, sliders]);
   return (
-    <div className="h-full flex items-start justify-center gap-5 ">
+    <div className="h-full flex flex-col lg:flex-row items-center lg:items-start justify-center gap-5 mx-2  ">
       <SlideManager />
       <div className="w-full h-full flex flex-col items-start justify-start gap-2 my-5">
         {sliderList?.length > 0 ? (

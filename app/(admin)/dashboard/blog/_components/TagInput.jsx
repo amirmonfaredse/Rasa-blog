@@ -6,7 +6,7 @@ import { useState } from "react";
 function TagInput({ tagList, tagged = [] }) {
   const [tags, setTags] = useState(tagList);
   const [filteredTags, setFilteredTags] = useState([]);
-  console.log(tagged)
+  console.log(tagged);
 
   const idsInTagged = new Set(tagged.map((tag) => tag.tagId));
 
@@ -45,7 +45,7 @@ function TagInput({ tagList, tagged = [] }) {
   }
   return (
     <>
-      <label className="flex flex-col gap-3 mt-5">
+      <label className="w-[95%] flex flex-col gap-3 mt-5">
         <div className="flex gap-4 ">
           <h2 className=" text-ghost-900">برچسب ها :</h2>
         </div>
@@ -64,7 +64,7 @@ function TagInput({ tagList, tagged = [] }) {
         />
       </label>
       {inpFocused && (
-        <div className="w-full  min-h-[80px] h-auto flex flex-wrap gap-1 overflow-auto no-scrollbar p-1">
+        <div className="w-full min-h-[80px] h-auto flex flex-wrap gap-1 overflow-auto no-scrollbar p-1">
           {filteredTags.length > 0 ? (
             filteredTags.map((tag, index) => (
               <div
@@ -88,9 +88,9 @@ function TagInput({ tagList, tagged = [] }) {
         </div>
       )}
       {confirmedTags?.length > 0 && (
-        <div className="w-full">
+        <div className="w-full h-fit ">
           <h3 className="text-sm text-ghost-900 my-2">انتخاب شده ها:</h3>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             {confirmedTags?.map((tag, index) => (
               <div
                 key={`${tag.slug}-${index}`}

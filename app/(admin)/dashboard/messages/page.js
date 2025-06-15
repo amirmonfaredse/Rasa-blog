@@ -4,34 +4,36 @@ import DeleteButton from "../../_components/DeleteButton";
 export default async function Page() {
   const messages = await serviceContactGetMessages();
   return (
-    <div className="flex flex-col w-full h-full text-gray-200 ">
-      <h1 className="flex items-center w-full h-[100px]  text-2xl">پیام ها</h1>
+    <div className="w-full h-full flex flex-col justify-center items-center gap-4 text-ghost-900 px-2 mb-4">
+      <h1 className="w-full h-28 flex items-center justify-start text-2xl px-2">
+        پیام ها
+      </h1>
       {messages.map((mess, index) => (
         <div
           key={`${mess.id}-${index}`}
-          className="flex flex-col border border-gray-200 rounded-xl my-3 ml-10 p-4 "
+          className="w-full flex flex-col justify-start items-start  border border-avocado-400 rounded-xl p-4 "
         >
-          <div className="flex w-full min-h-14  h-fit">
-            <div className="flex items-center gap-2 mx-2">
-              <h3 className="text-md text-gray-400">شناسه پیام : </h3>
-              <h4 className="bg-gray-600 px-2 rounded-md">{mess.id}</h4>
+          <div className="w-[90%] min-h-14 h-fit gap-2 md:gap-1 flex flex-col justify-center">
+            <div className="flex items-center md:gap-2 md:mx-2">
+              <h3 className="text-md text-ghost-800">شناسه پیام : </h3>
+              <h4 className=" px-2 rounded-md">{mess.id}</h4>
             </div>
-            <div className="flex items-center gap-3 mx-2">
-              <h3 className="text-lg text-gray-400">نام : </h3>
-              <h4 className="text-md flex items-center bg-gray-600 px-4  rounded-md">
+            <div className="flex items-center md:gap-3 md:mx-2">
+              <h3 className="text-lg text-ghost-800">نام : </h3>
+              <h4 className="text-md flex items-center px-4  rounded-md">
                 {mess.fullName}
               </h4>
             </div>
-            <div className="flex items-center gap-3 mx-2">
-              <h3 className="text-lg text-gray-400">آدرس ایمیل : </h3>
-              <h4 className="text-md flex items-center bg-gray-600 px-4 rounded-md">
+            <div className="flex items-center md:gap-3 md:mx-2">
+              <h3 className="text-lg text-ghost-800">آدرس ایمیل : </h3>
+              <h4 className="text-md flex items-center  px-4 rounded-md">
                 {mess.email}
               </h4>
             </div>
           </div>
-          <div className="flex flex-col">
-            <h3 className="text-lg text-gray-400 my-3">متن پیام : </h3>
-            <p className=" w-full h-fit min-h-14 rounded-md p-2 px-4 bg-gray-600 ">
+          <div className="w-[90%] flex flex-col">
+            <h3 className="text-lg text-ghost-400 my-3">متن پیام : </h3>
+            <p className=" w-full h-fit min-h-14 rounded-md p-2 px-4 bg-ghost-100 text-ghost-1000">
               {mess.message}
             </p>
           </div>

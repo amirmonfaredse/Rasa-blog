@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
           <div className="w-full flex flex-col items-start justify-start relative">
             <MenuButton />
             <Header />
-            <div className="flex w-full h-[95%]">
+            <div className="w-full h-[95%] flex justify-center md:justify-start ">
               <SideLayoutContainer>
                 <SideLayout />
               </SideLayoutContainer>

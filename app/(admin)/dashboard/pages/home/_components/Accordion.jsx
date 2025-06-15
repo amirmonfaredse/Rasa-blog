@@ -9,11 +9,11 @@ function Accordion({ title = "Default", children }) {
   }
 
   return (
-    <div className="w-full flex flex-col">
+    <div className="w-[95%] lg:w-full flex flex-col">
       <div
         style={{ borderColor: openAcc && "white" }}
         onClick={onOpenAcc}
-        className="w-full h-14 flex items-center justify-start gap-2 px-10 rounded-lg border-4 border-avocado-100 text-avocado-900 group cursor-pointer hover:border-avocado-500 duration-300"
+        className="w-full h-14 flex items-center justify-start gap-2 px-2 md:px-10 rounded-lg border-4 border-avocado-100 text-avocado-900 group cursor-pointer hover:border-avocado-500 duration-300"
       >
         <h1>{title}</h1>
         <svg

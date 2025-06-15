@@ -24,8 +24,8 @@ export default function TextEditorCreateBlog({ formState }) {
     if (formState?.status === "success") setContent("");
   }, [formState]);
   return (
-    <div className="h-fit w-fit flex items-center justify-center ">
-      <div className="w-[1000px] h-fit">
+    <div className="w-[95%] md:w-full h-fit flex items-center justify-center">
+      <div className="w-full h-fit">
         <JoditEditor
           ref={editor}
           name="textEditor"

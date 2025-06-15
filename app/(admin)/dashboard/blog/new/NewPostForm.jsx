@@ -22,36 +22,38 @@ export default function NewPostForm({ categories, tagList }) {
     }
   }, [state]);
   return (
-    <form action={formAction} className="py-5">
+    <form
+      action={formAction}
+      className="w-full h-fit flex flex-col justify-center items-center py-5 pt-10 md:pt-5 px-1 "
+    >
       <CustomToastContainer />
-      <div className="flex flex-col gap-5">
-        <label className="flex flex-col gap-3">
-          <h2 className="text-ghost-900">عنوان:</h2>
+      <div className="w-[95%] lg:w-[90%] flex flex-col gap-5">
+        <label className="w-full flex flex-col gap-3">
+          <h2 className="w-full text-ghost-900">عنوان:</h2>
           <input
             required
             name="blogTitle"
             type="text"
-            className="w-full border-2 border-ghost-1000 text-ghost-900 h-12 rounded-sm p-2"
+            className="w-full h-12 border-2 border-ghost-1000 text-ghost-900  rounded-sm p-2"
           />
         </label>
-        <label className="flex flex-col gap-3">
+        <label className="w-full flex flex-col gap-3">
           <h2 className="text-ghost-900">توضیحات :</h2>
           <input
             required
             name="blogDescription"
             type="text"
-            className="w-full border-2 border-ghost-1000 text-ghost-900 h-12 rounded-sm p-2"
+            className="w-full h-12 border-2 border-ghost-1000 text-ghost-900  rounded-sm p-2"
           />
         </label>
-        <label className="flex flex-col gap-3">
-          <h2 className="text-ghost-900">آدرس تصویر اصلی:</h2>
+        <label className="w-full flex flex-col gap-3">
+          <h2 className="w-full text-ghost-900">آدرس تصویر اصلی:</h2>
           <input
             type="text"
             name="blogImage"
-            className="w-full border-2 border-ghost-1000 text-ghost-900 h-12 rounded-sm p-2"
+            className="w-full h-12 border-2 border-ghost-1000 text-ghost-900  rounded-sm p-2"
           />
         </label>
-
         <label className="flex flex-col gap-3">
           <h2 className="text-ghost-900">دسته بندی ها:</h2>
           <div className="w-full max-w-sm min-w-[200px]">

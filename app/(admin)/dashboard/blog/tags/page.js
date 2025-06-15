@@ -6,29 +6,29 @@ import DeleteTagButton from "./DeleteTagButton";
 export default async function Page() {
   const tags = await serviceGetTags();
   return (
-    <div className="w-full flex">
-      <form action={actionCreateTag} className="py-5 px-2 flex flex-col gap-2">
+    <div className="w-full flex flex-col lg:flex-row">
+      <form action={actionCreateTag} className="flex flex-col gap-2 py-5 px-2">
         <h2 className="text-lg text-ghost-900 border border-ghost-700 px-5 py-2 rounded-md mb-4">
           ایجاد برچسب
         </h2>
         <label className="text-folly-900">عنوان تگ : </label>
         <input
           name="tagTitle"
-          className="w-[400px] border-2 border-ghost-1000 text-ghost-900 h-12 rounded-sm p-2"
+          className="w-full lg:w-[400px] border-2 border-ghost-1000 text-ghost-900 h-12 rounded-sm p-2"
           type="text"
         />
         <label className="text-folly-900">نام یکتا : </label>
 
         <input
           name="tagSlug"
-          className="w-[400px] border-2 border-ghost-1000 text-ghost-900 h-12 rounded-sm p-2"
+          className="w-full lg:w-[400px] border-2 border-ghost-1000 text-ghost-900 h-12 rounded-sm p-2"
           type="text"
         />
         <button className="w-full bg-folly-900 text-white  mt-5 p-2 rounded">
           اضافه کن
         </button>
       </form>
-      <div className="w-[50%] py-5 px-2 flex flex-col gap-5">
+      <div className="w-full lg:w-[50%] py-5 px-2 flex flex-col gap-5">
         <h2 className="text-lg text-ghost-900 border border-ghost-700 px-5 py-2 rounded-md mb-4">
           همه برچسب ها{" "}
         </h2>

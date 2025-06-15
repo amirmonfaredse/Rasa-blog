@@ -50,11 +50,11 @@ export default function CommentForm({ blogId }) {
         />
         <label
           htmlFor="fullName"
-          className="w-full md:w-[50%] h-[100px] flex flex-col justify-evenly "
+          className="w-full md:w-[50%] h-[100px] flex flex-col justify-evenly text-ghost-900"
         >
           نام :{" "}
           <input
-            className="w-full border-2 border-transparent  p-2 rounded-md bg-gray-600 outline-none focus:border-gray-500 focus:border-2"
+            className="w-full border-2 border-transparent  p-2 rounded-md bg-avocado-100 outline-none focus:border-avocado-900 focus:border-2"
             type="text"
             name="fullName"
             required
@@ -66,7 +66,7 @@ export default function CommentForm({ blogId }) {
         >
           ایمیل :{" "}
           <input
-            className="w-full border-2 border-transparent  p-2 rounded-md bg-gray-600 outline-none focus:border-gray-500 focus:border-2"
+            className="w-full border-2 border-transparent  p-2 rounded-md bg-avocado-100 outline-none focus:border-avocado-900 focus:border-2"
             type="eamil"
             name="email"
             required
@@ -79,13 +79,13 @@ export default function CommentForm({ blogId }) {
       >
         متن نظر :{" "}
         <textarea
-          className="w-full h-[200px] md:h-[150px] lg:h-[100px] border-2   border-transparent md: p-2 rounded-md bg-gray-600 outline-none focus:border-gray-500 focus:border-2 resize-none"
+          className="w-full h-[200px] md:h-[150px] lg:h-[100px] border-2   border-transparent md: p-2 rounded-md bg-avocado-100 outline-none focus:border-avocado-900 focus:border-2 resize-none"
           name="message"
         />
       </label>
 
       <button
-        className="w-full h-[40px] bg-gray-400 text-gray-800  py-2 px-4 my-4 rounded-md cursor-pointer hover:bg-gray-600 transition-colors duration-400"
+        className="w-full h-[40px] bg-cles-400 text-white  py-2 px-4 my-4 rounded-md cursor-pointer hover:bg-folly-300 transition-colors duration-400"
         type="submit"
         disabled={pending}
       >

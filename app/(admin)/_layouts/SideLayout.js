@@ -6,12 +6,10 @@ export const blogSubLinks = [
   { title: "دسته بندی ها", path: "/dashboard/blog/categories" },
   { title: "تگ ها", path: "/dashboard/blog/tags" },
 ];
-export const pagesSubLinks = [
-  { title: "خانه", path: "/dashboard/pages/home" },
-];
+export const pagesSubLinks = [{ title: "خانه", path: "/dashboard/pages/home" }];
 
 export const messagesSubLinks = [
-  { title: "فرم تماس", path: "/dashboard/messages/contact" },
+  { title: "فرم تماس", path: "/dashboard/messages" },
   { title: "نظرات", path: "/dashboard/messages/comments" },
 ];
 

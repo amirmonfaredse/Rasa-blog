@@ -2,57 +2,70 @@ import { serviceGetBlogs } from "@/app/_data/blog/blogServices";
 import Link from "next/link";
 import DeleteButtonBlog from "../_components/DeleteButtonBlog";
 
+export function Th({ children, row = false, center = false }) {
+  return (
+    <th
+      className={`${row ? "w-[50px]" : "w-[280px]"} h-full flex ${center ? "justify-center" : "justify-start"} items-center line-clamp-1 leading-7 ${row && "px-1"}`}
+    >
+      {children}
+    </th>
+  );
+}
+export function Td({ children, row = false, center = false }) {
+  return (
+    <th
+      className={`${row ? "w-[50px]" : "w-[280px]"} h-full flex ${center ? "justify-center" : "justify-start"} items-start line-clamp-1 leading-7 ${row && "px-2"}`}
+    >
+      {children}
+    </th>
+  );
+}
+
 export default async function Page() {
   const blogs = await serviceGetBlogs();
   return (
-    <div className=" w-full p-5">
-      <div className="my-4">
+    <div className="w-full flex flex-col items-start justify-start mt-5">
+      <div className="w-full h-fit flex ">
         <Link
-          className="bg-gray-50 text-gray-800  px-5 py-1 mt-2 rounded-lg hover:bg-gray-400 transition duration-300"
+          className="w-full md:w-52  h-10 flex items-center justify-center bg-folly-500 text-white  px-5 py-1 mt-2 rounded-lg hover:bg-ghost-400 transition duration-300"
           href="/dashboard/blogs/new"
         >
           پست جدید
         </Link>
       </div>
-      <table className="w-full flex flex-col items-start justify-center">
+      <table className="w-[95%] flex flex-col overflow-x-scroll">
         <thead className="w-full">
-          <tr className="w-full min-h-[40px] flex items-center gap-5 justify-start cursor-default bg-gray-500 text-gray-100 my-5 p-2 rounded">
-            <th className="w-[5%] flex justify-start">شماره</th>
-            <th className="w-[30%] flex justify-center">عنوان</th>
-            <th className="w-[20%] flex justify-center">نویسنده</th>
-            <th className="w-[20%] flex justify-center">تاریخ انتشار</th>
-            <th className="w-[20%] flex justify-center">عملیات</th>
+          <tr className="w-fit h-12 flex items-center justify-start  cursor-default bg-ghost-500 text-white my-5  px-2 rounded">
+            <Th row>شماره</Th>
+            <Th center>عنوان</Th>
+            <Th center>نویسنده</Th>
+            <Th>تاریخ انتشار</Th>
+            <Th center>عملیات</Th>
           </tr>
         </thead>
         {blogs &&
           blogs.map((blog, index) => (
-            <tbody key={blog.id} className="w-full">
-              <tr className="w-full h-[40px] flex items-center gap-5 justify-start cursor-default bg-gray-100 text-gray-600 my-5 p-2  rounded hover:bg-gray-400 transition duration-300">
-                <td className="w-[5%] h-[25px] flex justify-center items-center bg-gray-600 text-gray-100  rounded-xl ">
-                  {index + 1}
-                </td>
-                <td className="w-[30%] h-[30px] flex">
-                  <div className="w-fit h-[30px]  line-clamp-1 leading-7 text-sm">
-                    {blog.title}
-                  </div>
-                </td>
-                <td className="w-[20%] flex justify-center text-sm">{blog.author}</td>
-                <td className="w-[20%] flex justify-center text-sm "></td>
-                <td className="w-[20%] flex justify-evenly ">
+            <tbody key={blog.id} className="w-fit md:w-full flex flex-col ">
+              <tr className="w-fit h-12 flex items-center justify-start cursor-default bg-ghost-100 text-ghost-600 my-5 p-2  rounded">
+                <Td row>{index + 1}</Td>
+                <Td>{blog.title}</Td>
+                <Td center>{blog.author}</Td>
+                <Td center>{/* Date */}</Td>
+                <Td center>
                   <Link
                     href={`/blogs/${blog.id}`}
-                    className="text-xs text-green-600 hover:bg-gray-50 p-2 rounded-lg"
+                    className="w-fit md: text-xs text-green-600 p-2 rounded-lg"
                   >
                     مشاهده
                   </Link>
                   <Link
                     href={`/dashboard/blog/${blog.id}`}
-                    className="text-xs text-green-600 hover:bg-gray-50 p-2 rounded-lg"
+                    className="text-xs text-green-600 p-2 rounded-lg"
                   >
                     ویرایش
                   </Link>
                   <DeleteButtonBlog blogId={blog.id} />
-                </td>
+                </Td>
               </tr>
             </tbody>
           ))}

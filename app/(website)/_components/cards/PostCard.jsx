@@ -13,8 +13,10 @@ import SaveSvg from "./svg/SaveSvg";
 import HeartSvg from "./svg/HeartSvg";
 import MainCard from "./MainCard";
 import HeaderCard from "./HeaderCard";
+import Link from "next/link";
 
 export default function PostCard({
+  id,
   title,
   author,
   created_at,
@@ -109,9 +111,12 @@ export default function PostCard({
               </ul>
             </div>
             <div className="w-full sm:w-1/2 h-1/2 sm:h-full flex items-center justify-center my-2 sm:my-0">
-              <button className="w-full sm:w-2/3 h-14 bg-blue-950 text-blue-100 rounded-3xl  sm:rounded-full hover:text-xl duration-300 mx-2 sm:mx-0">
+              <Link
+                href={`/blogs/${id}`}
+                className="w-full  sm:w-2/3 h-14 flex items-center justify-center bg-blue-950 text-blue-100 rounded-3xl  sm:rounded-full hover:text-xl duration-300 mx-2 sm:mx-0"
+              >
                 بیشتر بخوانید
-              </button>
+              </Link>
             </div>
           </FooterPostContainer>
         </MainCard>

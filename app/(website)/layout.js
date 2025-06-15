@@ -24,8 +24,8 @@ export default function RootLayout({ children }) {
       </head>
       <body className="flex flex-col bg-ghost-100  text-ghost-1000 min-h-screen relative overflow-x-hidden">
         <Header />
-        <div className="m-2 md:mx-8 md:my-4">
-          <main className="max-w-7xl mx-auto w-full h-full">{children}</main>
+        <div className="w-full h-fit m-2 md:mx-8 md:my-4">
+          <main className="w-full h-fit max-w-7xl mx-auto ">{children}</main>
         </div>
         <Footer />
       </body>

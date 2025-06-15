@@ -41,6 +41,7 @@ export default async function Page() {
         {blogs.length > 0 ? (
           blogs?.map((blog, index) => (
             <PostCard
+              id={blog.id}
               title={blog.title}
               author={blog.author}
               created_at={blog.created_at}
@@ -53,7 +54,12 @@ export default async function Page() {
           <div>پستی وجود ندارد ...</div>
         )}
         <div className="w-full flex justify-center">
-          <Link href="/blogs" className="w-64 text-center text-lg bg-cles-400 text-white p-5 shadow-2xl rounded-md ">همه بلاگ ها</Link>
+          <Link
+            href="/blogs"
+            className="w-64 text-center text-lg bg-cles-400 text-white p-5 shadow-2xl rounded-md "
+          >
+            همه بلاگ ها
+          </Link>
         </div>
       </PostContainer>
     </div>

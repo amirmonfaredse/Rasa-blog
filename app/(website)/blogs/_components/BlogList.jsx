@@ -25,6 +25,7 @@ function BlogList({ blogs }) {
       {filteredBlogs.length > 0 ? (
         filteredBlogs.map((blog, index) => (
           <PostCard
+            id={blog.id}
             title={blog.title}
             author={blog.author}
             created_at={blog.created_at}
