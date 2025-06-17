@@ -8,6 +8,9 @@ import {
   PostContainer,
   SliderContainer,
 } from "./_components/utilities/utilities";
+import BlogList from "./blogs/_components/BlogList";
+import { BlogContextProvider } from "./_providers/BlogProvider";
+import { Suspense } from "react";
 
 export default async function Page() {
   const blogs = (await serviceGetBlogs()).slice(0, 5);
@@ -37,22 +40,12 @@ export default async function Page() {
         title="آخرین پست ها"
         className="w-full h-32 flex items-center gap-4 mt-8"
       />
-      <PostContainer className="w-full sm:w-[90%] h-fit flex flex-col  items-start justify-start gap-10 sm:gap-16 mb-10">
-        {blogs.length > 0 ? (
-          blogs?.map((blog, index) => (
-            <PostCard
-              id={blog.id}
-              title={blog.title}
-              author={blog.author}
-              created_at={blog.created_at}
-              image={blog.image}
-              content={blog.content}
-              key={`blog-${blog.id}-${index}`}
-            />
-          ))
-        ) : (
-          <div>پستی وجود ندارد ...</div>
-        )}
+      <PostContainer className="w-full h-fit flex flex-col items-center justify-start gap-10 sm:gap-16 mb-10">
+        <BlogContextProvider>
+          <Suspense>
+            <BlogList blogs={blogs} />
+          </Suspense>
+        </BlogContextProvider>{" "}
         <div className="w-full flex justify-center">
           <Link
             href="/blogs"

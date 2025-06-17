@@ -1,19 +1,15 @@
 import Image from "next/image";
+import Link from "next/link";
+import HeaderCard from "./HeaderCard";
+import MainCard from "./MainCard";
 import {
   ColHead,
   ColInfo,
   Container,
   FooterPostContainer,
-  LiTag,
   ParagraphContainer,
-  Reaction,
 } from "./utilities/utilities";
-import ShareSvg from "./svg/ShareSvg";
-import SaveSvg from "./svg/SaveSvg";
-import HeartSvg from "./svg/HeartSvg";
-import MainCard from "./MainCard";
-import HeaderCard from "./HeaderCard";
-import Link from "next/link";
+import { extractTextFromHTMLOnClient } from "@/app/utility/domPurify";
 
 export default function PostCard({
   id,
@@ -89,7 +85,7 @@ export default function PostCard({
           <ParagraphContainer className="w-full min-h-[240px] h-[260px] sm:h-2/3 flex justify-center items-start p-3">
             <div className="w-[90%] h-full">
               <p className="w-full h-fit leading-10 line-clamp-6 sm:line-clamp-4 text-justify">
-                {content}
+                {extractTextFromHTMLOnClient(content)}
               </p>
             </div>
           </ParagraphContainer>

@@ -1,8 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
-import PostCard from "../../_components/cards/PostCard";
 import { useBlogContext } from "../../_providers/BlogProvider";
-
+import dynamic from "next/dynamic";
+const PostCard = dynamic(() => import("../../_components/cards/PostCard"), {
+  ssr: false,
+});
 function BlogList({ blogs }) {
   const [filteredBlogs, setFilteredBlogs] = useState(blogs);
   const { searchInputValue, categorizedBlogs, checkedList } = useBlogContext();
