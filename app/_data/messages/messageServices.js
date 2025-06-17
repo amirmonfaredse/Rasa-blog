@@ -2,9 +2,12 @@ import { supabase } from "../supabase";
 
 // POST
 export async function serviceContactSendMessage(newMessage) {
-  const { status, error } = await supabase.from("contact").insert([newMessage]);
+  const { data, error } = await supabase
+    .from("contact")
+    .insert([newMessage])
+    .select();
   if (error) throw new Error("در ارسال پیام مشکلی ایجاد شده است");
-  return status;
+  return data;
 }
 
 // GET

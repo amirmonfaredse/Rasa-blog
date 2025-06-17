@@ -3,6 +3,7 @@ import { Noto_Sans_Arabic } from "next/font/google";
 import LoadClarity from "../utility/LoadClarity";
 import Footer from "./_layouts/Footer";
 import Header from "./_layouts/Header";
+import { Toaster } from "react-hot-toast";
 export const metadata = {
   title: {
     template: "%s | رسا",
@@ -23,6 +24,7 @@ export default function RootLayout({ children }) {
         <LoadClarity />
       </head>
       <body className="flex flex-col bg-ghost-100  text-ghost-1000 min-h-screen relative overflow-x-hidden">
+        <Toaster />
         <Header />
         <div className="w-full h-fit m-2 md:mx-8 md:my-4">
           <main className="w-full h-fit max-w-7xl mx-auto ">{children}</main>

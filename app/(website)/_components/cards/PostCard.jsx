@@ -74,7 +74,7 @@ export default function PostCard({
             </div>
           </ColHead>
           <ColHead className="w-full sm:w-1/6 lg:w-1/6 h-[60px] sm:h-full flex sm:flex-col items-center sm:items-end justify-evenly  sm:justify-center  gap-3 sm:pl-8">
-            <Reaction className="hover:scale-110">
+            {/* <Reaction className="hover:scale-110">
               <HeartSvg />
             </Reaction>
             <Reaction className="hover:-translate-y-1">
@@ -82,7 +82,7 @@ export default function PostCard({
             </Reaction>
             <Reaction className="hover:-rotate-6">
               <ShareSvg />
-            </Reaction>
+            </Reaction> */}
           </ColHead>
         </HeaderCard>
         <MainCard className="w-full h-4/5 sm:h-fit flex flex-col justify-between">
@@ -95,7 +95,7 @@ export default function PostCard({
           </ParagraphContainer>
           <FooterPostContainer className="w-full h-1/3 flex flex-col sm:flex-row my-6">
             <div className="w-full sm:w-1/2 h-1/2 sm:h-full flex flex-col sm:flex-row items-center justify-center px-5">
-              <ul className="w-full sm:w-2/3 flex items-center justify-center flex-wrap px-5 py-4 sm:py-0 gap-x-2 gap-y-1 ">
+              {/* <ul className="w-full sm:w-2/3 flex items-center justify-center flex-wrap px-5 py-4 sm:py-0 gap-x-2 gap-y-1 ">
                 <LiTag className="hover:border-red-800 hover:bg-red-800 hover:text-red-200">
                   سرگرمی
                 </LiTag>
@@ -108,7 +108,7 @@ export default function PostCard({
                 <LiTag className=" hover:border-yellow-800 cursor-pointer duration-300 hover:bg-yellow-800 hover:text-yellow-200">
                   کسب و کار
                 </LiTag>
-              </ul>
+              </ul> */}
             </div>
             <div className="w-full sm:w-1/2 h-1/2 sm:h-full flex items-center justify-center my-2 sm:my-0">
               <Link

@@ -7,6 +7,7 @@ import SideLayout from "./_layouts/SideLayout";
 import { SliderContextProvider } from "./_providers/NavigationProvider";
 import MenuButton from "./_layouts/components/MenuButton";
 import SideLayoutContainer from "./_layouts/components/SideLayoutContainer";
+import { Toaster } from "react-hot-toast";
 export const metadata = {
   title: {
     template: "%s | رسا",
@@ -28,6 +29,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="fa" dir="rtl" className={`${NotoFont.className}`}>
       <body className="w-full h-screen  bg-white overflow-x-hidden">
+        <Toaster />
         <SliderContextProvider>
           <div className="w-full flex flex-col items-start justify-start relative">
             <MenuButton />

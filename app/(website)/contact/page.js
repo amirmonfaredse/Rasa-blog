@@ -1,7 +1,7 @@
-import { actionContactSendMessage } from "@/app/_data/messages/messageActions";
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
+import FormContact from "./_components/FormContact";
 export const metadata = {
   title: "تماس با ما",
   description:
@@ -62,41 +62,7 @@ export default function Page() {
             <h4>monfared.dev@gmail.com</h4>
           </div>
         </div>
-        <form
-          action={actionContactSendMessage}
-          className="w-full md:w-[50%] flex flex-col items-center px-2 md:px-0 mt-5 md:mt-2 md:mx-auto "
-        >
-          <label htmlFor="fullName" className="w-full">
-            نام و نام خانوادگی :{" "}
-          </label>
-          <input
-            className="w-full border-2 my-4 p-2  border-ghost-600 bg-ghost-100 shadow-xl outline-none"
-            type="text"
-            name="fullName"
-            required
-          />
-          <label htmlFor="email" className="w-full">
-            ایمیل :{" "}
-          </label>
-          <input
-            className="w-full border-2 my-4 p-2  border-ghost-600 bg-ghost-100 shadow-xl outline-none"
-            type="email"
-            name="email"
-          />
-          <label htmlFor="message" className="w-full">
-            متن پیام :{" "}
-          </label>
-          <textarea
-            className="w-full border-2 my-4 p-2  border-ghost-600 bg-ghost-100 shadow-xl outline-none"
-            name="message"
-            rows={10}
-          />
-          <input
-            className="w-full md:w-[300px] bg-ghost-800 text-ghost-100 py-4  my-4 rounded-md cursor-pointer hover:bg-ghost-600 transition-colors duration-400"
-            type="submit"
-            value="ارسال پیام"
-          />
-        </form>
+        <FormContact />
       </div>
     </Suspense>
   );

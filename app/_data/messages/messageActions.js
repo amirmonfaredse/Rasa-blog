@@ -12,14 +12,24 @@ import {
 import { sanitizeHTMLOnServer } from "@/app/utility/jsDOM";
 import { secureAccess } from "../utility";
 
-export async function actionContactSendMessage(formData) {
+export async function actionContactSendMessage(_, formData) {
   const messageFields = {
     fullName: formData.get("fullName"),
     email: formData.get("email"),
     message: formData.get("message"),
   };
-  await serviceContactSendMessage(messageFields);
-  revalidatePath("/contact");
+  const message = await serviceContactSendMessage(messageFields);
+  if (message) {
+    return {
+      status: "success",
+      message: " پیام با موفقیت ارسال شد",
+    };
+  } else {
+    return {
+      status: "error",
+      message: "مشکلی در ارسال پیام ایجاد شده است",
+    };
+  }
 }
 export async function actionContactRemoveMessage(id) {
   await secureAccess();

@@ -3,7 +3,7 @@
 import { actionCreateBlog } from "@/app/_data/blog/blogActions";
 import CustomToastContainer from "@/app/utility/CustomToastContainer";
 import { useActionState, useEffect } from "react";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import TagInput from "../_components/TagInput";
 import TextEditorCreateBlog from "../_components/TextEditorCreateBlog";
 import ReleaseButton from "./ReleaseButton";
