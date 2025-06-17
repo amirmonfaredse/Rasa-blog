@@ -20,7 +20,7 @@ export default function PostCard({
   content,
 }) {
   return (
-    <article className="w-full h-fit sm:h-fit min-h-[500px] sm:flex-row border-ghost-800 rounded-3xl sm:rounded-[50px] overflow-hidden">
+    <article className="w-[90%] md:w-full h-fit sm:h-fit min-h-[500px] sm:flex-row border-ghost-800 rounded-3xl sm:rounded-[50px] overflow-hidden ">
       <Container className="w-full h-full flex flex-col items-center justify-between gap-1">
         <HeaderCard className="w-full h-2/5 sm:h-fit sm:p-3 flex flex-col sm:flex-row relative bg-cles-100">
           <ColHead className="w-full sm:w-2/6 lg:w-1/6 h-[200px] sm:h-[130px] relative">

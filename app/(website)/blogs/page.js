@@ -20,7 +20,7 @@ export default async function Page() {
   const categorized = await serviceGetCategorizeds();
 
   return (
-    <div className="w-full h-full flex flex-col sm:flex-row justify-between">
+    <div className="w-full h-full flex flex-col sm:flex-row justify-between ">
       <BlogContextProvider>
         <Suspense>
           <Sidebar categories={categories} categorized={categorized} />

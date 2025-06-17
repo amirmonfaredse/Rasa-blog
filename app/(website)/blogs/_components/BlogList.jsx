@@ -23,7 +23,7 @@ function BlogList({ blogs }) {
   }, [blogs, searchInputValue, categorizedBlogs, checkedList.length]);
 
   return (
-    <div className="w-full sm:w-[65%] md:w-[70%] h-full flex flex-col gap-12">
+    <div className="w-full sm:w-[65%] md:w-[70%] h-full flex flex-col items-center justify-start gap-12">
       {filteredBlogs.length > 0 ? (
         filteredBlogs.map((blog, index) => (
           <PostCard
