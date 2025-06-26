@@ -1,12 +1,26 @@
 "use server";
-import persianDate from "persian-date";
+import { revalidatePath } from "next/cache";
 
 import {
   sanitizeHTMLOnServer,
   sanitizeTextOnServer,
-} from "@/app/utility/jsDOM";
-import { revalidatePath } from "next/cache";
-import { secureAccess, secureAList, secureTagList } from "../utility";
+} from "../../utility/jsDOM";
+import {
+  newBlogFieldProps,
+  newCategorizingFieldProps,
+  TagFieldProps,
+  TaggingFieldProps,
+  CategoryFieldProps,
+  UpdatedFieldsProps,
+} from "../../../types/app/data/types";
+import {
+  getPersianDate,
+  idRand,
+  secureAccess,
+  secureAList,
+  secureTagList,
+  validateUrl,
+} from "../utility";
 import {
   serviceCategorizing,
   serviceCreateBlog,
@@ -18,73 +32,64 @@ import {
   serviceDeleteRelationalTagged,
   serviceDeleteTag,
   serviceGetBlog,
-  serviceGetCategorizeds,
   serviceGetCategory,
   serviceGetTag,
   serviceTagging,
   serviceUpdateBlog,
   serviceUpdateCategory,
+  serviceUpdateTag,
 } from "./blogServices";
+import { ActionResult } from "next/dist/server/app-render/types";
 
-// return Result
-async function validateUrl(image) {
-  try {
-    new URL(image);
-    return true;
-  } catch (error) {
-    throw new Error("لینک تصویر مجاز نیست");
-  }
-}
-
-function uuId() {
-  return Math.floor(Math.random() * 10000);
-}
-function getPersianDate() {
-  return new persianDate(new Date()).format("MMMM,D");
-}
 // ACTION for POST / New Post
-export async function actionCreateBlog(_, formData) {
-  await secureAccess();
-  const created_at = await getPersianDate();
-  const image = encodeURI(formData.get("blogImage"));
-  const getTags = JSON.parse(formData.get("blogTags"));
 
-  const blogId = uuId();
-  await validateUrl(image);
-  const newBlogFields = {
+export async function actionCreateBlog(
+  _: any,
+  formData: FormData
+): Promise<ActionResult> {
+  await secureAccess();
+  const blogId = idRand();
+  const newBlogFields: newBlogFieldProps = {
     id: blogId,
-    created_at,
+    created_at: getPersianDate(),
     author: "امیررضا منفرد",
-    title: sanitizeTextOnServer(formData.get("blogTitle")).trim(),
-    description: sanitizeTextOnServer(formData.get("blogDescription").trim()),
+    title: sanitizeTextOnServer(formData.get("blogTitle")),
+    description: sanitizeTextOnServer(
+      formData.get("blogDescription") as string
+    ),
     content: sanitizeHTMLOnServer(formData.get("textEditor")),
-    image,
+    image:
+      (await validateUrl(encodeURI(formData.get("blogImage") as string))) &&
+      encodeURI(formData.get("blogImage") as string),
   };
   const createdBlog = await serviceCreateBlog(newBlogFields);
   revalidatePath("dashboard/blogs");
   revalidatePath("dashboard/blogs/new");
   revalidatePath("dashboard/blogs/all");
-  const categories = await secureAList(formData.getAll("blogCategory"));
-  const tags = await secureTagList(getTags);
+
+  const categories = await secureAList(formData.getAll("blogCategory") as []);
+  const tagsString = JSON.parse(formData.get("blogTags") as string);
+  const tags = secureTagList(tagsString);
   if (createdBlog) {
     try {
-      let tasks = categories.map(async (catId) => {
+      let tasks = categories.map(async (catId: string) => {
         await serviceGetCategory(catId);
-        const newCategorizingField = {
-          categoryId: Number(catId),
+        const newCategorizingField: newCategorizingFieldProps = {
+          categoryId: catId,
           blogId,
         };
         return await serviceCategorizing(newCategorizingField);
       });
-      const tagTasks = tags.map(async (tag) => {
+      // CHANGE : TYPE OF tag MUST CHANGE
+      const tagTasks = tags.map(async (tag: any) => {
         await serviceGetTag(tag.id);
-        const newTaggingField = {
-          tagId: Number(tag.id),
+        const newTaggingField: TaggingFieldProps = {
+          tagId: tag.id,
           blogId,
         };
         return await serviceTagging(newTaggingField);
       });
-      tasks = [...tasks, tagTasks];
+      tasks = [...tasks, ...tagTasks];
       await Promise.all(tasks);
     } catch (error) {
       return {
@@ -101,49 +106,49 @@ export async function actionCreateBlog(_, formData) {
   };
 }
 // ACTION for PUT / Edit Post
-export async function actionUpdateBlog(_, formData) {
+export async function actionUpdateBlog(_: any, formData: FormData) {
   await secureAccess();
-  const blogId = Number(formData.get("id"));
+  const blogId: string = formData.get("id") as string;
   const blog = await serviceGetBlog(blogId);
-  if (!blogId) throw new Error("پست مورد نظر وجود ندارد");
   if (!blog) throw new Error("پست مورد نظر وجود ندارد");
-  const image = encodeURI(formData.get("blogImage"));
+  const image = encodeURI(formData.get("blogImage") as string);
   await validateUrl(image);
 
-  const getTags = JSON.parse(formData.get("blogTags"));
-  const updatedFields = {
+  const getTags = JSON.parse(formData.get("blogTags") as string);
+
+  const updatedFields: UpdatedFieldsProps = {
     id: blogId,
     author: "امیررضا منفرد",
-    description: sanitizeTextOnServer(formData.get("blogDescription").trim()),
+    description: sanitizeTextOnServer(formData.get("blogDescription")),
     title: sanitizeTextOnServer(formData.get("blogTitle")),
     content: sanitizeHTMLOnServer(formData.get("textEditor")),
     image,
   };
 
   const updatedBlog = await serviceUpdateBlog(blogId, updatedFields);
-  const tags = await secureTagList(getTags);
-  const categories = await secureAList(formData.getAll("blogCategory"));
+  const tags = secureTagList(getTags);
+  const categories = await secureAList(formData.getAll("blogCategory") as []);
   if (updatedBlog) {
     await serviceDeleteRelationalCategorizeds(blogId);
     await serviceDeleteRelationalTagged(blogId);
     try {
       let tasks = categories.map(async (catId) => {
         await serviceGetCategory(catId);
-        const newCategorizingField = {
-          categoryId: Number(catId),
+        const newCategorizingField: newCategorizingFieldProps = {
+          categoryId: catId,
           blogId,
         };
         return await serviceCategorizing(newCategorizingField);
       });
       const tagTasks = tags.map(async (tag) => {
         await serviceGetTag(tag.id);
-        const newTaggingField = {
-          tagId: Number(tag.id),
+        const newTaggingField: TaggingFieldProps = {
+          tagId: tag.id,
           blogId,
         };
         return await serviceTagging(newTaggingField);
       });
-      tasks = [...tasks, tagTasks];
+      tasks = [...tasks, ...tagTasks];
       await Promise.all(tasks);
     } catch (error) {
       console.log(error);
@@ -165,12 +170,11 @@ export async function actionUpdateBlog(_, formData) {
 }
 // ACTION for DELETE / Delete Post
 
-export async function actionDeleteBlog(id) {
+export async function actionDeleteBlog(id: string): Promise<ActionResult> {
   await secureAccess();
-  const blog = await serviceGetBlog(Number(id));
+  const blog = await serviceGetBlog(id);
   if (!blog) throw new Error("این پست وجود ندارد");
   await serviceDeleteBlog(blog.id);
-
   revalidatePath("dashboard/blogs");
   return {
     status: "success",
@@ -179,11 +183,11 @@ export async function actionDeleteBlog(id) {
 }
 
 // ACTION for POST / New Category
-export async function actionCreateCategory(formData) {
+export async function actionCreateCategory(formData: FormData): ActionResult {
   await secureAccess();
-  const newCategoryFields = {
-    title: sanitizeTextOnServer(formData.get("categoryTitle").trim()),
-    name: sanitizeTextOnServer(formData.get("categoryValue").trim()),
+  const newCategoryFields: CategoryFieldProps = {
+    title: sanitizeTextOnServer(formData.get("categoryTitle")),
+    name: sanitizeTextOnServer(formData.get("categoryValue")),
   };
   await serviceCreateCategory(newCategoryFields);
   revalidatePath("dashboard/blogs");
@@ -194,14 +198,15 @@ export async function actionCreateCategory(formData) {
   };
 }
 // ACTION for PUT / Edit Category
-export async function actionUpdateCategory(formData) {
+export async function actionUpdateCategory(formData: FormData): ActionResult {
   await secureAccess();
-  const categoryId = Number(formData.get("id"));
+  const categoryId = formData.get("id") as string;
   const category = serviceGetCategory(categoryId);
   if (!category) throw new Error("دسته بندی مورد نظر وجود ندارد");
-  const updatedFields = {
-    title: sanitizeTextOnServer(formData.get("categoryTitle").trim()),
-    name: sanitizeTextOnServer(formData.get("categoryValue").trim()),
+
+  const updatedFields: CategoryFieldProps = {
+    title: sanitizeTextOnServer(formData.get("categoryTitle")),
+    name: sanitizeTextOnServer(formData.get("categoryValue")),
   };
   await serviceUpdateCategory(updatedFields, categoryId);
   revalidatePath("dashboard/blogs");
@@ -214,7 +219,7 @@ export async function actionUpdateCategory(formData) {
   };
 }
 // ACTION for DELETE / Delete Category
-export async function actionDeleteCategory(id) {
+export async function actionDeleteCategory(id: string): ActionResult {
   await secureAccess();
   const category = await serviceGetCategory(id);
   if (!category) throw new Error("دسته بندی مورد نظر وجود ندارد");
@@ -229,9 +234,10 @@ export async function actionDeleteCategory(id) {
   };
 }
 
-export async function actionCreateTag(formData) {
+export async function actionCreateTag(formData: FormData): ActionResult {
   await secureAccess();
-  const newField = {
+
+  const newField: TagFieldProps = {
     title: sanitizeHTMLOnServer(formData.get("tagTitle")),
     slug: sanitizeHTMLOnServer(formData.get("tagSlug")),
   };
@@ -244,16 +250,16 @@ export async function actionCreateTag(formData) {
   };
 }
 
-export async function actionUpdateTag(formData) {
+export async function actionUpdateTag(formData: FormData): ActionResult {
   await secureAccess();
-  const tagId = Number(formData.get("id"));
+  const tagId = formData.get("id") as string;
   const tag = serviceGetTag(tagId);
   if (!tag) throw new Error("برچسب مورد نظر وجود ندارد");
-  const updatedFields = {
+  const updatedFields: TagFieldProps = {
     title: sanitizeTextOnServer(formData.get("tagTitle")),
     slug: sanitizeTextOnServer(formData.get("tagSlug")),
   };
-  await serviceUpdateCategory(updatedFields, tagId);
+  await serviceUpdateTag(updatedFields, tagId);
   revalidatePath("dashboard/blogs");
   revalidatePath("dashboard/blogs/all");
   revalidatePath("dashboard/blogs/new");
@@ -264,7 +270,7 @@ export async function actionUpdateTag(formData) {
   };
 }
 
-export async function actionDeleteTag(slug) {
+export async function actionDeleteTag(slug: string): ActionResult {
   await secureAccess();
   const tag = await serviceGetTag(slug);
   if (!tag) throw new Error("برچسب مورد نظر وجود ندارد");

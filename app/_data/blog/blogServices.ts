@@ -1,12 +1,21 @@
 import { notFound } from "next/navigation";
 import { supabase } from "../supabase";
+import {
+  newBlogFieldProps,
+  TagFieldProps,
+  CategoryFieldProps,
+  UpdatedFieldsProps,
+} from "../../../types/app/data/types";
 
 // POST / Post
-export async function serviceCreateBlog(newBlog) {
+export async function serviceCreateBlog(
+  newBlog: newBlogFieldProps
+): Promise<newBlogFieldProps> {
   const { data, error } = await supabase
     .from("blog")
     .insert([newBlog])
-    .select();
+    .select()
+    .single();
   if (error) {
     console.log(error);
     throw new Error(
@@ -26,12 +35,12 @@ export async function serviceGetBlogs() {
   return data;
 }
 // GET / Post
-export async function serviceGetBlog(id) {
+export async function serviceGetBlog(id: string): Promise<any> {
   const { data, error } = await supabase
     .from("blog")
     .select()
-    .single()
-    .eq("id", Number(id));
+    .eq("id", id)
+    .single();
   if (data === null) notFound();
   if (error) {
     console.log(error);
@@ -40,11 +49,14 @@ export async function serviceGetBlog(id) {
   return data;
 }
 // PUT / Post
-export async function serviceUpdateBlog(id, updatedFields) {
+export async function serviceUpdateBlog(
+  id: string,
+  updatedFields: UpdatedFieldsProps
+): Promise<any> {
   const { data, error } = await supabase
     .from("blog")
     .update(updatedFields)
-    .eq("id", Number(id))
+    .eq("id", id)
     .select();
   if (error) {
     console.log(error);
@@ -55,18 +67,17 @@ export async function serviceUpdateBlog(id, updatedFields) {
   return data;
 }
 // DELETE / Post
-export async function serviceDeleteBlog(blogId) {
-  const { error } = await supabase
-    .from("blog")
-    .delete()
-    .eq("id", String(blogId));
+export async function serviceDeleteBlog(blogId: string): Promise<void> {
+  const { error } = await supabase.from("blog").delete().eq("id", blogId);
   if (error) {
     console.log(error);
     throw new Error("مشکلی ایجاد شده است  مجددا تلاش کنید");
   }
 }
 // POST / Category
-export async function serviceCreateCategory(newCategory) {
+export async function serviceCreateCategory(
+  newCategory: CategoryFieldProps
+): Promise<any> {
   const { data, error } = await supabase
     .from("blog-categories")
     .insert([newCategory]);
@@ -85,12 +96,13 @@ export async function serviceGetCategories() {
   }
   return data;
 }
-export async function serviceGetCategory(id) {
+// CHANGE Promise<any>
+export async function serviceGetCategory(catId: string): Promise<any> {
   const { data, error } = await supabase
     .from("blog-categories")
     .select()
-    .single()
-    .eq("id", String(id));
+    .eq("id", catId)
+    .single();
   if (error) {
     console.log(error);
     throw new Error("مشکلی ایجاد شده است ، مجددا تلاش کنید");
@@ -98,11 +110,12 @@ export async function serviceGetCategory(id) {
 
   return data;
 }
-export async function serviceGetRelationalBlogsBasedTags(blogId) {
-  const { data, error } = await supabase.from("blog");
-}
+
 // PUT / Category
-export async function serviceUpdateCategory(updatedFields, id) {
+export async function serviceUpdateCategory(
+  updatedFields: CategoryFieldProps,
+  id: string
+): Promise<any> {
   const { data, error } = await supabase
     .from("blog-categories")
     .update(updatedFields)
@@ -114,7 +127,7 @@ export async function serviceUpdateCategory(updatedFields, id) {
   return data;
 }
 // DELETE / Category
-export async function serviceDeleteCategory(id) {
+export async function serviceDeleteCategory(id: string): Promise<void> {
   const { error } = await supabase
     .from("blog-categories")
     .delete()
@@ -125,10 +138,9 @@ export async function serviceDeleteCategory(id) {
   }
 }
 
-export async function serviceCreateTag(newTag) {
-  const { status, error } = await supabase.from("tags").insert([newTag]);
+export async function serviceCreateTag(newTag: TagFieldProps): Promise<void> {
+  const { data, error } = await supabase.from("tags").insert([newTag]);
   if (error) throw new Error("در ایجاد برچسب مشکلی پیش آمده است");
-  return status;
 }
 export async function serviceGetTags() {
   const { data, error } = await supabase.from("tags").select("*");
@@ -136,12 +148,12 @@ export async function serviceGetTags() {
   return data;
 }
 
-export async function serviceGetTag(id) {
+export async function serviceGetTag(tagId: string): Promise<any> {
   const { data, error } = await supabase
     .from("tags")
     .select()
-    .single()
-    .eq("id", Number(id));
+    .eq("id", tagId)
+    .single();
   if (error) {
     console.log(error);
     throw new Error("مشکلی در دریافت  برچسب ایجاد شده است");
@@ -149,16 +161,19 @@ export async function serviceGetTag(id) {
   return data;
 }
 
-export async function serviceUpdateTag(updatedField, id) {
-  const { status, error } = await supabase
+export async function serviceUpdateTag(
+  updatedField: TagFieldProps,
+  id: string
+): Promise<any> {
+  const { data, error } = await supabase
     .from("tags")
     .update(updatedField)
     .eq("id", Number(id));
   if (error) throw new Error("مشکلی در بروزرسانی  برچسب ایجاد شده است");
-  return status;
+  return data;
 }
-export async function serviceDeleteTag(id) {
-  const { error } = await supabase.from("tags").delete().eq("id", Number(id));
+export async function serviceDeleteTag(id: string): Promise<void> {
+  const { error } = await supabase.from("tags").delete().eq("id", id);
   if (error) throw new Error("در حذف برچسب مشکلی ایجاد شده است");
 }
 
@@ -218,12 +233,12 @@ export async function serviceGetTaggeds() {
   return data;
 }
 
-export async function serviceGetTagBySlug(slug) {
+export async function serviceGetTagBySlug(slug: string) {
   const { data, error } = await supabase
     .from("tags")
     .select()
-    .single()
-    .eq("slug", slug);
+    .eq("slug", slug)
+    .single();
   if (error) {
     console.log(error);
     throw new Error("مشکلی در دریافت تگ ایجاد شده است");

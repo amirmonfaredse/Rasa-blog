@@ -5,7 +5,7 @@ const createDOMPurify = require("dompurify");
 const DOMPurify = createDOMPurify(window);
 
 export function sanitizeHTMLOnServer(dirty) {
-  return DOMPurify.sanitize(dirty);
+  return DOMPurify.sanitize(dirty).trim();
 }
 
 export function extractTextFromHTML(html, maxLength = 550) {
@@ -19,5 +19,7 @@ export function sanitizeTextOnServer(dirty) {
     ALLOWED_TAGS: [],
     ALLOWED_ATTR: [],
   });
-  return sanitized.replace(/[^a-zA-Zآ-ی0-9۰-۹ .,!?؟؛،:()\[\]{}'"«»\-]/g, "");
+  return sanitized
+    .replace(/[^a-zA-Zآ-ی0-9۰-۹ .,!?؟؛،:()\[\]{}'"«»\-]/g, "")
+    .trim();
 }
