@@ -1,26 +1,15 @@
 "use server";
 import { revalidatePath } from "next/cache";
-import {
-  serviceAddFilesURLList,
-  serviceGetImageFileURL,
-  serviceUploadFile,
-} from "./mediaServices";
+import { ActionResult } from "next/dist/server/app-render/types";
+import { addToImageList, serviceUploadFile } from "./mediaServices";
 
 const allowedImageTypes = ["image/png", "image/jpeg", "image/jpg"];
 
-async function addToImageList(imageName, imageSize, imageType) {
-  const imageURL = await serviceGetImageFileURL(imageName);
-  const imageField = {
-    url: imageURL,
-    name: imageName,
-    size: imageSize,
-    type: imageType,
-  };
-  await serviceAddFilesURLList(imageField);
-}
-
-export async function actionUploadImage(_, formData) {
-  const image = formData.get("imageFile");
+export async function actionUploadImage(
+  _: any,
+  formData: FormData
+): ActionResult {
+  const image = formData.get("imageFile") as File;
   try {
     if (!allowedImageTypes.includes(image.type))
       return {
@@ -33,8 +22,8 @@ export async function actionUploadImage(_, formData) {
         message: "حداکثر حجم فایل باید کمتر از5 مگابایت باشد",
       };
     image.name.replace(/[^a-zA-Z0-9.\-_]/g, "");
-    const arrayBuffer = await image.arrayBuffer();
-    const bufferImage = Buffer.from(arrayBuffer);
+    const arrayBuffer: ArrayBuffer = await image.arrayBuffer();
+    const bufferImage: Buffer = Buffer.from(arrayBuffer);
 
     await serviceUploadFile(image.name, bufferImage);
     await addToImageList(image.name, image.size, image.type);

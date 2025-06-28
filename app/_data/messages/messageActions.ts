@@ -9,14 +9,22 @@ import {
   serviceContactGetMessage,
   serviceContactSendMessage,
 } from "./messageServices";
-import { sanitizeHTMLOnServer } from "@/app/utility/jsDOM";
+import { sanitizeHTMLOnServer } from "../../utility/jsDOM";
 import { secureAccess } from "../utility";
+import {
+  CommentFieldProps,
+  MessageFieldProps,
+} from "../../../types/app/data/types";
+import { ActionResult } from "next/dist/server/app-render/types";
 
-export async function actionContactSendMessage(_, formData) {
-  const messageFields = {
-    fullName: formData.get("fullName"),
-    email: formData.get("email"),
-    message: formData.get("message"),
+export async function actionContactSendMessage(
+  _: any,
+  formData: FormData
+): ActionResult {
+  const messageFields: MessageFieldProps = {
+    fullName: formData.get("fullName") as string,
+    email: formData.get("email") as string,
+    message: formData.get("message") as string,
   };
   const message = await serviceContactSendMessage(messageFields);
   if (message) {
@@ -31,7 +39,7 @@ export async function actionContactSendMessage(_, formData) {
     };
   }
 }
-export async function actionContactRemoveMessage(id) {
+export async function actionContactRemoveMessage(id: string): Promise<void> {
   await secureAccess();
   const contact = await serviceContactGetMessage(id);
   if (!contact) throw new Error("امکان حذف این پیام وجود ندارد");
@@ -39,9 +47,12 @@ export async function actionContactRemoveMessage(id) {
   revalidatePath("/dashboard/contact");
 }
 
-export async function actionCommentsSendMessage(_, formData) {
-  const blogId = Number(sanitizeHTMLOnServer(formData.get("blogId")));
-  const messageField = {
+export async function actionCommentsSendMessage(
+  _: any,
+  formData: FormData
+): ActionResult {
+  const blogId = sanitizeHTMLOnServer(formData.get("blogId"));
+  const messageField: CommentFieldProps = {
     fullName: sanitizeHTMLOnServer(formData.get("fullName")),
     email: sanitizeHTMLOnServer(formData.get("email")),
     message: sanitizeHTMLOnServer(formData.get("message")),
@@ -56,7 +67,7 @@ export async function actionCommentsSendMessage(_, formData) {
       "نظرشما باموفقیت ارسال شد ، بعد از تایید برروی سایت قرار خواهد گرفت",
   };
 }
-export async function actionCommentsRemoveMessage(id) {
+export async function actionCommentsRemoveMessage(id: string): ActionResult {
   await secureAccess();
   const comment = await serviceCommentsGetMessage(id);
   if (!comment) throw new Error("امکان حذف این نظر وجود ندارد");
@@ -67,7 +78,7 @@ export async function actionCommentsRemoveMessage(id) {
     message: "نظر با موفقیت حذف شد",
   };
 }
-export async function actionCommentsConfirmMessage(id) {
+export async function actionCommentsConfirmMessage(id: string): ActionResult {
   await secureAccess();
   const comment = await serviceCommentsGetMessage(id);
   if (!comment) throw new Error("امکان حذف این نظر وجود ندارد");

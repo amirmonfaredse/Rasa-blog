@@ -1,10 +1,14 @@
+import { SlideFieldProps } from "../../../types/app/data/types";
 import { supabase } from "../supabase";
 
-export async function serviceCreateSlide(newSlide) {
+export async function serviceCreateSlide(
+  newSlide: SlideFieldProps
+): Promise<any> {
   const { data, error } = await supabase
     .from("sliders")
     .insert([newSlide])
-    .select();
+    .select()
+    .single();
   if (error) {
     console.log(error);
     throw new Error(
@@ -21,7 +25,7 @@ export async function serviceGetSliders() {
   }
   return data;
 }
-export async function serviceGetSlider(id) {
+export async function serviceGetSlider(id: string): Promise<any> {
   const { data, error } = await supabase
     .from("sliders")
     .select()
@@ -33,7 +37,7 @@ export async function serviceGetSlider(id) {
   }
   return data;
 }
-export async function serviceDeleteSlide(slideId) {
+export async function serviceDeleteSlide(slideId: string): Promise<void> {
   const { error } = await supabase.from("sliders").delete().eq("id", slideId);
   if (error) {
     console.log(error);

@@ -1,7 +1,13 @@
+import {
+  CommentFieldProps,
+  MessageFieldProps,
+} from "../../../types/app/data/types";
 import { supabase } from "../supabase";
 
 // POST
-export async function serviceContactSendMessage(newMessage) {
+export async function serviceContactSendMessage(
+  newMessage: MessageFieldProps
+): Promise<any> {
   const { data, error } = await supabase
     .from("contact")
     .insert([newMessage])
@@ -16,22 +22,19 @@ export async function serviceContactGetMessages() {
   if (error) throw new Error("مشکلی در دریافت پیام ها ایجاد شده است");
   return data;
 }
-export async function serviceContactGetMessage(id) {
+export async function serviceContactGetMessage(id: string): Promise<any> {
   const { data, error } = await supabase
     .from("contact")
     .select()
-    .single()
-    .eq("id", id);
+    .eq("id", id)
+    .single();
   if (error) throw new Error("مشکلی در دریافت  پیام ایجاد شده است");
   return data;
 }
 
 // DELETE
-export async function serviceContactDeleteMessage(id) {
-  const { error } = await supabase
-    .from("contact")
-    .delete()
-    .eq("id", String(id));
+export async function serviceContactDeleteMessage(id: string): Promise<void> {
+  const { error } = await supabase.from("contact").delete().eq("id", id);
   if (error) throw new Error("مشکلی در حذف کردن پیام پیش آمده");
 }
 
@@ -40,20 +43,20 @@ export async function serviceCommentsGetMessages() {
   if (error) throw new Error("مشکلی در دریافت نظرات پیش آمده است");
   return data;
 }
-export async function serviceCommentsGetMessage(id) {
+export async function serviceCommentsGetMessage(id: string): Promise<any> {
   const { data, error } = await supabase
     .from("comments")
     .select()
-    .single()
-    .eq("id", String(id));
+    .eq("id", id)
+    .single();
   if (error) throw new Error("مشکلی در دریافت این نظر پیش آمده است");
   return data;
 }
-export async function serviceCommentsConfirmMessage(id) {
+export async function serviceCommentsConfirmMessage(id: string) {
   const { status, error } = await supabase
     .from("comments")
     .update({ confirmed: true })
-    .eq("id", String(id));
+    .eq("id", id);
   if (error) throw new Error("در تایید این کامنت مشکلی ایجاد شده است");
   return status;
 }
@@ -66,17 +69,16 @@ export async function serviceCommentsGetConfirmedMessages() {
   if (error) throw new Error("مشکلی در دریافت نظرات ایجاد شده است");
   return data;
 }
-export async function serviceCommentsSendMessage(newComment) {
+export async function serviceCommentsSendMessage(
+  newComment: CommentFieldProps
+) {
   const { status, error } = await supabase
     .from("comments")
     .insert([newComment]);
   if (error) throw new Error("مشکلی در دریافت نظرات پیش آمده است");
   return status;
 }
-export async function serviceCommentsDeleteMessage(id) {
-  const { error } = await supabase
-    .from("comments")
-    .delete()
-    .eq("id", String(id));
+export async function serviceCommentsDeleteMessage(id: string): Promise<void> {
+  const { error } = await supabase.from("comments").delete().eq("id", id);
   if (error) throw new Error("مشکلی در دریافت نظرات پیش آمده است");
 }
