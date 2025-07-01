@@ -1,18 +1,16 @@
 "use server";
 import { revalidatePath } from "next/cache";
-
+import { ActionResult } from "next/dist/server/app-render/types";
+import {
+  newBlogFieldProps,
+  newCategorizingFieldProps,
+  TaggingFieldProps,
+  UpdatedFieldsProps,
+} from "../../../types/app/data/types";
 import {
   sanitizeHTMLOnServer,
   sanitizeTextOnServer,
 } from "../../utility/jsDOM";
-import {
-  newBlogFieldProps,
-  newCategorizingFieldProps,
-  TagFieldProps,
-  TaggingFieldProps,
-  CategoryFieldProps,
-  UpdatedFieldsProps,
-} from "../../../types/app/data/types";
 import {
   getPersianDate,
   idRand,
@@ -22,24 +20,21 @@ import {
   validateUrl,
 } from "../utility";
 import {
-  serviceCategorizing,
   serviceCreateBlog,
-  serviceCreateCategory,
-  serviceCreateTag,
   serviceDeleteBlog,
-  serviceDeleteCategory,
-  serviceDeleteRelationalCategorizeds,
-  serviceDeleteRelationalTagged,
-  serviceDeleteTag,
   serviceGetBlog,
+  serviceUpdateBlog,
+} from "./blogServices";
+import {
+  serviceCategorizing,
+  serviceDeleteRelationalCategorizeds,
   serviceGetCategory,
+} from "./categories/categories.services";
+import {
+  serviceDeleteRelationalTagged,
   serviceGetTag,
   serviceTagging,
-  serviceUpdateBlog,
-  serviceUpdateCategory,
-  serviceUpdateTag,
-} from "./blogServices";
-import { ActionResult } from "next/dist/server/app-render/types";
+} from "./tags/tags.services";
 
 // ACTION for POST / New Post
 
@@ -53,7 +48,7 @@ export async function actionCreateBlog(
     id: blogId,
     created_at: getPersianDate(),
     author: "امیررضا منفرد",
-    title: sanitizeTextOnServer(formData.get("blogTitle")),
+    title: sanitizeTextOnServer(formData.get("blogTitle") as string),
     description: sanitizeTextOnServer(
       formData.get("blogDescription") as string
     ),
@@ -119,8 +114,10 @@ export async function actionUpdateBlog(_: any, formData: FormData) {
   const updatedFields: UpdatedFieldsProps = {
     id: blogId,
     author: "امیررضا منفرد",
-    description: sanitizeTextOnServer(formData.get("blogDescription")),
-    title: sanitizeTextOnServer(formData.get("blogTitle")),
+    description: sanitizeTextOnServer(
+      formData.get("blogDescription") as string
+    ),
+    title: sanitizeTextOnServer(formData.get("blogTitle") as string),
     content: sanitizeHTMLOnServer(formData.get("textEditor")),
     image,
   };
@@ -179,108 +176,5 @@ export async function actionDeleteBlog(id: string): Promise<ActionResult> {
   return {
     status: "success",
     message: "پست با موفقیت حذف شد",
-  };
-}
-
-// ACTION for POST / New Category
-export async function actionCreateCategory(formData: FormData): ActionResult {
-  await secureAccess();
-  const newCategoryFields: CategoryFieldProps = {
-    title: sanitizeTextOnServer(formData.get("categoryTitle")),
-    name: sanitizeTextOnServer(formData.get("categoryValue")),
-  };
-  await serviceCreateCategory(newCategoryFields);
-  revalidatePath("dashboard/blogs");
-  revalidatePath("dashboard/blogs/categories");
-  return {
-    status: "success",
-    message: "دسته بندی با موفقیت ایجاد شد",
-  };
-}
-// ACTION for PUT / Edit Category
-export async function actionUpdateCategory(formData: FormData): ActionResult {
-  await secureAccess();
-  const categoryId = formData.get("id") as string;
-  const category = serviceGetCategory(categoryId);
-  if (!category) throw new Error("دسته بندی مورد نظر وجود ندارد");
-
-  const updatedFields: CategoryFieldProps = {
-    title: sanitizeTextOnServer(formData.get("categoryTitle")),
-    name: sanitizeTextOnServer(formData.get("categoryValue")),
-  };
-  await serviceUpdateCategory(updatedFields, categoryId);
-  revalidatePath("dashboard/blogs");
-  revalidatePath("dashboard/blogs/all");
-  revalidatePath("dashboard/blogs/new");
-  revalidatePath("dashboard/blogs/categories");
-  return {
-    status: "success",
-    message: "دسته بندی با موفقیت ویرایش شد ",
-  };
-}
-// ACTION for DELETE / Delete Category
-export async function actionDeleteCategory(id: string): ActionResult {
-  await secureAccess();
-  const category = await serviceGetCategory(id);
-  if (!category) throw new Error("دسته بندی مورد نظر وجود ندارد");
-  await serviceDeleteCategory(id);
-  revalidatePath("dashboard/blogs");
-  revalidatePath("dashboard/blogs/all");
-  revalidatePath("dashboard/blogs/new");
-  revalidatePath("dashboard/blogs/categories");
-  return {
-    status: "success",
-    message: "دسته بندی با موفقیت حذف شد ",
-  };
-}
-
-export async function actionCreateTag(formData: FormData): ActionResult {
-  await secureAccess();
-
-  const newField: TagFieldProps = {
-    title: sanitizeHTMLOnServer(formData.get("tagTitle")),
-    slug: sanitizeHTMLOnServer(formData.get("tagSlug")),
-  };
-  await serviceCreateTag(newField);
-  revalidatePath("dashboard/blogs");
-  revalidatePath("dashboard/blogs/tags");
-  return {
-    status: "success",
-    message: "برچسب با موفقیت ایجاد شد",
-  };
-}
-
-export async function actionUpdateTag(formData: FormData): ActionResult {
-  await secureAccess();
-  const tagId = formData.get("id") as string;
-  const tag = serviceGetTag(tagId);
-  if (!tag) throw new Error("برچسب مورد نظر وجود ندارد");
-  const updatedFields: TagFieldProps = {
-    title: sanitizeTextOnServer(formData.get("tagTitle")),
-    slug: sanitizeTextOnServer(formData.get("tagSlug")),
-  };
-  await serviceUpdateTag(updatedFields, tagId);
-  revalidatePath("dashboard/blogs");
-  revalidatePath("dashboard/blogs/all");
-  revalidatePath("dashboard/blogs/new");
-  revalidatePath("dashboard/blogs/tags");
-  return {
-    status: "success",
-    message: "برچسب با موفقیت ویرایش شد",
-  };
-}
-
-export async function actionDeleteTag(slug: string): ActionResult {
-  await secureAccess();
-  const tag = await serviceGetTag(slug);
-  if (!tag) throw new Error("برچسب مورد نظر وجود ندارد");
-  await serviceDeleteTag(slug);
-  revalidatePath("dashboard/blogs");
-  revalidatePath("dashboard/blogs/all");
-  revalidatePath("dashboard/blogs/new");
-  revalidatePath("dashboard/blogs/tags");
-  return {
-    status: "success",
-    message: "برچسب با موفقیت حذف شد ",
   };
 }

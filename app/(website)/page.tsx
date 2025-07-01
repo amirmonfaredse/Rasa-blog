@@ -1,3 +1,4 @@
+import { serviceGetTaggeds } from "_data/blog/tags/tags.services";
 import Link from "next/link";
 import { serviceGetBlogs } from "../_data/blog/blogServices";
 import { serviceGetSliders } from "../_data/pages/pages.services";
@@ -10,6 +11,10 @@ import {
 } from "./_components/utilities/utilities";
 
 export default async function Page() {
+  // Test Types For Data
+  const getTags = await serviceGetTaggeds();
+  console.log("get Taged : ", getTags);
+
   const blogs = (await serviceGetBlogs()).slice(0, 5);
   const sliders = await serviceGetSliders();
   return (

@@ -3,21 +3,25 @@ import { supabase } from "../supabase";
 
 export async function serviceCreateSlide(
   newSlide: SlideFieldProps
-): Promise<any> {
-  const { data, error } = await supabase
-    .from("sliders")
-    .insert([newSlide])
-    .select()
-    .single();
+): Promise<void> {
+  const { error } = await supabase.from("sliders").insert([newSlide]);
   if (error) {
     console.log(error);
     throw new Error(
       "مشکلی در فرایند ایجاد اسلاید به وجود آمده است  مجددا تلاش کنید"
     );
   }
-  return data;
 }
-export async function serviceGetSliders() {
+export type serviceGetSlideProps = {
+  id: string;
+  title: string;
+  image: string;
+  bgColor: string;
+  textColor: string;
+  type: string;
+};
+
+export async function serviceGetSliders(): Promise<serviceGetSlideProps[]> {
   const { data, error } = await supabase.from("sliders").select("*");
   if (error) {
     console.log(error);
@@ -25,7 +29,9 @@ export async function serviceGetSliders() {
   }
   return data;
 }
-export async function serviceGetSlider(id: string): Promise<any> {
+export async function serviceGetSlider(
+  id: string
+): Promise<serviceGetSlideProps> {
   const { data, error } = await supabase
     .from("sliders")
     .select()

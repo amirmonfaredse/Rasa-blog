@@ -1,7 +1,12 @@
 "use server";
 import { revalidatePath } from "next/cache";
 import { ActionResult } from "next/dist/server/app-render/types";
-import { addToImageList, serviceUploadFile } from "./mediaServices";
+import {
+  serviceAddFilesURLList,
+  serviceGetImageFileURL,
+  serviceUploadFile,
+} from "./mediaServices";
+import { ImageFieldProps } from "@/types/app/data/types";
 
 const allowedImageTypes = ["image/png", "image/jpeg", "image/jpg"];
 
@@ -26,7 +31,7 @@ export async function actionUploadImage(
     const bufferImage: Buffer = Buffer.from(arrayBuffer);
 
     await serviceUploadFile(image.name, bufferImage);
-    await addToImageList(image.name, image.size, image.type);
+    await actionAddToImageList(image.name, image.size, image.type);
     revalidatePath("dashboard/media/upload");
     return {
       status: "success",
@@ -36,4 +41,18 @@ export async function actionUploadImage(
     console.log(error);
     throw new Error("مشکلی در فرایند آپلود فایل ایجاد شده است مجددا تلاش کنید");
   }
+}
+export async function actionAddToImageList(
+  imageName: string,
+  imageSize: number,
+  imageType: string
+): Promise<void> {
+  const imageURL = await serviceGetImageFileURL(imageName);
+  const imageField: ImageFieldProps = {
+    url: imageURL,
+    name: imageName,
+    size: imageSize,
+    type: imageType,
+  };
+  await serviceAddFilesURLList(imageField);
 }

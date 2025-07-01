@@ -1,34 +1,19 @@
-import { ImageFieldProps } from "../../../types/app/data/types";
+import { FilesUrlProps, ImageFieldProps } from "../../../types/app/data/types";
 import { supabase } from "../supabase";
 
 export async function serviceUploadFile(
   filePath: string,
   bufferedImage: Buffer
-): Promise<any> {
-  const { data, error } = await supabase.storage
+): Promise<void> {
+  const { error } = await supabase.storage
     .from("blogs-images")
     .upload(filePath, bufferedImage);
   if (error) {
     console.log(error);
     throw new Error("مشکلی ایجاد شده است لطفا مجددا تلاش کنید");
   }
-  return data;
 }
 
-export async function addToImageList(
-  imageName: string,
-  imageSize: number,
-  imageType: string
-): Promise<void> {
-  const imageURL = await serviceGetImageFileURL(imageName);
-  const imageField: ImageFieldProps = {
-    url: imageURL,
-    name: imageName,
-    size: imageSize,
-    type: imageType,
-  };
-  await serviceAddFilesURLList(imageField);
-}
 export async function serviceGetImageFileURL(
   filePath: string
 ): Promise<string> {
@@ -51,7 +36,10 @@ export async function serviceAddFilesURLList(
   }
   return status;
 }
-export async function serviceGetFilesFieldsFromURLList(): Promise<any> {
+
+export async function serviceGetFilesFieldsFromURLList(): Promise<
+  FilesUrlProps[]
+> {
   const { data, error } = await supabase.from("filesUrl").select("*");
   if (error) throw new Error("مشکلی در دریافت لیست آدرس ها ایجاد شده است");
   return data;
