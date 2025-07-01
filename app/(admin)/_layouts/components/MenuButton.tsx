@@ -1,12 +1,14 @@
 "use client";
 
-import { useSliderContext } from "../../_providers/NavigationProvider";
+import { useSliderContext } from "(admin)/_providers/NavigationProvider";
+
 
 function MenuButton() {
   const { openDrawer, setOpenDrawer } = useSliderContext();
-  function onClickDrawer() {
+
+  const onClickDrawer: React.MouseEventHandler<HTMLDivElement> = () => {
     setOpenDrawer(!openDrawer);
-  }
+  };
   return (
     <div
       onClick={onClickDrawer}

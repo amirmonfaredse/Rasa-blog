@@ -1,6 +1,7 @@
 "use client";
 
-import { actionDeleteTag } from "../../../../_data/blog/blogActions";
+import { actionDeleteTag } from "_data/blog/tags/tags.actions";
+
 
 function DeleteTagButton({ slug }: { slug: string }) {
   return (

@@ -12,16 +12,8 @@ export async function serviceCreateSlide(
     );
   }
 }
-export type serviceGetSlideProps = {
-  id: string;
-  title: string;
-  image: string;
-  bgColor: string;
-  textColor: string;
-  type: string;
-};
 
-export async function serviceGetSliders(): Promise<serviceGetSlideProps[]> {
+export async function serviceGetSliders(): Promise<SlideFieldProps[]> {
   const { data, error } = await supabase.from("sliders").select("*");
   if (error) {
     console.log(error);
@@ -29,9 +21,7 @@ export async function serviceGetSliders(): Promise<serviceGetSlideProps[]> {
   }
   return data;
 }
-export async function serviceGetSlider(
-  id: string
-): Promise<serviceGetSlideProps> {
+export async function serviceGetSlider(id: string): Promise<SlideFieldProps> {
   const { data, error } = await supabase
     .from("sliders")
     .select()

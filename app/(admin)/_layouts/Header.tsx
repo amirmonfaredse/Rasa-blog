@@ -1,8 +1,8 @@
-import { signOutAction } from "../../_data/actions";
-import { auth } from "../../_data/auth";
+import { signOutAction } from "_data/actions";
 import Image from "next/image";
 import Link from "next/link";
 import persianDate from "persian-date";
+import { auth } from "../../_data/auth";
 
 export default async function Header() {
   const { user } = await auth();

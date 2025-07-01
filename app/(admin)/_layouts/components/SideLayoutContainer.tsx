@@ -1,5 +1,6 @@
 "use client";
-import { useSliderContext } from "../../_providers/NavigationProvider";
+
+import { useSliderContext } from "(admin)/_providers/NavigationProvider";
 
 function SideLayoutContainer({ children }: { children: React.ReactNode }) {
   const { openDrawer } = useSliderContext();

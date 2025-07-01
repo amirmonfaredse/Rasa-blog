@@ -1,6 +1,6 @@
-import { serviceGetFilesFieldsFromURLList } from "../../../../_data/media/mediaServices";
 import Image from "next/image";
 import FileUploader from "../_components/FileUploader.jsx";
+import { serviceGetFilesFieldsFromURLList } from "_data/media/mediaServices.js";
 
 export default async function Page() {
   const images = await serviceGetFilesFieldsFromURLList();

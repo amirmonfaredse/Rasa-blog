@@ -1,5 +1,6 @@
 "use client";
-import { actionDeleteBlog } from "../../../../_data/blog/blogActions";
+
+import { actionDeleteBlog } from "_data/blog/blogActions";
 
 export default function DeleteButtonBlog({ blogId }: { blogId: string }) {
   return (

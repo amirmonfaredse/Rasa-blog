@@ -25,7 +25,11 @@ export const ChewyFont = Chewy({
   display: "swap",
   preload: false,
 });
-export default function RootLayout({ children }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="fa" dir="rtl" className={`${NotoFont.className}`}>
       <body className="w-full h-screen  bg-white overflow-x-hidden">

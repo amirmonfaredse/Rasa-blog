@@ -1,6 +1,6 @@
-import { actionCreateTag } from "../../../../_data/blog/blogActions";
-import { serviceGetTags } from "../../../../_data/blog/blogServices";
+import { serviceGetTags } from "_data/blog/tags/tags.services";
 import DeleteTagButton from "./DeleteTagButton";
+import { actionCreateTag } from "_data/blog/tags/tags.actions";
 
 export default async function Page() {
   const tags = await serviceGetTags();

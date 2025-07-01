@@ -1,42 +1,37 @@
 "use client";
 
+import { TagInputProps } from "@/types/app/admin/types";
+import { getTagServiceProps } from "@/types/app/data/types";
 import Image from "next/image";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
-function TagInput({
-  tagList,
-  tagged = [],
-}: {
-  tagList: any[];
-  tagged?: any[];
-}) {
-  const [tags, setTags] = useState(tagList);
-  const [filteredTags, setFilteredTags] = useState([]);
+function TagInput({ tagList, tagged = [] }: TagInputProps) {
+  const [tags, setTags] = useState<getTagServiceProps[]>(tagList);
+  const [filteredTags, setFilteredTags] = useState<getTagServiceProps[]>([]);
+  const idsInTagged: Set<string> = new Set(tagged.map((tag) => tag.tagId));
 
-  const idsInTagged = new Set(tagged.map((tag) => tag.tagId));
-
-  const [confirmedTags, setConfirmedTags] = useState(() =>
+  const [confirmedTags, setConfirmedTags] = useState<getTagServiceProps[]>(() =>
     tagList.filter((tag) => idsInTagged.has(tag.id))
   );
-  const [inpFocused, setInpFocused] = useState(true);
-  function handleSearchTag(e: React.ChangeEvent<HTMLInputElement>) {
-    if (e.currentTarget.value !== "") {
+  const [inpFocused, setInpFocused] = useState<boolean>(true);
+  const handleSearchTag = (e: ChangeEvent<HTMLInputElement>): void => {
+    if (e.target.value !== "") {
       setFilteredTags(() =>
-        tags.filter((tag) => tag.title.includes(e.currentTarget.value))
+        tags.filter((tag) => tag.title.includes(e.target?.value))
       );
     }
-  }
-  function handleEnter(e: React.KeyboardEvent<HTMLInputElement>) {
+  };
+  const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
     }
-  }
-  function onAddToConfirmedTag(title: string, slug: string, id: string) {
+  };
+  const onAddToConfirmedTag = (title: string, slug: string, id: string) => {
     if (!confirmedTags?.some((tag) => tag.title === title.trim())) {
       setConfirmedTags([
         ...confirmedTags,
         {
-          id,
+          id: id.trim(),
           title: title.trim(),
           slug: slug.trim(),
         },
@@ -44,10 +39,10 @@ function TagInput({
     } else {
       alert("این برچسب انتخاب شده است");
     }
-  }
-  function handleRemoveTagFromList(tagSlug: string) {
+  };
+  const handleRemoveTagFromList = (tagSlug: string) => {
     setConfirmedTags(confirmedTags.filter((tag) => tag.slug !== tagSlug));
-  }
+  };
   return (
     <>
       <label className="w-[95%] flex flex-col gap-3 mt-5">

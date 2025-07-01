@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Dispatch, MouseEventHandler, useState } from "react";
 
 function Accordion({
   title = "Default",
@@ -9,10 +9,10 @@ function Accordion({
   title?: string;
   children: React.ReactNode;
 }) {
-  const [openAcc, setOpenAcc] = useState(true);
-  function onOpenAcc() {
+  const [openAcc, setOpenAcc] = useState<boolean>(true);
+  const onOpenAcc: MouseEventHandler<HTMLDivElement> = () => {
     setOpenAcc(!openAcc);
-  }
+  };
 
   return (
     <div className="w-[95%] lg:w-full flex flex-col">

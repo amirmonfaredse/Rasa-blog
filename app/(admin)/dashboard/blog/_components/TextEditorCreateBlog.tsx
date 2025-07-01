@@ -1,12 +1,17 @@
 "use client";
+import { ActionResult } from "@/types/app/data/types";
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-export default function TextEditorCreateBlog({ formState }) {
+export default function TextEditorCreateBlog({
+  formState,
+}: {
+  formState: ActionResult;
+}) {
   const editor = useRef(null);
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState<string>("");
   const config = useMemo(
     () => ({
       uploader: {

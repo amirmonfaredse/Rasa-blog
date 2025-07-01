@@ -55,7 +55,7 @@ export default async function Page() {
                 <Td row>{index + 1}</Td>
                 <Td>{blog.title}</Td>
                 <Td center>{blog.author}</Td>
-                <Td center>{/* Date */}</Td>
+                <Td center>{blog.created_at}</Td>
                 <Td center>
                   <Link
                     href={`/blogs/${blog.id}`}

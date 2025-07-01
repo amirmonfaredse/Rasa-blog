@@ -1,8 +1,9 @@
 "use client";
-import { actionUpdateBlog } from "../../../../_data/blog/blogActions";
-import CustomToastContainer from "../../../../utility/CustomToastContainer";
+import { EditPostFormProps } from "@/types/app/admin/types";
 import { useActionState, useEffect } from "react";
 import { toast } from "react-hot-toast";
+import { actionUpdateBlog } from "../../../../_data/blog/blogActions";
+import CustomToastContainer from "../../../../utility/CustomToastContainer";
 import TagInput from "../_components/TagInput";
 import TextEditorEditBlog from "../_components/TextEditorEditBlog";
 import EditButton from "./EditButton";
@@ -13,12 +14,11 @@ export default function EditPostForm({
   tagList,
   categorized,
   tagged,
-}) {
+}: EditPostFormProps) {
   const [state, formAction, pending] = useActionState(actionUpdateBlog, {
     status: "",
     message: "",
   });
-
   useEffect(() => {
     if (state?.message?.length > 0) {
       if (state?.status === "error") toast.error(state?.message);
@@ -87,7 +87,7 @@ export default function EditPostForm({
                     className="flex m-2"
                     value={cat.id}
                     defaultChecked={categorized.some(
-                      (obj) => Number(obj.categoryId) === Number(cat.id)
+                      (obj) => obj.categoryId === cat.id
                     )}
                     name="blogCategory"
                   />

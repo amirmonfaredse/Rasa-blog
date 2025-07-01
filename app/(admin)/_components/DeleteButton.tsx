@@ -1,6 +1,7 @@
 "use client";
 
-import { actionContactRemoveMessage } from "../../_data/messages/messageActions";
+import { actionContactRemoveMessage } from "_data/messages/messageActions";
+
 
 export default function DeleteButton({ id }: { id: string }) {
   return (

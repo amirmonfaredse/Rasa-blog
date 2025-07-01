@@ -1,18 +1,18 @@
 "use client";
+import { actionUploadImage } from "_data/media/mediaActions";
 import Image from "next/image";
 import { useActionState, useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { toast } from "react-toastify";
-import { actionUploadImage } from "../../../../_data/media/mediaActions";
-import CustomToastContainer from "../../../../utility/CustomToastContainer";
-import SpinnerLoader from "../../../../utility/SpinnerLoader";
+import CustomToastContainer from "utility/CustomToastContainer";
+import SpinnerLoader from "utility/SpinnerLoader";
 const initialState = {
   status: "",
   message: "",
 };
 function FileUploader() {
-  const [fileName, setFileName] = useState("");
-  const [preview, setPreview] = useState("");
+  const [fileName, setFileName] = useState<string>("");
+  const [preview, setPreview] = useState<string>("");
   const [state, formAction, pending] = useActionState(
     actionUploadImage,
     initialState
@@ -23,8 +23,8 @@ function FileUploader() {
       if (state?.status === "success") toast.success(state.message);
     }
   }, [state]);
-  const onDrop = useCallback((acceptedFiles) => {
-    acceptedFiles.forEach((file) => {
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    acceptedFiles.forEach((file: File) => {
       const reader = new FileReader();
       setFileName(file.name);
       if (file) reader.readAsDataURL(file);
@@ -33,7 +33,7 @@ function FileUploader() {
       reader.onerror = () => alert("خواندن فایل با مشکل ایجاد شده است");
       reader.onload = () => {
         const dataUrl = reader.result;
-        setPreview(dataUrl);
+        setPreview(dataUrl as string);
       };
     });
   }, []);

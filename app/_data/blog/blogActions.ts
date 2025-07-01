@@ -2,7 +2,7 @@
 import { revalidatePath } from "next/cache";
 import { ActionResult } from "next/dist/server/app-render/types";
 import {
-  newBlogFieldProps,
+  BlogFieldProps,
   newCategorizingFieldProps,
   TaggingFieldProps,
   UpdatedFieldsProps,
@@ -44,7 +44,7 @@ export async function actionCreateBlog(
 ): Promise<ActionResult> {
   await secureAccess();
   const blogId = idRand();
-  const newBlogFields: newBlogFieldProps = {
+  const newBlogFields: BlogFieldProps = {
     id: blogId,
     created_at: getPersianDate(),
     author: "امیررضا منفرد",

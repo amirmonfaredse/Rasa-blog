@@ -1,7 +1,7 @@
 "use client";
 import { actionCommentsRemoveMessage } from "@/app/_data/messages/messageActions";
 
-function DeleteCommentButton({ id }) {
+function DeleteCommentButton({ id }: { id: string }) {
   return (
     <button
       onClick={async () => {

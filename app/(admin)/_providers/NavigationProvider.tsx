@@ -1,6 +1,6 @@
 "use client";
+import { SliderContextType } from "@/types/app/admin/types";
 import { createContext, useContext, useState } from "react";
-import { SliderContextType } from "../../../types/app/admin/types";
 
 const SliderContext = createContext<SliderContextType>({
   sliderList: [],
@@ -14,7 +14,7 @@ export function SliderContextProvider({
   children: React.ReactNode;
 }) {
   const [sliderList, setSliderList] = useState([]);
-  const [openDrawer, setOpenDrawer] = useState(false);
+  const [openDrawer, setOpenDrawer] = useState<boolean>(false);
 
   return (
     <SliderContext.Provider

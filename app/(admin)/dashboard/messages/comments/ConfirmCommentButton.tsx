@@ -1,7 +1,7 @@
 "use client";
 import { actionCommentsConfirmMessage } from "@/app/_data/messages/messageActions";
 
-function ConfirmCommentButton({ id }) {
+function ConfirmCommentButton({ id }: { id: string }) {
   return (
     <button
       onClick={async () => {

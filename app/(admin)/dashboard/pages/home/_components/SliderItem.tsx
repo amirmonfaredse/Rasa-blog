@@ -1,6 +1,7 @@
+import { SliderItemProps } from "@/types/app/admin/types";
 import RemoveSlide from "./RemoveSlide";
 
-export default function SliderItem({ index, slide }) {
+export default function SliderItem({ index, slide }: SliderItemProps) {
   return (
     <div className="flex w-full items-center justify-start border-2 border-avocado-600 p-2 rounded-lg">
       <div className="w-5/6 flex gap-2">

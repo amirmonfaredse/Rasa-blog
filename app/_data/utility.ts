@@ -1,4 +1,3 @@
-"use server";
 import persianDate from "persian-date";
 
 import { sanitizeTextOnServer } from "../utility/jsDOM";
@@ -24,7 +23,7 @@ interface TagListProps {
   title: string;
   slug: string;
 }
-export function secureTagList(list: []): TagListProps[] {
+export async function secureTagList(list: []): Promise<TagListProps[]> {
   return list.map((item: TagListProps) => {
     return {
       id: item.id,

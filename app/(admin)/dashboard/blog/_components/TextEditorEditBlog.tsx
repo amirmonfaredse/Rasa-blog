@@ -1,12 +1,17 @@
 "use client";
+import { TextEditorEditBlogProps } from "@/types/app/admin/types";
+import { ActionResult } from "next/dist/server/app-render/types";
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-export default function TextEditorEditBlog({ defaultContent, formState }) {
+export default function TextEditorEditBlog({
+  defaultContent,
+  formState,
+}: TextEditorEditBlogProps) {
   const editor = useRef(null);
-  const [content, setContent] = useState(() => defaultContent);
+  const [content, setContent] = useState<string>(() => defaultContent);
   const config = useMemo(
     () => ({
       direction: "rtl" as const,

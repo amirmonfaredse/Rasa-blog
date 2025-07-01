@@ -1,12 +1,12 @@
 "use client";
+import { SideTabProps } from "@/types/app/admin/types";
 import { motion } from "motion/react";
 import Link from "next/link";
-import { useState } from "react";
-import { SideTabProps } from "../../../../types/app/admin/types";
+import { MouseEventHandler, useState } from "react";
 
-export default function SideTab({ title, href = "", subs }: SideTabProps) {
-  const [openList, setOpenList] = useState(false);
-  const onNavClick = () => {
+export default function SideTab({ title, href = "/", subs }: SideTabProps) {
+  const [openList, setOpenList] = useState<boolean>(false);
+  const onNavClick: MouseEventHandler<HTMLAnchorElement> = () => {
     setOpenList(!openList);
   };
 

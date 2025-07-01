@@ -3,8 +3,13 @@ import { useSliderContext } from "@/app/(admin)/_providers/NavigationProvider";
 import SlideManager from "./SlideManager";
 import SliderItem from "./SliderItem";
 import { useEffect } from "react";
+import { SlideFieldProps } from "@/types/app/data/types";
 
-export default function SliderContainer({ sliders }) {
+export default function SliderContainer({
+  sliders,
+}: {
+  sliders: SlideFieldProps[];
+}) {
   const { sliderList, setSliderList } = useSliderContext();
   useEffect(() => {
     setSliderList(sliders);

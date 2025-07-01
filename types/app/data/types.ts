@@ -2,7 +2,7 @@ export type ActionResult = {
   status: string;
   message: string;
 };
-export type newBlogFieldProps = {
+export type BlogFieldProps = {
   id: string;
   created_at: string;
   author: string;
@@ -54,6 +54,7 @@ export type CommentFieldProps = {
   blogId: string;
 };
 export type SlideFieldProps = {
+  id?: string;
   title: string;
   image: string;
   bgColor: string;

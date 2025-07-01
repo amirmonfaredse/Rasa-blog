@@ -1,14 +1,15 @@
 "use client";
 
-import { actionCreateBlog } from "../../../../_data/blog/blogActions";
-import CustomToastContainer from "../../../../utility/CustomToastContainer";
+import { actionCreateBlog } from "_data/blog/blogActions";
 import { useActionState, useEffect } from "react";
 import { toast } from "react-hot-toast";
+import CustomToastContainer from "utility/CustomToastContainer";
 import TagInput from "../_components/TagInput";
 import TextEditorCreateBlog from "../_components/TextEditorCreateBlog";
 import ReleaseButton from "./ReleaseButton";
+import { NewPostFormProps } from "@/types/app/admin/types";
 
-export default function NewPostForm({ categories, tagList }) {
+export default function NewPostForm({ categories, tagList }: NewPostFormProps) {
   const [state, formAction, pending] = useActionState(actionCreateBlog, {
     status: "",
     message: "",

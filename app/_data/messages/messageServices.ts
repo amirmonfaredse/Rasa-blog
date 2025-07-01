@@ -9,9 +9,10 @@ import { supabase } from "../supabase";
 // POST
 export async function serviceContactSendMessage(
   newMessage: MessageFieldProps
-): Promise<void> {
+): Promise<MessageFieldProps> {
   const { data, error } = await supabase.from("contact").insert([newMessage]);
   if (error) throw new Error("در ارسال پیام مشکلی ایجاد شده است");
+  return data;
 }
 
 // GET

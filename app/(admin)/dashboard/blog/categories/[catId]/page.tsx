@@ -1,8 +1,12 @@
-import { actionUpdateCategory } from "../../../../../_data/blog/blogActions";
-import { serviceGetCategory } from "../../../../../_data/blog/blogServices";
+import { actionUpdateCategory } from "_data/blog/categories/categories.actions";
+import { serviceGetCategory } from "_data/blog/categories/categories.services";
 import Link from "next/link";
 
-export default async function Page({ params }) {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ catId: string }>;
+}) {
   const { catId } = await params;
   const category = await serviceGetCategory(catId);
 

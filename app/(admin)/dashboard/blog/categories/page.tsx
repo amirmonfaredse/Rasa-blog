@@ -1,7 +1,7 @@
-import { actionCreateCategory } from "../../../../_data/blog/blogActions";
-import { serviceGetCategories } from "../../../../_data/blog/blogServices";
 import Link from "next/link";
 import DeleteButtonCategory from "../_components/DeleteButtonCategory";
+import { actionCreateCategory } from "_data/blog/categories/categories.actions";
+import { serviceGetCategories } from "_data/blog/categories/categories.services";
 
 export default async function Page() {
   const categories = await serviceGetCategories();
