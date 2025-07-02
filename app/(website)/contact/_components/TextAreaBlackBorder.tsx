@@ -11,14 +11,14 @@ function TextAreaBlackBorder({
   className,
   type = "textarea",
 }: TextAreaBlackBorderProps) {
-  const [inpOk, setInpOk] = useState(false);
-  const [inpValue, setInpValue] = useState("");
-  const [message, setMessage] = useState("");
+  const [inpOk, setInpOk] = useState<boolean>(false);
+  const [inpValue, setInpValue] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
 
-  const onInputChange = (e) => {
+  const onInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInpValue(e.target.value);
   };
-  const onBlurInput = (value, type) => {
+  const onBlurInput = (value: string, type: string) => {
     setMessage("");
     const isValid = validateInput(value, type);
     if (isValid) {
@@ -34,7 +34,7 @@ function TextAreaBlackBorder({
     <>
       <textarea
         className={`w-full border-2 mt-4 p-2  border-ghost-600 bg-ghost-100 shadow-xl outline-none ${className} `}
-        name={className}
+        name={name}
         onChange={onInputChange}
         onBlur={(e) => {
           onBlurInput(e.target.value, type);

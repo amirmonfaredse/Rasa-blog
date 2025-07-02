@@ -1,11 +1,15 @@
 import PostCard from "@/app/(website)/_components/cards/PostCard";
+import { serviceGetBlogs } from "_data/blog/blogServices";
 import {
-  serviceGetBlogs,
   serviceGetTagBySlug,
-  serviceGetTaggeds
-} from "@/app/_data/blog/blogServices";
+  serviceGetTaggeds,
+} from "_data/blog/tags/tags.services";
 
-export default async function Page({ params }) {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
   const tag = await serviceGetTagBySlug(slug);
   let taggeds = await serviceGetTaggeds();

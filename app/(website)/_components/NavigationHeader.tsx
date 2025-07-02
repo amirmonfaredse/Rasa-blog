@@ -1,12 +1,14 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { MouseEventHandler, useEffect, useState } from "react";
 import NavList from "./NavList";
 
 const NavigationHeader = () => {
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const [showSearch, setShowSearch] = useState(false);
-  const [isMobileMode, setIsMobileMode] = useState(window.innerWidth < 768);
+  const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
+  const [showSearch, setShowSearch] = useState<boolean>(false);
+  const [isMobileMode, setIsMobileMode] = useState<boolean>(
+    window.innerWidth < 768
+  );
   // CHANGE
   // use memo And Callback Here for Optimizing
   useEffect(() => {
@@ -20,10 +22,10 @@ const NavigationHeader = () => {
     setDrawerOpen(false);
   }, [isMobileMode]);
 
-  const handleDrawer = () => {
+  const handleDrawer: MouseEventHandler<HTMLDivElement> = () => {
     setDrawerOpen(!drawerOpen);
   };
-  const handleSearchBox = () => {
+  const handleSearchBox: MouseEventHandler<HTMLDivElement> = () => {
     setShowSearch(!showSearch);
   };
   return (

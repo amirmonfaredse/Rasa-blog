@@ -1,14 +1,15 @@
-import {
-  serviceGetBlogs,
-  serviceGetCategories,
-  serviceGetCategorizeds,
-} from "@/app/_data/blog/blogServices";
 import { Suspense } from "react";
 import { BlogContextProvider } from "../_providers/BlogProvider";
 import BlogList from "./_components/BlogList";
 import Sidebar from "./_components/Sidebar";
+import { serviceGetBlogs } from "_data/blog/blogServices";
+import {
+  serviceGetCategories,
+  serviceGetCategorizeds,
+} from "_data/blog/categories/categories.services";
+import { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "وبلاگ",
   description:
     "برای مشاهده آخرین پست ها  در حوزه طراحی سایت ، تکنولوژی و برنامه نویسی از این صفحه بازدید کنید",

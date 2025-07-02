@@ -1,7 +1,7 @@
 import { Bounce, ToastContainer } from "react-toastify";
 
 function CustomToastContainer({
-  position = "top-right",
+  position = "top-right" as const,
   autoClose = 5000,
   hideProgressBar = false,
   newestOnTop = true,

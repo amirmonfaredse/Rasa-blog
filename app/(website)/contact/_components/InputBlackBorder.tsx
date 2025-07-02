@@ -5,20 +5,19 @@ import { validateInput } from "@/app/utility/validateInput";
 import { InputBlackBorderProps } from "@/types/app/website/types";
 import { useState } from "react";
 
-
 function InputBlackBorder({
   className,
   type = "text",
   name,
   required = false,
 }: InputBlackBorderProps) {
-  const [inpOk, setInpOk] = useState(false);
-  const [inpValue, setInpValue] = useState("");
-  const [message, setMessage] = useState("");
-  const onInputChange = (e) => {
+  const [inpOk, setInpOk] = useState<boolean>(false);
+  const [inpValue, setInpValue] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInpValue(e.target.value);
   };
-  const onBlurInput = (value, type) => {
+  const onBlurInput = (value: string, type: string) => {
     setMessage("");
     const isValid = validateInput(value, type);
     if (isValid) {

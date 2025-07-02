@@ -1,11 +1,11 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { MouseEventHandler, ReactElement, useState } from "react";
 import SearchModal from "./SearchModal";
 
 export default function SearchButton() {
-  const [showSearchModal, setShowSearchModal] = useState(false);
-  const handleSearchModal = () => {
+  const [showSearchModal, setShowSearchModal] = useState<boolean>(false);
+  const handleSearchModal: MouseEventHandler = () => {
     setShowSearchModal(!showSearchModal);
   };
   return (

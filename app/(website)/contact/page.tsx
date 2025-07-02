@@ -2,7 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 import FormContact from "./_components/FormContact";
-export const metadata = {
+import { Metadata } from "next";
+export const metadata: Metadata = {
   title: "تماس با ما",
   description:
     "برای مشاهده ی اطلاعات تماس  و یا ارتباط مستقیم از طریق فرم ارسال پیام ، از این صفحه بازدید کنید",

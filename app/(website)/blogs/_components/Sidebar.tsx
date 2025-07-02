@@ -1,7 +1,8 @@
 "use client";
+import { SidebarBlogProps } from "@/types/app/website/types";
 import { useBlogContext } from "../../_providers/BlogProvider";
 
-export default function Sidebar({ categories, categorized }) {
+export default function Sidebar({ categories, categorized }: SidebarBlogProps) {
   const {
     setSearchInputValue,
     categorizedBlogs,
@@ -9,24 +10,24 @@ export default function Sidebar({ categories, categorized }) {
     checkedList,
     setCheckedList,
   } = useBlogContext();
-  function onSearchInp(e) {
+  function onSearchInp(e: React.ChangeEvent<HTMLInputElement>) {
     setSearchInputValue(e.target.value);
   }
 
-  function onCheckInp(e) {
-    const targetId = Number(e.target.id);
+  function onCheckInp(e: React.ChangeEvent<HTMLInputElement>) {
+    const targetId = e.target.id;
     setCheckedList([...checkedList, targetId]);
     if (e.target.checked) {
       categorized.map((c) => {
-        const cId = Number(c.categoryId);
-        const blogId = Number(c.blogId);
+        const cId = c.categoryId;
+        const blogId: string = c.blogId;
         if (cId === targetId && !categorizedBlogs.includes(blogId))
           setCategorizedBlog([...categorizedBlogs, blogId]);
       });
     } else {
       // Remove Category [id] from the categorizedBlog List
       categorized.map((c) => {
-        if (Number(c.categoryId) === Number(e.target.id)) {
+        if (c.categoryId === e.target.id) {
           setCategorizedBlog(categorizedBlogs.filter((b) => b !== c.blogId));
         }
       });

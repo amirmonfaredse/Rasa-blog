@@ -1,16 +1,24 @@
 "use client";
+import { BlogContextType } from "@/types/app/website/types";
 import { createContext, useContext, useState } from "react";
 
-const BlogContext = createContext();
+const BlogContext = createContext<BlogContextType>({
+  searchInputValue: "",
+  setSearchInputValue: () => {},
+  categorizedBlogs: [],
+  setCategorizedBlog: () => {},
+  checkedList: [],
+  setCheckedList: () => {},
+});
 
 export function BlogContextProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [searchInputValue, setSearchInputValue] = useState("");
-  const [categorizedBlogs, setCategorizedBlog] = useState([]);
-  const [checkedList, setCheckedList] = useState([]);
+  const [searchInputValue, setSearchInputValue] = useState<string>("");
+  const [categorizedBlogs, setCategorizedBlog] = useState<string[]>([]);
+  const [checkedList, setCheckedList] = useState<any[]>([]);
   return (
     <BlogContext.Provider
       value={{

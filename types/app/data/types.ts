@@ -12,6 +12,7 @@ export type BlogFieldProps = {
   image: string;
 };
 export type newCategorizingFieldProps = {
+  id?: string;
   categoryId: string;
   blogId: string;
 };
@@ -29,6 +30,7 @@ export type UpdatedFieldsProps = {
   image: string;
 };
 export type CategoryFieldProps = {
+  id?: string;
   title: string;
   name: string;
 };

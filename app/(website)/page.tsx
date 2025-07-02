@@ -11,10 +11,6 @@ import {
 } from "./_components/utilities/utilities";
 
 export default async function Page() {
-  // Test Types For Data
-  const getTags = await serviceGetTaggeds();
-  console.log("get Taged : ", getTags);
-
   const blogs = (await serviceGetBlogs()).slice(0, 5);
   const sliders = await serviceGetSliders();
   return (

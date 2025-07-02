@@ -1,12 +1,14 @@
 import { serviceGetBlog } from "@/app/_data/blog/blogServices";
-import {
-  serviceCommentsGetConfirmedMessages
-} from "@/app/_data/messages/messageServices";
+import { serviceCommentsGetConfirmedMessages } from "@/app/_data/messages/messageServices";
 import { sanitizeHTMLOnServer } from "@/app/utility/jsDOM";
 import Image from "next/image";
 import CommentForm from "./CommentForm";
 import ShowComments from "./ShowComments";
-export async function generateMetadata({ params }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ blogId: string }>;
+}) {
   const { blogId } = await params;
   const blog = await serviceGetBlog(blogId);
   return {
@@ -14,7 +16,11 @@ export async function generateMetadata({ params }) {
     desciption: "",
   };
 }
-export default async function Page({ params }) {
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ blogId: string }>;
+}) {
   const { blogId } = await params;
   const blog = await serviceGetBlog(blogId);
   const confirmedComments = await serviceCommentsGetConfirmedMessages();

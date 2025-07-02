@@ -5,8 +5,13 @@ import "swiper/css/effect-creative";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Slide from "./Slide";
+import { SlideFieldProps } from "@/types/app/data/types";
 
-export default function MainSlider({ sliders }) {
+export default function MainSlider({
+  sliders,
+}: {
+  sliders: SlideFieldProps[];
+}) {
   useEffect(() => {
     const sliderTimer = setInterval(() => {
       return () => {

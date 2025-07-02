@@ -1,4 +1,6 @@
-function ShowComments({ comment }) {
+import { CommentFieldProps } from "@/types/app/data/types";
+
+function ShowComments({ comment }: { comment: CommentFieldProps }) {
   return (
     <div className="flex flex-col gap-2 border border-avocado-500 text-ghost-800 rounded-sm p-4">
       <div className="w-full flex gap-2">

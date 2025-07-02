@@ -24,12 +24,7 @@ export default function Loading() {
       </div>
       <div className="flex flex-col w-[50%] max-h-screen bg-gray-700  transition animate-pulse duration-75">
         <div className=""> </div>
-        <div
-          className="w-[500px] border-2  border-transparent my-4 p-2 rounded-md bg-gray-600 outline-none focus:border-gray-500 focus:border-2"
-          type="text"
-          name="fullName"
-          required
-        ></div>
+        <div className="w-[500px] border-2  border-transparent my-4 p-2 rounded-md bg-gray-600 outline-none focus:border-gray-500 focus:border-2"></div>
       </div>
     </div>
   );

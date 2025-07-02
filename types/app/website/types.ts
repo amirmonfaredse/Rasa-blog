@@ -1,4 +1,5 @@
-import { LinkRestProps } from "next/link";
+import { Dispatch, MouseEventHandler, SetStateAction } from "react";
+import { CategoryFieldProps, getCategorizedServiceProps } from "../data/types";
 
 export type PostCardUtilityProps = {
   children?: React.ReactNode;
@@ -55,7 +56,7 @@ export type NavListProps = {
   isMobileMode: boolean;
 };
 export type SearchModalProps = {
-  handleSearchModal: () => void;
+  handleSearchModal: MouseEventHandler<HTMLDivElement>;
 };
 export type InputBlackBorderProps = {
   className?: string;
@@ -69,4 +70,16 @@ export type TextAreaBlackBorderProps = {
   name: string;
   className?: string;
   type?: string;
+};
+export type BlogContextType = {
+  searchInputValue: string;
+  setSearchInputValue: Dispatch<SetStateAction<string>>;
+  categorizedBlogs: string[];
+  setCategorizedBlog: Dispatch<SetStateAction<string[]>>;
+  checkedList: string[];
+  setCheckedList: Dispatch<SetStateAction<string[]>>;
+};
+export type SidebarBlogProps = {
+  categories: CategoryFieldProps[];
+  categorized: getCategorizedServiceProps[];
 };

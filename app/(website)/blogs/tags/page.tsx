@@ -1,4 +1,4 @@
-import { serviceGetTags } from "@/app/_data/blog/blogServices";
+import { serviceGetTags } from "_data/blog/tags/tags.services";
 import Link from "next/link";
 
 export default async function Page() {

@@ -4,7 +4,8 @@ import LoadClarity from "../utility/LoadClarity";
 import Footer from "./_layouts/Footer";
 import Header from "./_layouts/Header";
 import { Toaster } from "react-hot-toast";
-export const metadata   = {
+import { Metadata } from "next";
+export const metadata: Metadata = {
   title: {
     template: "%s | رسا",
     default: "صفحه اصلی  |  رسا",
@@ -17,7 +18,11 @@ const NotoFont = Noto_Sans_Arabic({
   preload: false,
 });
 
-export default function RootLayout({ children }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="fa" dir="rtl" className={NotoFont.className}>
       <head>

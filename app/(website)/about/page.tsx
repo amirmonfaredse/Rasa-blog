@@ -1,6 +1,7 @@
+import { Metadata } from "next";
 import Image from "next/image";
 import { Suspense } from "react";
-export const metadata = {
+export const metadata: Metadata = {
   title: "درباره من",
   description: "در صفحه درمورد رسا بیشتر بدانید ",
 };

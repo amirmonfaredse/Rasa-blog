@@ -17,7 +17,7 @@ export type SideTabProps = {
   title: string;
   href?: any;
   subs?: any[];
-};
+}; 
 export type SliderContextType = {
   sliderList: SlideFieldProps[];
   setSliderList: Dispatch<SetStateAction<SlideFieldProps[]>>;
