@@ -12,12 +12,20 @@ import { supabase } from "../supabase";
 export async function serviceContactSendMessage(
   newMessage: MessageFieldProps
 ): Promise<ActionResult> {
-  const { error } = await supabase.from("contact").insert([newMessage]);
-  if (error) throw new Error("در ارسال پیام مشکلی ایجاد شده است");
-  return {
-    type: ToastType.Success,
-    message: "پیام با موفقیت ارسال شد",
-  };
+  try {
+    await supabase.from("contact").insert([newMessage]);
+    return {
+      type: ToastType.Success,
+      message: "پیام با موفقیت ارسال شد",
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      type: ToastType.Error,
+      message: "در ارسال پیام مشکلی ایجاد شده است",
+      error,
+    };
+  }
 }
 
 // GET
@@ -44,12 +52,20 @@ export async function serviceContactGetMessage(
 export async function serviceContactDeleteMessage(
   id: string
 ): Promise<ActionResult> {
-  const { error } = await supabase.from("contact").delete().eq("id", id);
-  if (error) throw new Error("مشکلی در حذف کردن پیام پیش آمده");
-  return {
-    type: ToastType.Success,
-    message: "پیام با موفقیت حذف شد",
-  };
+  try {
+    await supabase.from("contact").delete().eq("id", id);
+    return {
+      type: ToastType.Success,
+      message: "پیام با موفقیت حذف شد",
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      type: ToastType.Error,
+      message: "مشکلی در حذف کردن پیام پیش آمده",
+      error,
+    };
+  }
 }
 
 export async function serviceCommentsGetMessages(): Promise<
@@ -73,15 +89,19 @@ export async function serviceCommentsGetMessage(
 export async function serviceCommentsConfirmMessage(
   id: string
 ): Promise<ActionResult> {
-  const { error } = await supabase
-    .from("comments")
-    .update({ confirmed: true })
-    .eq("id", id);
-  if (error) throw new Error("در تایید این کامنت مشکلی ایجاد شده است");
-  return {
-    type: ToastType.Success,
-    message: "پیام تایید شد",
-  };
+  try {
+    await supabase.from("comments").update({ confirmed: true }).eq("id", id);
+    return {
+      type: ToastType.Success,
+      message: "پیام تایید شد",
+    };
+  } catch (error) {
+    return {
+      type: ToastType.Error,
+      message: "در تایید کامنت مشکلی ایجاد شده است",
+      error,
+    };
+  }
 }
 export async function serviceCommentsGetConfirmedMessages(): Promise<
   serviceCommentGetMessage[]
@@ -97,20 +117,34 @@ export async function serviceCommentsGetConfirmedMessages(): Promise<
 export async function serviceCommentsSendMessage(
   newComment: CommentFieldProps
 ): Promise<ActionResult> {
-  const { error } = await supabase.from("comments").insert([newComment]);
-  if (error) throw new Error("مشکلی در دریافت نظرات پیش آمده است");
-  return {
-    type: ToastType.Success,
-    message: "نظر ارسال شد",
-  };
+  try {
+    await supabase.from("comments").insert([newComment]);
+    return {
+      type: ToastType.Success,
+      message: "نظر ارسال شد",
+    };
+  } catch (error) {
+    return {
+      type: ToastType.Error,
+      message: "مشکلی در دریافت نظرات پیش آمده است",
+      error,
+    };
+  }
 }
 export async function serviceCommentsDeleteMessage(
   id: string
 ): Promise<ActionResult> {
-  const { error } = await supabase.from("comments").delete().eq("id", id);
-  if (error) throw new Error("مشکلی در دریافت نظرات پیش آمده است");
-  return {
-    type: ToastType.Success,
-    message: "نظر با موفقیت حذف شد",
-  };
+  try {
+    await supabase.from("comments").delete().eq("id", id);
+    return {
+      type: ToastType.Success,
+      message: "نظر با موفقیت حذف شد",
+    };
+  } catch (error) {
+    return {
+      type: ToastType.Error,
+      message: "مشکلی در دریافت نظرات پیش آمده است",
+      error,
+    };
+  }
 }

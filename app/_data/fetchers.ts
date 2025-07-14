@@ -19,11 +19,11 @@ import {
   useTagsResult,
 } from "@/types/app/admin/hooks";
 import { ActionResult } from "@/types/app/data/types";
+import axios from "axios";
 import { PostFormData } from "lib/http";
-import { ToastType } from "react-hot-toast";
 import useSWR from "swr";
 import useSWRMutation from "swr/mutation";
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export function useBlogs(): useBlogsResult {
   const { data, error, isLoading } = useSWR("/api/blogss", fetcher);

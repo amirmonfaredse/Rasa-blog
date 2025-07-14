@@ -10,17 +10,20 @@ export async function serviceUploadFile(
   filePath: string,
   bufferedImage: Buffer
 ): Promise<ActionResult> {
-  const { error } = await supabase.storage
-    .from("blogs-images")
-    .upload(filePath, bufferedImage);
-  if (error) {
+  try {
+    await supabase.storage.from("blogs-images").upload(filePath, bufferedImage);
+    return {
+      type: ToastType.Success,
+      message: "فایل با موفقیت بارگذاری شد",
+    };
+  } catch (error) {
     console.log(error);
-    throw new Error("مشکلی ایجاد شده است لطفا مجددا تلاش کنید");
+    return {
+      type: ToastType.Error,
+      message: "مشکلی در بارگذاری فایل ایجاد شده است",
+      error,
+    };
   }
-  return {
-    type: ToastType.Success,
-    message: "فایل با موفقیت بارگذاری شد",
-  };
 }
 
 export async function serviceGetImageFileURL(
@@ -36,15 +39,21 @@ export async function serviceGetImageFileURL(
 export async function serviceAddFilesURLList(
   imageField: ImageFieldProps
 ): Promise<ActionResult> {
-  const { error } = await supabase.from("filesUrl").insert([imageField]);
-  if (error) {
+  try {
+    await supabase.from("filesUrl").insert([imageField]);
+    return {
+      type: ToastType.Success,
+      message: "فایل با موفقیت به لیست فایل ها اضافه شد",
+    };
+  } catch (error) {
     console.log(error);
-    throw new Error("مشکلی در فرایند آپلود ایجاد شده است");
+
+    return {
+      type: ToastType.Error,
+      message: "مشکلی در فرایند اضافه کردن فایل به لیست فایل ها ایجاد شده است",
+      error,
+    };
   }
-  return {
-    type: ToastType.Success,
-    message: "فایل با موفقیت به لیست فایل ها اضافه شد",
-  };
 }
 
 export async function serviceGetFilesFieldsFromURLList(): Promise<
