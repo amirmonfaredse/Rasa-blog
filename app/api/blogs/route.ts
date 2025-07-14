@@ -1,6 +1,9 @@
 import { ActionResult } from "@/types/app/data/types";
 
-import { serviceCreateBlog, serviceGetBlogs } from "_data/blog/blogServices";
+import {
+  serviceCreateBlog,
+  serviceGetBlogs
+} from "_data/blog/blogServices";
 import { idRand, secureAccess } from "_data/utility";
 import {
   extractBlogFields,
@@ -14,7 +17,6 @@ export async function GET() {
   const blogs = await serviceGetBlogs();
   return NextResponse.json(blogs);
 }
-
 export async function POST(request: Request): Promise<Response> {
   await secureAccess();
   const formData = await request.formData();

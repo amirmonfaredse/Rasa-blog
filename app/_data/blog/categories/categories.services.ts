@@ -67,10 +67,10 @@ export async function serviceUpdateCategory(
     };
   } catch (error) {
     console.log(error);
-
     return {
       type: ToastType.Error,
       message: "مشکلی در بروزرسانی دسته بندی ایجاد شده است",
+      error,
     };
   }
 }

@@ -53,8 +53,8 @@ export async function serviceGetBlog(id: string): Promise<BlogFieldProps> {
 }
 // PUT / Post
 export async function serviceUpdateBlog(
-  id: string,
-  updatedFields: UpdatedFieldsProps
+  updatedFields: UpdatedFieldsProps,
+  id: string
 ): Promise<ActionResult> {
   try {
     await supabase.from("blog").update(updatedFields).eq("id", id);
