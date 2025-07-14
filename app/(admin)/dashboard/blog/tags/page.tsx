@@ -1,9 +1,10 @@
-import { serviceGetTags } from "_data/blog/tags/tags.services";
-import DeleteTagButton from "./DeleteTagButton";
+"use client";
 import { actionCreateTag } from "_data/blog/tags/tags.actions";
+import { useTags } from "_data/fetchers";
+import DeleteTagButton from "./DeleteTagButton";
 
-export default async function Page() {
-  const tags = await serviceGetTags();
+export default function Page() {
+  const { tags } = useTags();
   return (
     <div className="w-full flex flex-col lg:flex-row">
       <form action={actionCreateTag} className="flex flex-col gap-2 py-5 px-2">

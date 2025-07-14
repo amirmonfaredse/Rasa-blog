@@ -1,8 +1,9 @@
-import { serviceContactGetMessages } from "@/app/_data/messages/messageServices";
-import DeleteButton from "../../_components/DeleteButton";
+"use client";
+import DeleteButton from "(admin)/_components/DeleteButton";
+import { useMessages } from "_data/fetchers";
 
-export default async function Page() {
-  const messages = await serviceContactGetMessages();
+export default function Page() {
+  const { messages } = useMessages();
   return (
     <div className="w-full h-full flex flex-col justify-center items-center gap-4 text-ghost-900 px-2 mb-4">
       <h1 className="w-full h-28 flex items-center justify-start text-2xl px-2">

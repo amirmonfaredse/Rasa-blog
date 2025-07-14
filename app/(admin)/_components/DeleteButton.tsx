@@ -2,7 +2,6 @@
 
 import { actionContactRemoveMessage } from "_data/messages/messageActions";
 
-
 export default function DeleteButton({ id }: { id: string }) {
   return (
     <button

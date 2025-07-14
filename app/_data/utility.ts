@@ -32,10 +32,10 @@ export async function secureTagList(list: []): Promise<TagListProps[]> {
     };
   });
 }
-export async function validateUrl(image: string): Promise<boolean> {
+export function validateUrl(image: string): string {
   try {
     new URL(image);
-    return true;
+    return encodeURI(image);
   } catch (error) {
     throw new Error("لینک تصویر مجاز نیست");
   }

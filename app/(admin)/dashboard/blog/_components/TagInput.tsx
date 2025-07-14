@@ -1,17 +1,20 @@
 "use client";
 
-import { TagInputProps } from "@/types/app/admin/types";
 import { getTagServiceProps } from "@/types/app/data/types";
+import { useTaggeds, useTags } from "_data/fetchers";
 import Image from "next/image";
 import { ChangeEvent, useState } from "react";
 
-function TagInput({ tagList, tagged = [] }: TagInputProps) {
-  const [tags, setTags] = useState<getTagServiceProps[]>(tagList);
+function TagInput({ blogId }: { blogId?: string }) {
+  const { tags } = useTags();
+  let { taggeds } = useTaggeds();
+  if (blogId) taggeds = taggeds.filter((tag) => tag.blogId === blogId);
+
   const [filteredTags, setFilteredTags] = useState<getTagServiceProps[]>([]);
-  const idsInTagged: Set<string> = new Set(tagged.map((tag) => tag.tagId));
+  const idsInTagged: Set<string> = new Set(taggeds.map((tag) => tag.tagId));
 
   const [confirmedTags, setConfirmedTags] = useState<getTagServiceProps[]>(() =>
-    tagList.filter((tag) => idsInTagged.has(tag.id))
+    tags.filter((tag) => idsInTagged.has(tag.id))
   );
   const [inpFocused, setInpFocused] = useState<boolean>(true);
   const handleSearchTag = (e: ChangeEvent<HTMLInputElement>): void => {

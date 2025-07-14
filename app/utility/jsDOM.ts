@@ -14,7 +14,7 @@ export function extractTextFromHTML(html: string, maxLength: number = 550) {
   return text.trim().slice(0, maxLength) + "...";
 }
 
-export function sanitizeTextOnServer(dirty: string) {
+export function sanitizeTextOnServer(dirty: string): string {
   const sanitized = DOMPurify.sanitize(dirty, {
     ALLOWED_TAGS: [],
     ALLOWED_ATTR: [],

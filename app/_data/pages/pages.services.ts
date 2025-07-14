@@ -1,9 +1,10 @@
-import { SlideFieldProps } from "../../../types/app/data/types";
+import { ToastType } from "@/types/app/admin/store";
+import { ActionResult, SlideFieldProps } from "../../../types/app/data/types";
 import { supabase } from "../supabase";
 
 export async function serviceCreateSlide(
   newSlide: SlideFieldProps
-): Promise<void> {
+): Promise<ActionResult> {
   const { error } = await supabase.from("sliders").insert([newSlide]);
   if (error) {
     console.log(error);
@@ -11,6 +12,10 @@ export async function serviceCreateSlide(
       "مشکلی در فرایند ایجاد اسلاید به وجود آمده است  مجددا تلاش کنید"
     );
   }
+  return {
+    type: ToastType.Success,
+    message: "اسلاید با موفقیت ایجاد شد",
+  };
 }
 
 export async function serviceGetSliders(): Promise<SlideFieldProps[]> {
@@ -33,10 +38,16 @@ export async function serviceGetSlider(id: string): Promise<SlideFieldProps> {
   }
   return data;
 }
-export async function serviceDeleteSlide(slideId: string): Promise<void> {
+export async function serviceDeleteSlide(
+  slideId: string
+): Promise<ActionResult> {
   const { error } = await supabase.from("sliders").delete().eq("id", slideId);
   if (error) {
     console.log(error);
     throw new Error("مشکلی ایجاد شده است  مجددا تلاش کنید");
   }
+  return {
+    type: ToastType.Success,
+    message: "اسلاید با موفقیت حذف شد",
+  };
 }

@@ -1,9 +1,6 @@
-import { auth } from "@/app/_data/auth";
 import { ChewyFont } from "../layout";
 
 export default async function Page() {
-  const session = await auth();
-
   return (
     <div className="w-full h-full m-5 pb-2 pt-5">
       <div className="w-full h-fit md:h-36 flex flex-col md:flex-row justify-start items-center gap-10">

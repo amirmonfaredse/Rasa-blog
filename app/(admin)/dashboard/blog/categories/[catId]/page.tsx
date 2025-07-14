@@ -1,14 +1,12 @@
+"use client";
 import { actionUpdateCategory } from "_data/blog/categories/categories.actions";
-import { serviceGetCategory } from "_data/blog/categories/categories.services";
+import { useCategory } from "_data/fetchers";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ catId: string }>;
-}) {
-  const { catId } = await params;
-  const category = await serviceGetCategory(catId);
+export default function Page() {
+  const { catId } = useParams<{ catId: string }>();
+  const { category } = useCategory(catId);
 
   return (
     <form action={actionUpdateCategory} className="flex flex-col py-5  gap-3">

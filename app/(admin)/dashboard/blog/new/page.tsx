@@ -1,16 +1,44 @@
+"use client";
+import { useAdminStore } from "(admin)/_providers/StoreProvider";
+import { useCreateBlog } from "_data/fetchers";
+import CategoriesList from "../_components/CategoriesList";
+import TextEditorCreateBlog from "../_components/TextEditorCreateBlog";
+import { Input, Label } from "../_components/utilities";
+import ReleaseButton from "./ReleaseButton";
 
-import NewPostForm from "./NewPostForm";
-import { Suspense } from "react";
-import SpinnerLoader from "../../../../utility/SpinnerLoader";
-import { serviceGetCategories } from "_data/blog/categories/categories.services";
-import { serviceGetTags } from "_data/blog/tags/tags.services";
+export default function Page() {
+  const showToast = useAdminStore((state) => state.showToast);
+  const { trigger, data, error, isMutating } = useCreateBlog();
 
-export default async function Page() {
-  const categories = await serviceGetCategories();
-  const tagList = await serviceGetTags();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const results = await trigger(formData);
+    results.forEach((result) => showToast(result));
+  };
+
   return (
-    <Suspense fallback={<SpinnerLoader />}>
-      <NewPostForm categories={categories} tagList={tagList} />
-    </Suspense>
+    <form
+      onSubmit={handleSubmit}
+      className="w-full h-fit flex flex-col justify-center items-center py-5 pt-10 md:pt-5 px-1"
+    >
+      <div className="w-[95%] lg:w-[90%] flex flex-col gap-5">
+        <Label title="عنوان">
+          <Input required name="blogTitle" />
+        </Label>
+        <Label title="توضیحات">
+          <Input required name="blogDescription" />
+        </Label>
+        <Label title="آدرس تصویر اصلی">
+          <Input name="blogImage" />
+        </Label>
+        <Label title="دسته بندی ها">
+          <CategoriesList />
+        </Label>
+      </div>
+      <TextEditorCreateBlog />
+      {/* <TagInput /> */}
+      <ReleaseButton pending={isMutating} />
+    </form>
   );
 }

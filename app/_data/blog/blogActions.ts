@@ -4,6 +4,7 @@ import { ActionResult } from "next/dist/server/app-render/types";
 import {
   BlogFieldProps,
   newCategorizingFieldProps,
+  TagFieldProps,
   TaggingFieldProps,
   UpdatedFieldsProps,
 } from "../../../types/app/data/types";
@@ -35,6 +36,13 @@ import {
   serviceGetTag,
   serviceTagging,
 } from "./tags/tags.services";
+import { ToastType } from "@/types/app/admin/store";
+import {
+  extractBlogFields,
+  handleCategorizing,
+  handleTagging,
+  revalidateBlogs,
+} from "lib/blogsUtils";
 
 // ACTION for POST / New Post
 
@@ -44,59 +52,16 @@ export async function actionCreateBlog(
 ): Promise<ActionResult> {
   await secureAccess();
   const blogId = idRand();
-  const newBlogFields: BlogFieldProps = {
-    id: blogId,
-    created_at: getPersianDate(),
-    author: "امیررضا منفرد",
-    title: sanitizeTextOnServer(formData.get("blogTitle") as string),
-    description: sanitizeTextOnServer(
-      formData.get("blogDescription") as string
-    ),
-    content: sanitizeHTMLOnServer(formData.get("textEditor")),
-    image:
-      (await validateUrl(encodeURI(formData.get("blogImage") as string))) &&
-      encodeURI(formData.get("blogImage") as string),
-  };
-  const createdBlog = await serviceCreateBlog(newBlogFields);
-  revalidatePath("dashboard/blogs");
-  revalidatePath("dashboard/blogs/new");
-  revalidatePath("dashboard/blogs/all");
-
-  const categories = await secureAList(formData.getAll("blogCategory") as []);
-  const tagsString = JSON.parse(formData.get("blogTags") as string);
-  const tags = secureTagList(tagsString);
-  if (createdBlog) {
-    try {
-      let tasks = categories.map(async (catId: string) => {
-        await serviceGetCategory(catId);
-        const newCategorizingField: newCategorizingFieldProps = {
-          categoryId: catId,
-          blogId,
-        };
-        return await serviceCategorizing(newCategorizingField);
-      });
-      // CHANGE : TYPE OF tag MUST CHANGE
-      const tagTasks = tags.map(async (tag: any) => {
-        await serviceGetTag(tag.id);
-        const newTaggingField: TaggingFieldProps = {
-          tagId: tag.id,
-          blogId,
-        };
-        return await serviceTagging(newTaggingField);
-      });
-      tasks = [...tasks, ...tagTasks];
-      await Promise.all(tasks);
-    } catch (error) {
-      return {
-        status: "error",
-        message:
-          "پست جدید اضافه شد، اضافه کردن دسته بندی با مشکل همراه شده است",
-      };
-    }
+  const blogFields: BlogFieldProps = extractBlogFields(formData, blogId);
+  const blogCreated = await serviceCreateBlog(blogFields);
+  revalidateBlogs();
+  if (blogCreated) {
+    await handleCategorizing(formData, blogId);
+    await handleTagging(formData, blogId);
   }
 
   return {
-    status: "success",
+    type: ToastType.Success,
     message: "پست جدید با موفقیت ایجاد شد",
   };
 }
@@ -107,8 +72,7 @@ export async function actionUpdateBlog(_: any, formData: FormData) {
   const blog = await serviceGetBlog(blogId);
   if (!blog) throw new Error("پست مورد نظر وجود ندارد");
   const image = encodeURI(formData.get("blogImage") as string);
-  await validateUrl(image);
-
+  validateUrl(image);
   const getTags = JSON.parse(formData.get("blogTags") as string);
 
   const updatedFields: UpdatedFieldsProps = {

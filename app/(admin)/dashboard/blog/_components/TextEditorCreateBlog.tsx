@@ -5,11 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-export default function TextEditorCreateBlog({
-  formState,
-}: {
-  formState: ActionResult;
-}) {
+export default function TextEditorCreateBlog() {
   const editor = useRef(null);
   const [content, setContent] = useState<string>("");
   const config = useMemo(
@@ -25,9 +21,7 @@ export default function TextEditorCreateBlog({
   const handleChange = (value: string) => {
     setContent(value);
   };
-  useEffect(() => {
-    if (formState?.status === "success") setContent("");
-  }, [formState]);
+
   return (
     <div className="w-[95%] md:w-full h-fit flex items-center justify-center">
       <div className="w-full h-fit">

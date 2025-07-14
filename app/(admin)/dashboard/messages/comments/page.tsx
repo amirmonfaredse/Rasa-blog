@@ -1,9 +1,10 @@
-import { serviceCommentsGetMessages } from "@/app/_data/messages/messageServices";
-import DeleteCommentButton from "./DeleteCommentButton";
+"use client";
+import { useComments } from "_data/fetchers";
 import ConfirmCommentButton from "./ConfirmCommentButton";
+import DeleteCommentButton from "./DeleteCommentButton";
 
-export default async function Page() {
-  const comments = await serviceCommentsGetMessages();
+export default function Page() {
+  const { comments } = useComments();
   return (
     <div className="flex flex-col w-full h-full text-ghost-1000 ">
       <h1 className="w-full h-28 flex items-center text-2xl">نظرات</h1>

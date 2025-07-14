@@ -1,8 +1,9 @@
-import { serviceGetFilesFieldsFromURLList } from "../../../_data/media/mediaServices";
+"use client";
+import { useImageFiles } from "_data/fetchers";
 import Image from "next/image";
 import FileUploader from "./_components/FileUploader.jsx";
-export default async function Page() {
-  const images = await serviceGetFilesFieldsFromURLList();
+export default function Page() {
+  const { images } = useImageFiles();
   return (
     <div className="w-full h-full flex flex-col lg:flex-row justify-start items-start">
       <div className="w-full lg:w-[50%] h-auto lg:h-full  p-5">
@@ -11,7 +12,7 @@ export default async function Page() {
         </h1>
         <ul className="w-full flex flex-col items-start justify-start py-2 gap-2">
           {images?.length > 0 ? (
-            images.map((image, index) => (
+            images?.map((image, index) => (
               <li
                 key={`${image.name}-${index}`}
                 className="w-full h-28 flex justify-start items-center gap-2 bg-cles-100 rounded-lg px-2"

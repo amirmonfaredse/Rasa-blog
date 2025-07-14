@@ -1,14 +1,15 @@
+import { ToastType } from "@/types/app/admin/store";
+import { CategoryFieldProps } from "@/types/app/data/types";
+import { secureAccess } from "_data/utility";
 import { revalidatePath } from "next/cache";
+import { ActionResult } from "next/dist/server/app-render/types";
+import { sanitizeTextOnServer } from "utility/jsDOM";
 import {
   serviceCreateCategory,
   serviceDeleteCategory,
   serviceGetCategory,
   serviceUpdateCategory,
 } from "./categories.services";
-import { secureAccess } from "_data/utility";
-import { ActionResult } from "next/dist/server/app-render/types";
-import { sanitizeTextOnServer } from "utility/jsDOM";
-import { CategoryFieldProps } from "@/types/app/data/types";
 
 // ACTION for POST / New Category
 export async function actionCreateCategory(formData: FormData): ActionResult {
@@ -21,7 +22,7 @@ export async function actionCreateCategory(formData: FormData): ActionResult {
   revalidatePath("dashboard/blogs");
   revalidatePath("dashboard/blogs/categories");
   return {
-    status: "success",
+    type: ToastType.Success,
     message: "دسته بندی با موفقیت ایجاد شد",
   };
 }

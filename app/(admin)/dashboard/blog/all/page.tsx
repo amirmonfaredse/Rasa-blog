@@ -1,33 +1,13 @@
-import { serviceGetBlogs } from "../../../../_data/blog/blogServices";
+"use client";
+import { BlogFieldProps } from "@/types/app/data/types";
+import { useBlogs } from "_data/fetchers";
 import Link from "next/link";
 import DeleteButtonBlog from "../_components/DeleteButtonBlog";
-import { TProps } from "../../../../../types/app/admin/types";
+import { Td, Th } from "../_components/Table";
 
-export function Th({ children, row = false, center = false }: TProps) {
-  return (
-    <th
-      className={`${row ? "w-[50px]" : "w-[280px]"} h-full flex ${
-        center ? "justify-center" : "justify-start"
-      } items-center line-clamp-1 leading-7 ${row && "px-1"}`}
-    >
-      {children}
-    </th>
-  );
-}
-export function Td({ children, row = false, center = false }: TProps) {
-  return (
-    <th
-      className={`${row ? "w-[50px]" : "w-[280px]"} h-full flex ${
-        center ? "justify-center" : "justify-start"
-      } items-start line-clamp-1 leading-7 ${row && "px-2"}`}
-    >
-      {children}
-    </th>
-  );
-}
-
-export default async function Page() {
-  const blogs = await serviceGetBlogs();
+export default function Page() {
+  const { blogs } = useBlogs();
+ 
   return (
     <div className="w-full flex flex-col items-start justify-start mt-5">
       <div className="w-full h-fit flex ">
@@ -49,7 +29,7 @@ export default async function Page() {
           </tr>
         </thead>
         {blogs &&
-          blogs.map((blog, index) => (
+          blogs.map((blog: BlogFieldProps, index: number) => (
             <tbody key={blog.id} className="w-fit md:w-full flex flex-col ">
               <tr className="w-fit h-12 flex items-center justify-start cursor-default bg-ghost-100 text-ghost-600 my-5 p-2  rounded">
                 <Td row>{index + 1}</Td>

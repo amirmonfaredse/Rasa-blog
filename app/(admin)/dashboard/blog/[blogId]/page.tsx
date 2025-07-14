@@ -1,40 +1,55 @@
-import { Suspense } from "react";
+"use client";
+import { useActionState, useEffect } from "react";
 
-import Loading from "../Loading";
-import EditPostForm from "./EditPostForm";
-import { serviceGetBlog } from "_data/blog/blogServices";
-import {
-  serviceGetCategories,
-  serviceGetCategorizeds,
-} from "_data/blog/categories/categories.services";
-import {
-  serviceGetTaggeds,
-  serviceGetTags,
-} from "_data/blog/tags/tags.services";
+import { actionUpdateBlog } from "_data/blog/blogActions";
+import { useBlog } from "_data/fetchers";
+import { useParams } from "next/navigation";
+import CustomToastContainer from "utility/CustomToastContainer";
+import CategoriesList from "../_components/CategoriesList";
+import TagInput from "../_components/TagInput";
+import TextEditorEditBlog from "../_components/TextEditorEditBlog";
+import { Input, Label } from "../_components/utilities";
+import EditButton from "./EditButton";
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ blogId: string }>;
-}) {
-  const { blogId } = await params;
-  const blog = await serviceGetBlog(blogId);
-  const categories = await serviceGetCategories();
-  const tagList = await serviceGetTags();
-  let categorized = await serviceGetCategorizeds();
-  categorized = categorized.filter((cat) => cat.blogId === blogId);
-  let tagged = await serviceGetTaggeds();
-  tagged = tagged.filter((tag) => tag.blogId === blogId);
+export default function Page() {
+  const { blogId } = useParams<{ blogId: string }>();
+  const { blog } = useBlog(blogId);
+  const [state, formAction, pending] = useActionState(actionUpdateBlog, {
+    status: "",
+    message: "",
+  });
 
+  useEffect(() => {}, []);
   return (
-    <Suspense fallback={<Loading />}>
-      <EditPostForm
-        blog={blog}
-        categories={categories}
-        categorized={categorized}
-        tagList={tagList}
-        tagged={tagged}
-      />
-    </Suspense>
+    <form action={formAction} className="py-5">
+      <CustomToastContainer />
+      <div className="flex flex-col gap-5">
+        <Input
+          required
+          hidden
+          name="id"
+          type="number"
+          value={blog.id}
+          readOnly
+        />
+        <Label title="عنوان">
+          <Input required name="blogTitle" defaultValue={blog.title} />
+        </Label>
+        <Label title="توضیحات">
+          <Input
+            required
+            name="blogDescription"
+            defaultValue={blog.description}
+          />
+        </Label>
+        <Label title="آدرس تصویر اصلی">
+          <Input name="blogImage" defaultValue={blog.image} />
+        </Label>
+        <CategoriesList blogId={blogId} />
+      </div>
+      <TextEditorEditBlog formState={state} defaultContent={blog.content} />
+      <TagInput blogId={blogId} />
+      <EditButton pending={pending} />
+    </form>
   );
 }

@@ -3,7 +3,7 @@ export default function Loading() {
     <div className="flex w-full h-screen">
       <div className="flex flex-col justify-center items-center w-[50%] max-h-screen bg-gray-700  transition animate-pulse duration-75">
         <div className="text-3xl mb-5"></div>
-        <div className="my-4 flex flex-col justify-center items-center items-start">
+        <div className="my-4 flex flex-col justify-center items-start">
           <div className="text-lg text-gray-300"></div>
           <div className="flex justify-center gap-10 py-4">
             <div className=""> </div>

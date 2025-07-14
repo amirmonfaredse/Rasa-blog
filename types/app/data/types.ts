@@ -1,6 +1,7 @@
 export type ActionResult = {
-  status: string;
+  type: string;
   message: string;
+  error?: any;
 };
 export type BlogFieldProps = {
   id: string;
@@ -17,6 +18,7 @@ export type newCategorizingFieldProps = {
   blogId: string;
 };
 export type TaggingFieldProps = {
+  id: string;
   tagId: string;
   blogId: string;
 };
@@ -35,25 +37,30 @@ export type CategoryFieldProps = {
   name: string;
 };
 export type TagFieldProps = {
+  id: string;
   title: string;
   slug: string;
 };
 export type ImageFieldProps = {
+  id?: string;
   url: string;
   name?: string;
   size: number;
   type: string;
 };
 export type MessageFieldProps = {
+  id: string;
   fullName: string;
   email: string;
   message: string;
 };
 export type CommentFieldProps = {
+  id: string;
   fullName: string;
   email: string;
   message: string;
   blogId: string;
+  confirmed: boolean;
 };
 export type SlideFieldProps = {
   id?: string;

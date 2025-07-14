@@ -1,21 +1,29 @@
 import { notFound } from "next/navigation";
 import {
+  ActionResult,
   BlogFieldProps,
   UpdatedFieldsProps,
 } from "../../../types/app/data/types";
 import { supabase } from "../supabase";
+import { ToastType } from "@/types/app/admin/store";
 
 // POST / Post
 export async function serviceCreateBlog(
   newBlog: BlogFieldProps
-): Promise<void> {
-  const { error } = await supabase.from("blog").insert([newBlog]);
-
-  if (error) {
+): Promise<ActionResult> {
+  try {
+    await supabase.from("blog").insert([newBlog]);
+    return {
+      type: ToastType.Success,
+      message: "پست جدید با موفقیت ایجاد شد",
+    };
+  } catch (error) {
     console.log(error);
-    throw new Error(
-      "مشکلی در فرایند ایجاد پست به وجود آمده است  مجددا تلاش کنید"
-    );
+    return {
+      type: ToastType.Error,
+      message: "مشکلی در فرایند ایجاد پست به وجود آمده است  مجددا تلاش کنید",
+      error,
+    };
   }
 }
 
@@ -47,23 +55,36 @@ export async function serviceGetBlog(id: string): Promise<BlogFieldProps> {
 export async function serviceUpdateBlog(
   id: string,
   updatedFields: UpdatedFieldsProps
-): Promise<void> {
-  const { error } = await supabase
-    .from("blog")
-    .update(updatedFields)
-    .eq("id", id);
-  if (error) {
+): Promise<ActionResult> {
+  try {
+    await supabase.from("blog").update(updatedFields).eq("id", id);
+    return {
+      type: ToastType.Success,
+      message: "پست بروزرسانی شد",
+    };
+  } catch (error) {
     console.log(error);
-    throw new Error(
-      "مشکلی در فرایند ویرایش پست ایجاد شده است ، مجددا تلاش کنید"
-    );
+    return {
+      type: ToastType.Error,
+      message: "مشکلی در فرایند ویرایش پست ایجاد شده است ، مجددا تلاش کنید",
+      error,
+    };
   }
 }
 // DELETE / Post
-export async function serviceDeleteBlog(blogId: string): Promise<void> {
-  const { error } = await supabase.from("blog").delete().eq("id", blogId);
-  if (error) {
+export async function serviceDeleteBlog(blogId: string): Promise<ActionResult> {
+  try {
+    await supabase.from("blog").delete().eq("id", blogId);
+    return {
+      type: ToastType.Success,
+      message: "پست با موفقیت حذف شد",
+    };
+  } catch (error) {
     console.log(error);
-    throw new Error("مشکلی ایجاد شده است  مجددا تلاش کنید");
+    return {
+      type: ToastType.Error,
+      message: "مشکلی در حذف بلاگ ایجاد شده است",
+      error,
+    };
   }
 }

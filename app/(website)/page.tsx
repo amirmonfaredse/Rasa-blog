@@ -1,6 +1,4 @@
-import { serviceGetTaggeds } from "_data/blog/tags/tags.services";
 import Link from "next/link";
-import { serviceGetBlogs } from "../_data/blog/blogServices";
 import { serviceGetSliders } from "../_data/pages/pages.services";
 import MainSlider from "./_components/MainSlider";
 import PostCard from "./_components/cards/PostCard";
@@ -9,6 +7,7 @@ import {
   PostContainer,
   SliderContainer,
 } from "./_components/utilities/utilities";
+import { serviceGetBlogs } from "_data/blog/blogServices";
 
 export default async function Page() {
   const blogs = (await serviceGetBlogs()).slice(0, 5);

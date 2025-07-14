@@ -1,10 +1,15 @@
-import { FilesUrlProps, ImageFieldProps } from "../../../types/app/data/types";
+import { ToastType } from "@/types/app/admin/store";
+import {
+  ActionResult,
+  FilesUrlProps,
+  ImageFieldProps,
+} from "../../../types/app/data/types";
 import { supabase } from "../supabase";
 
 export async function serviceUploadFile(
   filePath: string,
   bufferedImage: Buffer
-): Promise<void> {
+): Promise<ActionResult> {
   const { error } = await supabase.storage
     .from("blogs-images")
     .upload(filePath, bufferedImage);
@@ -12,6 +17,10 @@ export async function serviceUploadFile(
     console.log(error);
     throw new Error("مشکلی ایجاد شده است لطفا مجددا تلاش کنید");
   }
+  return {
+    type: ToastType.Success,
+    message: "فایل با موفقیت بارگذاری شد",
+  };
 }
 
 export async function serviceGetImageFileURL(
@@ -26,15 +35,16 @@ export async function serviceGetImageFileURL(
 
 export async function serviceAddFilesURLList(
   imageField: ImageFieldProps
-): Promise<number> {
-  const { status, error } = await supabase
-    .from("filesUrl")
-    .insert([imageField]);
+): Promise<ActionResult> {
+  const { error } = await supabase.from("filesUrl").insert([imageField]);
   if (error) {
     console.log(error);
     throw new Error("مشکلی در فرایند آپلود ایجاد شده است");
   }
-  return status;
+  return {
+    type: ToastType.Success,
+    message: "فایل با موفقیت به لیست فایل ها اضافه شد",
+  };
 }
 
 export async function serviceGetFilesFieldsFromURLList(): Promise<

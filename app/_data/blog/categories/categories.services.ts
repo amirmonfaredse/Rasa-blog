@@ -1,4 +1,6 @@
+import { ToastType } from "@/types/app/admin/store";
 import {
+  ActionResult,
   CategoryFieldProps,
   getCategorizedServiceProps,
   getCategoryServiceProps,
@@ -9,13 +11,20 @@ import { supabase } from "_data/supabase";
 // POST / Category
 export async function serviceCreateCategory(
   newCategory: CategoryFieldProps
-): Promise<void> {
-  const { error } = await supabase
-    .from("blog-categories")
-    .insert([newCategory]);
-  if (error) {
+): Promise<ActionResult> {
+  try {
+    await supabase.from("blog-categories").insert([newCategory]);
+    return {
+      type: ToastType.Success,
+      message: "دسته بندی با موفقیت ایجاد شد",
+    };
+  } catch (error) {
     console.log(error);
-    throw new Error("مشکلی ایجاد شده است مجددا تلاش کنید");
+    return {
+      type: ToastType.Success,
+      message: "مشکلی ایجاد شده است مجددا تلاش کنید",
+      error,
+    };
   }
 }
 // GET / Categories
@@ -49,36 +58,50 @@ export async function serviceGetCategory(
 export async function serviceUpdateCategory(
   updatedFields: CategoryFieldProps,
   id: string
-): Promise<void> {
-  const { error } = await supabase
-    .from("blog-categories")
-    .update(updatedFields)
-    .eq("id", id);
-  if (error) {
+): Promise<ActionResult> {
+  try {
+    await supabase.from("blog-categories").update(updatedFields).eq("id", id);
+    return {
+      type: ToastType.Success,
+      message: "دسته بندی بروزرسانی شد",
+    };
+  } catch (error) {
     console.log(error);
-    throw new Error("مشکلی ایجاد شده است مجددا تلاش کنید");
+
+    return {
+      type: ToastType.Error,
+      message: "مشکلی در بروزرسانی دسته بندی ایجاد شده است",
+    };
   }
 }
 // DELETE / Category
-export async function serviceDeleteCategory(id: string): Promise<void> {
-  const { error } = await supabase
-    .from("blog-categories")
-    .delete()
-    .eq("id", id);
-  if (error) {
+export async function serviceDeleteCategory(id: string): Promise<ActionResult> {
+  try {
+    await supabase.from("blog-categories").delete().eq("id", id);
+    return {
+      type: ToastType.Success,
+      message: "دسته بندی با موفقیت حذف شد",
+    };
+  } catch (error) {
     console.log(error);
-    throw new Error("مشکلی ایجاد شده است مجددا تلاش کنید");
+    return {
+      type: ToastType.Error,
+      message: "مشکلی در حذف کردن دسته بندی ایجاد شده است",
+    };
   }
 }
 export async function serviceCategorizing(
   newField: getCategorizedServiceProps
-): Promise<void> {
-  const { error } = await supabase
-    .from("categorizing-blogs")
-    .insert([newField]);
-  if (error) {
+): Promise<ActionResult | boolean> {
+  try {
+    await supabase.from("categorizing-blogs").insert([newField]);
+    return true;
+  } catch (error) {
     console.log(error);
-    throw new Error("در فرایند دسته بندی کردن مشکلی ایجاد شده است");
+    return {
+      type: ToastType.Error,
+      message: "در فرایند دسته بندی کردن مشکلی ایجاد شده است",
+    };
   }
 }
 export async function serviceGetCategorizeds(): Promise<
@@ -93,15 +116,18 @@ export async function serviceGetCategorizeds(): Promise<
 }
 export async function serviceDeleteRelationalCategorizeds(
   blogId: string
-): Promise<void> {
-  const { error } = await supabase
-    .from("categorizing-blogs")
-    .delete()
-    .eq("blogId", blogId);
-  if (error) {
+): Promise<ActionResult> {
+  try {
+    await supabase.from("categorizing-blogs").delete().eq("blogId", blogId);
+    return {
+      type: ToastType.Success,
+      message: "دسته بندی به درستی حذف شد",
+    };
+  } catch (error) {
     console.log(error);
-    throw new Error(
-      "مشکلی در حذف مقادیر از جدول دسته بندی شده ها ایجاد شده است"
-    );
+    return {
+      type: ToastType.Error,
+      message: "مشکلی در حذف مقادیر از جدول دسته بندی شده ها ایجاد شده است",
+    };
   }
 }

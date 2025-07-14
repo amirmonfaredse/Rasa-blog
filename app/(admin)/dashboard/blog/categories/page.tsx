@@ -1,10 +1,12 @@
+"use client";
+import { actionCreateCategory } from "_data/blog/categories/categories.actions";
+import { useCategories } from "_data/fetchers";
 import Link from "next/link";
 import DeleteButtonCategory from "../_components/DeleteButtonCategory";
-import { actionCreateCategory } from "_data/blog/categories/categories.actions";
-import { serviceGetCategories } from "_data/blog/categories/categories.services";
 
-export default async function Page() {
-  const categories = await serviceGetCategories();
+export default function Page() {
+  const { categories } = useCategories();
+  
   return (
     <div className="w-full flex flex-col lg:flex-row gap-10">
       <form
