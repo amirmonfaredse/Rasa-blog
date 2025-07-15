@@ -7,6 +7,7 @@ import {
   serviceGetMessageProps,
 } from "../../../types/app/data/types";
 import { supabase } from "../supabase";
+import { revalidatePath } from "next/cache";
 
 // POST
 export async function serviceContactSendMessage(
@@ -88,18 +89,28 @@ export async function serviceCommentsGetMessage(
 }
 export async function serviceCommentsConfirmMessage(
   id: string
-): Promise<ActionResult> {
+): Promise<{ updateResult: ActionResult; blogId?: string }> {
   try {
-    await supabase.from("comments").update({ confirmed: true }).eq("id", id);
+    const { data } = await supabase
+      .from("comments")
+      .update({ confirmed: true })
+      .eq("id", id)
+      .select("blogId");
+    const blogId = data?.[0]?.blogId;
     return {
-      type: ToastType.Success,
-      message: "پیام تایید شد",
+      updateResult: {
+        type: ToastType.Success,
+        message: "پیام تایید شد",
+      },
+      blogId,
     };
   } catch (error) {
     return {
-      type: ToastType.Error,
-      message: "در تایید کامنت مشکلی ایجاد شده است",
-      error,
+      updateResult: {
+        type: ToastType.Error,
+        message: "در تایید کامنت مشکلی ایجاد شده است",
+        error,
+      },
     };
   }
 }
@@ -133,18 +144,29 @@ export async function serviceCommentsSendMessage(
 }
 export async function serviceCommentsDeleteMessage(
   id: string
-): Promise<ActionResult> {
+): Promise<{ deleteResult: ActionResult; blogId?: string }> {
   try {
-    await supabase.from("comments").delete().eq("id", id);
+    const { data } = await supabase
+      .from("comments")
+      .delete()
+      .eq("id", id)
+      .select("blogId");
+    const blogId = data?.[0]?.blogId;
+
     return {
-      type: ToastType.Success,
-      message: "نظر با موفقیت حذف شد",
+      deleteResult: {
+        type: ToastType.Success,
+        message: "نظر با موفقیت حذف شد",
+      },
+      blogId,
     };
   } catch (error) {
     return {
-      type: ToastType.Error,
-      message: "مشکلی در دریافت نظرات پیش آمده است",
-      error,
+      deleteResult: {
+        type: ToastType.Error,
+        message: "مشکلی در دریافت نظرات پیش آمده است",
+        error,
+      },
     };
   }
 }

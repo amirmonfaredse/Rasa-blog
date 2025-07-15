@@ -17,7 +17,7 @@ export type SideTabProps = {
   title: string;
   href?: any;
   subs?: any[];
-}; 
+};
 export type SliderContextType = {
   sliderList: SlideFieldProps[];
   setSliderList: Dispatch<SetStateAction<SlideFieldProps[]>>;
@@ -51,4 +51,10 @@ export type NewPostFormProps = {
 export type SliderItemProps = {
   index: number;
   slide: SlideFieldProps;
+};
+export type BufferingFileResult = {
+  name: string;
+  file: Buffer;
+  size: number;
+  type: string;
 };
