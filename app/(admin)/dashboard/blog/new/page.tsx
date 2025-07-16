@@ -1,20 +1,19 @@
 "use client";
-import { useAdminStore } from "(admin)/_providers/StoreProvider";
-import { useCreateBlog } from "_data/fetchers";
+import { useCreateBlog } from "_data/mutate";
 import CategoriesList from "../_components/CategoriesList";
 import TextEditorCreateBlog from "../_components/TextEditorCreateBlog";
 import { Input, Label } from "../_components/utilities";
 import ReleaseButton from "./ReleaseButton";
+import { useStore } from "_lib/store/store";
 
 export default function Page() {
-  const showToast = useAdminStore((state) => state.showToast);
   const { trigger, data, error, isMutating } = useCreateBlog();
-
+  const notifs = useStore.use.notifs();
+  console.log(notifs);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const results = await trigger(formData);
-    results.forEach((result) => showToast(result));
   };
 
   return (

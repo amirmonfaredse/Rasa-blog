@@ -4,7 +4,7 @@ import {
   serviceCommentsSendMessage,
 } from "_data/messages/messageServices";
 import { idRand } from "_data/utility";
-import { extractCommentFields, revalidateComments } from "lib/messagesUtils";
+import { extractCommentFields, revalidateComments } from "_lib/utility/messages.utils";
 import { NextResponse } from "next/server";
 import { sanitizeHTMLOnServer } from "utility/jsDOM";
 

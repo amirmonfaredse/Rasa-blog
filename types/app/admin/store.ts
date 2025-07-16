@@ -1,4 +1,4 @@
-import { AdminActions, AdminState } from "(admin)/_stores/adminStore";
+import { AdminActions, AdminState } from "_lib/store/store";
 
 export type ToastProps = {
   id?: string;

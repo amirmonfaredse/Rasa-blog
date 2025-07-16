@@ -4,7 +4,7 @@ import {
   serviceContactSendMessage,
 } from "_data/messages/messageServices";
 import { idRand, secureAccess } from "_data/utility";
-import { extractMessageFields } from "lib/messagesUtils";
+import { extractMessageFields } from "_lib/utility/messages.utils";
 import { NextResponse } from "next/server";
 
 export async function GET() {

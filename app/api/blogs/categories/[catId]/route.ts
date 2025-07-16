@@ -5,7 +5,7 @@ import {
   serviceUpdateCategory,
 } from "_data/blog/categories/categories.services";
 import { secureAccess } from "_data/utility";
-import { extractCategoryFields, revalidateCategories } from "lib/categoryUtils";
+import { extractCategoryFields, revalidateCategories } from "_lib/utility/category.utils";
 import { NextResponse } from "next/server";
 export async function GET({ params }: { params: { catId: string } }) {
   const category = await serviceGetCategory(params.catId);

@@ -12,7 +12,7 @@ import {
   handleCategorizing,
   handleTagging,
   revalidateBlogs,
-} from "lib/blogsUtils";
+} from "_lib/utility/blogs.utils";
 import { NextResponse } from "next/server";
 
 export async function GET({ params }: { params: { blogId: string } }) {

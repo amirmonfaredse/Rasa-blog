@@ -1,7 +1,7 @@
 "use client";
 import { ActionResult } from "@/types/app/data/types";
 import { DeleteData, PostFormData, PutFormData } from "_data/http";
-import useSWRMutation from "swr/dist/mutation";
+import useSWRMutation from "swr/mutation";
 
 export function useCreateBlog() {
   const { trigger, data, error, isMutating } = useSWRMutation(

@@ -4,7 +4,7 @@ import {
   serviceGetTags,
 } from "_data/blog/tags/tags.services";
 import { idRand, secureAccess } from "_data/utility";
-import { extractTagFields, revalidateTags } from "lib/tagUtils";
+import { extractTagFields, revalidateTags } from "_lib/utility/tag.utils";
 import { NextResponse } from "next/server";
 
 export async function GET() {

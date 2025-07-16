@@ -5,7 +5,7 @@ import {
   handleCategorizing,
   handleTagging,
   revalidateBlogs,
-} from "lib/blogsUtils";
+} from "_lib/utility/blogs.utils";
 import { revalidatePath } from "next/cache";
 import { ActionResult } from "next/dist/server/app-render/types";
 import {

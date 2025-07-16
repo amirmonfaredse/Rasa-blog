@@ -4,7 +4,7 @@ import {
   serviceGetSlider,
 } from "_data/pages/pages.services";
 import { secureAccess } from "_data/utility";
-import { revalidateSliders } from "lib/pagesUtils";
+import { revalidateSliders } from "_lib/utility/pages.utils";
 import { NextResponse } from "next/server";
 
 export async function GET({

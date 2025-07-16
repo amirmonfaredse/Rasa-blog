@@ -8,7 +8,6 @@ import SideLayout from "./_layouts/SideLayout";
 import MenuButton from "./_layouts/components/MenuButton";
 import SideLayoutContainer from "./_layouts/components/SideLayoutContainer";
 import { SliderContextProvider } from "./_providers/NavigationProvider";
-import { AdminStoreProvider } from "./_providers/StoreProvider";
 export const metadata = {
   title: {
     template: "%s | رسا",
@@ -35,21 +34,19 @@ export default function RootLayout({
     <html lang="fa" dir="rtl" className={`${NotoFont.className}`}>
       <body className="w-full h-screen  bg-white overflow-x-hidden">
         <SWRConfig>
-          <AdminStoreProvider>
-            <ToastListener />
-            <SliderContextProvider>
-              <div className="w-full flex flex-col items-start justify-start relative">
-                <MenuButton />
-                <Header />
-                <div className="w-full h-[95%] flex justify-center md:justify-start ">
-                  <SideLayoutContainer>
-                    <SideLayout />
-                  </SideLayoutContainer>
-                  {children}
-                </div>
+          <ToastListener />
+          <SliderContextProvider>
+            <div className="w-full flex flex-col items-start justify-start relative">
+              <MenuButton />
+              <Header />
+              <div className="w-full h-[95%] flex justify-center md:justify-start ">
+                <SideLayoutContainer>
+                  <SideLayout />
+                </SideLayoutContainer>
+                {children}
               </div>
-            </SliderContextProvider>
-          </AdminStoreProvider>
+            </div>
+          </SliderContextProvider>
         </SWRConfig>
       </body>
     </html>

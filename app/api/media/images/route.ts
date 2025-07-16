@@ -9,7 +9,7 @@ import {
   BufferingFile,
   revalidateMedia,
   ValidateImageFile,
-} from "lib/filesUtils";
+} from "_lib/utility/files.utils";
 import { NextResponse } from "next/server";
 
 export async function GET() {

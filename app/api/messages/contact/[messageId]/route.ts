@@ -4,7 +4,7 @@ import {
   serviceContactGetMessage,
 } from "_data/messages/messageServices";
 import { secureAccess } from "_data/utility";
-import { revalidateContacts } from "lib/messagesUtils";
+import { revalidateContacts } from "_lib/utility/messages.utils";
 import { NextResponse } from "next/server";
 
 export async function GET({
