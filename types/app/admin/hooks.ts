@@ -2,7 +2,7 @@ import {
   BlogFieldProps,
   CategoryFieldProps,
   CommentFieldProps,
-  getCategorizedServiceProps,
+  CategorizedProps,
   ImageFieldProps,
   MessageFieldProps,
   SlideFieldProps,
@@ -46,7 +46,7 @@ export type useCategoryResult = {
   isError: string;
 };
 export type useCategorizedResult = {
-  categorizeds: getCategorizedServiceProps[];
+  categorizeds: CategorizedProps[];
   isLoading: boolean;
   isError: string;
 };

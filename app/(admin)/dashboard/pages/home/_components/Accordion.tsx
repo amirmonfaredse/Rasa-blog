@@ -1,6 +1,6 @@
 "use client";
 
-import { Dispatch, MouseEventHandler, useState } from "react";
+import { MouseEventHandler, useState } from "react";
 
 function Accordion({
   title = "Default",

@@ -1,5 +1,5 @@
-import { serviceGetBlog } from "@/app/_data/blog/blogServices";
-import { serviceCommentsGetConfirmedMessages } from "@/app/_data/messages/messageServices";
+import { getBlog } from "@/app/_data/blog/blogServices";
+import { getConfirmedComments } from "@/app/_data/messages/messageServices";
 import { sanitizeHTMLOnServer } from "@/app/utility/jsDOM";
 import Image from "next/image";
 import CommentForm from "./CommentForm";
@@ -10,7 +10,7 @@ export async function generateMetadata({
   params: Promise<{ blogId: string }>;
 }) {
   const { blogId } = await params;
-  const blog = await serviceGetBlog(blogId);
+  const blog = await getBlog(blogId);
   return {
     title: blog.title,
     desciption: "",
@@ -22,8 +22,8 @@ export default async function Page({
   params: Promise<{ blogId: string }>;
 }) {
   const { blogId } = await params;
-  const blog = await serviceGetBlog(blogId);
-  const confirmedComments = await serviceCommentsGetConfirmedMessages();
+  const blog = await getBlog(blogId);
+  const confirmedComments = await getConfirmedComments();
 
   return (
     <div className="w-[95%] md:w-full  h-fit sm:px-10 mt-8">

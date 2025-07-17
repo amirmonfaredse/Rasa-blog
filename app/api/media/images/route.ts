@@ -1,7 +1,7 @@
 import { ActionResult } from "@/types/app/data/types";
 import {
-  serviceGetFilesFieldsFromURLList,
-  serviceUploadFile,
+  getFiles,
+  UploadFile,
 } from "_data/media/mediaServices";
 import { secureAccess } from "_data/utility";
 import {
@@ -13,7 +13,7 @@ import {
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const images = await serviceGetFilesFieldsFromURLList();
+  const images = await getFiles();
   return NextResponse.json(images);
 }
 
@@ -25,7 +25,7 @@ export async function POST(request: Request): Promise<Response> {
   if (validateResult)
     return NextResponse.json<ActionResult[]>([validateResult]);
   const { name, file, size, type } = await BufferingFile(image);
-  const uploadResult = await serviceUploadFile(name, file);
+  const uploadResult = await UploadFile(name, file);
   const addToListResult = await addImageToList(name, size, type);
   revalidateMedia();
   return NextResponse.json<ActionResult[]>([uploadResult, addToListResult]);

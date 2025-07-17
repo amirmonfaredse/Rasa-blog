@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { serviceGetSliders } from "../_data/pages/pages.services";
+import { getSliders } from "../_data/pages/pages.services";
 import MainSlider from "./_components/MainSlider";
 import PostCard from "./_components/cards/PostCard";
 import Devider from "./_components/utilities/Devider";
@@ -7,11 +7,11 @@ import {
   PostContainer,
   SliderContainer,
 } from "./_components/utilities/utilities";
-import { serviceGetBlogs } from "_data/blog/blogServices";
+import { getBlogs } from "_data/blog/blogServices";
 
 export default async function Page() {
-  const blogs = (await serviceGetBlogs()).slice(0, 5);
-  const sliders = await serviceGetSliders();
+  const blogs = (await getBlogs()).slice(0, 5);
+  const sliders = await getSliders();
   return (
     <div className="flex flex-col justify-start items-center ">
       {/*

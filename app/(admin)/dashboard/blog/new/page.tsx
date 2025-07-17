@@ -4,12 +4,10 @@ import CategoriesList from "../_components/CategoriesList";
 import TextEditorCreateBlog from "../_components/TextEditorCreateBlog";
 import { Input, Label } from "../_components/utilities";
 import ReleaseButton from "./ReleaseButton";
-import { useStore } from "_lib/store/store";
 
 export default function Page() {
-  const { trigger, data, error, isMutating } = useCreateBlog();
-  const notifs = useStore.use.notifs();
-  console.log(notifs);
+  const { trigger, data, isMutating } = useCreateBlog();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);

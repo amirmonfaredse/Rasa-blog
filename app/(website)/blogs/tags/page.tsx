@@ -1,8 +1,8 @@
-import { serviceGetTags } from "_data/blog/tags/tags.services";
+import { getTags } from "_data/blog/tags/tags.services";
 import Link from "next/link";
 
 export default async function Page() {
-  const tags = await serviceGetTags();
+  const tags = await getTags();
   return (
     <div className="w-full min-h-96 flex flex-col justify-start items-start">
       <h1 className="w-full h-[80px] text-2xl flex items-center ">

@@ -12,11 +12,7 @@ export type BlogFieldProps = {
   content: string;
   image: string;
 };
-export type newCategorizingFieldProps = {
-  id?: string;
-  categoryId: string;
-  blogId: string;
-};
+
 export type TaggingFieldProps = {
   id: string;
   tagId: string;
@@ -32,7 +28,7 @@ export type UpdatedFieldsProps = {
   image: string;
 };
 export type CategoryFieldProps = {
-  id?: string;
+  id: string;
   title: string;
   name: string;
 };
@@ -71,34 +67,24 @@ export type SlideFieldProps = {
   type: string;
 };
 
-export type getCategoryServiceProps = {
+export type CategorizedProps = {
   id: string;
-  title: string;
-  name: string;
-};
-export type getCategorizedServiceProps = {
-  id?: string;
   categoryId: string;
   blogId: string;
 };
 
-export type getTagServiceProps = {
+export type TagProps = {
   id: string;
   slug: string;
   title: string;
 };
 
-export type getTaggingServiceProps = {
-  id?: string;
-  tagId: string;
-  blogId: string;
-};
-
-export type getTaggedServiceProps = {
+export type TaggedProps = {
   id: string;
   tagId: string;
   blogId: string;
 };
+
 export type FilesUrlProps = {
   id?: string;
   url: string;
@@ -106,14 +92,14 @@ export type FilesUrlProps = {
   size: string;
   type: string;
 };
-export type serviceGetMessageProps = {
+export type MessageProps = {
   id: string;
   created_at: string;
   fullName: string;
   email: string;
   message: string;
 };
-export type serviceCommentGetMessage = {
+export type CommentProps = {
   id: string;
   created_at: string;
   fullName: string;

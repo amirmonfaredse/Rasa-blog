@@ -3,9 +3,9 @@
 import { revalidatePath } from "next/cache";
 import { secureAccess } from "../utility";
 import {
-  serviceCreateSlide,
-  serviceDeleteSlide,
-  serviceGetSlider,
+  createSlide,
+  deleteSlide,
+  getSlider,
 } from "./pages.services";
 import { sanitizeTextOnServer } from "../../utility/jsDOM";
 import { SlideFieldProps } from "../../../types/app/data/types";
@@ -20,7 +20,7 @@ export async function actionCreateSlide(formData: FormData): ActionResult {
     textColor: sanitizeTextOnServer(formData.get("textColor")),
     type: sanitizeTextOnServer(formData.get("typeSlide")),
   };
-  await serviceCreateSlide(slideFields);
+  await createSlide(slideFields);
   revalidatePath("/dashboard/pages/home");
   return {
     status: "success",
@@ -29,9 +29,9 @@ export async function actionCreateSlide(formData: FormData): ActionResult {
 }
 export async function actionRemoveSlide(id: string): ActionResult {
   await secureAccess();
-  const slide = await serviceGetSlider(id);
+  const slide = await getSlider(id);
   if (!slide) throw new Error("امکان حذف این اسلاید وجود ندارد");
-  await serviceDeleteSlide(id);
+  await deleteSlide(id);
   revalidatePath("/dashboard/pages/home");
   return {
     status: "success",

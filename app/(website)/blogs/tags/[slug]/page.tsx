@@ -1,8 +1,8 @@
 import PostCard from "@/app/(website)/_components/cards/PostCard";
-import { serviceGetBlogs } from "_data/blog/blogServices";
+import { getBlogs } from "_data/blog/blogServices";
 import {
-  serviceGetTagBySlug,
-  serviceGetTaggeds,
+  getTagBySlug,
+  getTaggedList,
 } from "_data/blog/tags/tags.services";
 
 export default async function Page({
@@ -11,11 +11,11 @@ export default async function Page({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const tag = await serviceGetTagBySlug(slug);
-  let taggeds = await serviceGetTaggeds();
+  const tag = await getTagBySlug(slug);
+  let taggeds = await getTaggedList();
   taggeds = taggeds.filter((tagged) => tagged.tagId === tag.id);
   const blogIds = new Set(taggeds.map((tagged) => tagged.blogId));
-  const blogs = await serviceGetBlogs();
+  const blogs = await getBlogs();
   const filteredBlogs = blogs.filter((blog) => blogIds.has(blog.id));
 
   return (

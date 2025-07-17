@@ -2,8 +2,8 @@ import { ToastType } from "@/types/app/admin/store";
 import { BufferingFileResult } from "@/types/app/admin/types";
 import { ActionResult, ImageFieldProps } from "@/types/app/data/types";
 import {
-  serviceAddFilesURLList,
-  serviceGetImageFileURL,
+  addFileToUrlList,
+  getFileUrl,
 } from "_data/media/mediaServices";
 import { revalidatePath } from "next/cache";
 
@@ -38,14 +38,14 @@ export async function addImageToList(
   size: number,
   type: string
 ): Promise<ActionResult> {
-  const url = await serviceGetImageFileURL(name);
+  const url = await getFileUrl(name);
   const imageFields = {
     url,
     name,
     size,
     type,
   };
-  return await serviceAddFilesURLList(imageFields);
+  return await addFileToUrlList(imageFields);
 }
 export function revalidateMedia() {
   revalidatePath("dashboard/media");

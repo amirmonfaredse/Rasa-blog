@@ -1,25 +1,17 @@
 "use client";
-import { useSliderContext } from "@/app/(admin)/_providers/NavigationProvider";
+import { useSliders } from "_data/fetchers";
 import SlideManager from "./SlideManager";
 import SliderItem from "./SliderItem";
-import { useEffect } from "react";
-import { SlideFieldProps } from "@/types/app/data/types";
 
-export default function SliderContainer({
-  sliders,
-}: {
-  sliders: SlideFieldProps[];
-}) {
-  const { sliderList, setSliderList } = useSliderContext();
-  useEffect(() => {
-    setSliderList(sliders);
-  }, [sliderList, setSliderList, sliders]);
+export default function SliderContainer() {
+  const { sliders } = useSliders();
+
   return (
     <div className="h-full flex flex-col lg:flex-row items-center lg:items-start justify-center gap-5 mx-2  ">
       <SlideManager />
       <div className="w-full h-full flex flex-col items-start justify-start gap-2 my-5">
-        {sliderList?.length > 0 ? (
-          sliderList.map((slide, index) => (
+        {sliders?.length > 0 ? (
+          sliders.map((slide, index) => (
             <SliderItem
               slide={slide}
               index={index}

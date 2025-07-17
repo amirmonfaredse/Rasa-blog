@@ -2,10 +2,10 @@ import { Suspense } from "react";
 import { BlogContextProvider } from "../_providers/BlogProvider";
 import BlogList from "./_components/BlogList";
 import Sidebar from "./_components/Sidebar";
-import { serviceGetBlogs } from "_data/blog/blogServices";
+import { getBlogs } from "_data/blog/blogServices";
 import {
-  serviceGetCategories,
-  serviceGetCategorizeds,
+  getCategories,
+  getCategorizedList,
 } from "_data/blog/categories/categories.services";
 import { Metadata } from "next";
 
@@ -16,9 +16,9 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const blogs = await serviceGetBlogs();
-  const categories = await serviceGetCategories();
-  const categorized = await serviceGetCategorizeds();
+  const blogs = await getBlogs();
+  const categories = await getCategories();
+  const categorized = await getCategorizedList();
 
   return (
     <div className="w-full h-full flex flex-col sm:flex-row justify-between">

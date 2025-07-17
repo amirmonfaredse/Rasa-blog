@@ -2,9 +2,9 @@
 import { revalidatePath } from "next/cache";
 import { ActionResult } from "next/dist/server/app-render/types";
 import {
-  serviceAddFilesURLList,
-  serviceGetImageFileURL,
-  serviceUploadFile,
+  addFileToUrlList,
+  getFileUrl,
+  UploadFile,
 } from "./mediaServices";
 import { ImageFieldProps } from "@/types/app/data/types";
 
@@ -30,7 +30,7 @@ export async function actionUploadImage(
     const arrayBuffer: ArrayBuffer = await image.arrayBuffer();
     const bufferImage: Buffer = Buffer.from(arrayBuffer);
 
-    await serviceUploadFile(image.name, bufferImage);
+    await UploadFile(image.name, bufferImage);
     await actionAddToImageList(image.name, image.size, image.type);
     revalidatePath("dashboard/media/upload");
     return {
@@ -47,12 +47,12 @@ export async function actionAddToImageList(
   imageSize: number,
   imageType: string
 ): Promise<void> {
-  const imageURL = await serviceGetImageFileURL(imageName);
+  const imageURL = await getFileUrl(imageName);
   const imageField: ImageFieldProps = {
     url: imageURL,
     name: imageName,
     size: imageSize,
     type: imageType,
   };
-  await serviceAddFilesURLList(imageField);
+  await addFileToUrlList(imageField);
 }

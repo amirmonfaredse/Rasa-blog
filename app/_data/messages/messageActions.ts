@@ -1,13 +1,13 @@
 "use server";
 import { revalidatePath } from "next/cache";
 import {
-  serviceCommentsConfirmMessage,
-  serviceCommentsDeleteMessage,
-  serviceCommentsGetMessage,
-  serviceCommentsSendMessage,
-  serviceContactDeleteMessage,
-  serviceContactGetMessage,
-  serviceContactSendMessage,
+  getConfirmedComment,
+  deleteComment,
+  getComment,
+  sendComment,
+  deleteMessage,
+  getMessage,
+  sendMessage,
 } from "./messageServices";
 import { sanitizeHTMLOnServer } from "../../utility/jsDOM";
 import { secureAccess } from "../utility";
@@ -26,7 +26,7 @@ export async function actionContactSendMessage(
     email: formData.get("email") as string,
     message: formData.get("message") as string,
   };
-  const message = await serviceContactSendMessage(messageFields);
+  const message = await sendMessage(messageFields);
   if (message) {
     return {
       status: "success",
@@ -41,9 +41,9 @@ export async function actionContactSendMessage(
 }
 export async function actionContactRemoveMessage(id: string): Promise<void> {
   await secureAccess();
-  const contact = await serviceContactGetMessage(id);
+  const contact = await getMessage(id);
   if (!contact) throw new Error("امکان حذف این پیام وجود ندارد");
-  await serviceContactDeleteMessage(id);
+  await deleteMessage(id);
   revalidatePath("/dashboard/contact");
 }
 
@@ -58,7 +58,7 @@ export async function actionCommentsSendMessage(
     message: sanitizeHTMLOnServer(formData.get("message")),
     blogId,
   };
-  await serviceCommentsSendMessage(messageField);
+  await sendComment(messageField);
   revalidatePath("/dashboard/contact/comments");
   revalidatePath(`/blogs/${blogId}`);
   return {
@@ -69,9 +69,9 @@ export async function actionCommentsSendMessage(
 }
 export async function actionCommentsRemoveMessage(id: string): ActionResult {
   await secureAccess();
-  const comment = await serviceCommentsGetMessage(id);
+  const comment = await getComment(id);
   if (!comment) throw new Error("امکان حذف این نظر وجود ندارد");
-  await serviceCommentsDeleteMessage(id);
+  await deleteComment(id);
   revalidatePath("/dashboard/contact/comments");
   return {
     status: "success",
@@ -80,9 +80,9 @@ export async function actionCommentsRemoveMessage(id: string): ActionResult {
 }
 export async function actionCommentsConfirmMessage(id: string): ActionResult {
   await secureAccess();
-  const comment = await serviceCommentsGetMessage(id);
+  const comment = await getComment(id);
   if (!comment) throw new Error("امکان حذف این نظر وجود ندارد");
-  await serviceCommentsConfirmMessage(id);
+  await getConfirmedComment(id);
   revalidatePath("/dashboard/contact/comments");
   return {
     status: "success",

@@ -1,172 +1,109 @@
 import { ToastType } from "@/types/app/admin/store";
+import { PostgrestError } from "@supabase/supabase-js";
 import {
   ActionResult,
   CommentFieldProps,
   MessageFieldProps,
-  serviceCommentGetMessage,
-  serviceGetMessageProps,
+  CommentProps,
+  MessageProps,
 } from "../../../types/app/data/types";
 import { supabase } from "../supabase";
-import { revalidatePath } from "next/cache";
 
-// POST
-export async function serviceContactSendMessage(
+export async function sendMessage(
   newMessage: MessageFieldProps
-): Promise<ActionResult> {
-  try {
-    await supabase.from("contact").insert([newMessage]);
-    return {
-      type: ToastType.Success,
-      message: "پیام با موفقیت ارسال شد",
-    };
-  } catch (error) {
-    console.log(error);
-    return {
-      type: ToastType.Error,
-      message: "در ارسال پیام مشکلی ایجاد شده است",
-      error,
-    };
-  }
+): Promise<PostgrestError | MessageFieldProps> {
+  const { error, data } = await supabase
+    .from("contact")
+    .insert([newMessage])
+    .select()
+    .single();
+
+  return error ?? data!;
 }
 
-// GET
-export async function serviceContactGetMessages(): Promise<
-  serviceGetMessageProps[]
-> {
+export async function getMessages(): Promise<PostgrestError | MessageProps[]> {
   const { data, error } = await supabase.from("contact").select("*");
-  if (error) throw new Error("مشکلی در دریافت پیام ها ایجاد شده است");
-  return data;
+  return error ?? data!;
 }
-export async function serviceContactGetMessage(
+export async function getMessage(
   id: string
-): Promise<serviceGetMessageProps> {
+): Promise<PostgrestError | MessageProps> {
   const { data, error } = await supabase
     .from("contact")
     .select()
     .eq("id", id)
     .single();
-  if (error) throw new Error("مشکلی در دریافت  پیام ایجاد شده است");
-  return data;
+  return error ?? data!;
 }
 
 // DELETE
-export async function serviceContactDeleteMessage(
+export async function deleteMessage(
   id: string
-): Promise<ActionResult> {
-  try {
-    await supabase.from("contact").delete().eq("id", id);
-    return {
-      type: ToastType.Success,
-      message: "پیام با موفقیت حذف شد",
-    };
-  } catch (error) {
-    console.log(error);
-    return {
-      type: ToastType.Error,
-      message: "مشکلی در حذف کردن پیام پیش آمده",
-      error,
-    };
-  }
+): Promise<PostgrestError | MessageProps> {
+  const { error, data } = await supabase
+    .from("contact")
+    .delete()
+    .eq("id", id)
+    .select()
+    .single();
+  return error ?? data!;
 }
 
-export async function serviceCommentsGetMessages(): Promise<
-  serviceCommentGetMessage[]
-> {
-  const { data, error } = await supabase.from("comments").select("*");
-  if (error) throw new Error("مشکلی در دریافت نظرات پیش آمده است");
-  return data;
+export async function getComments(): Promise<PostgrestError | CommentProps[]> {
+  const { error, data } = await supabase.from("comments").select("*");
+  return error ?? data!;
 }
-export async function serviceCommentsGetMessage(
+export async function getComment(
   id: string
-): Promise<serviceCommentGetMessage> {
-  const { data, error } = await supabase
+): Promise<PostgrestError | CommentProps> {
+  const { error, data } = await supabase
     .from("comments")
     .select()
     .eq("id", id)
     .single();
-  if (error) throw new Error("مشکلی در دریافت این نظر پیش آمده است");
-  return data;
+  return error ?? data!;
 }
-export async function serviceCommentsConfirmMessage(
-  id: string
-): Promise<{ updateResult: ActionResult; blogId?: string }> {
-  try {
-    const { data } = await supabase
-      .from("comments")
-      .update({ confirmed: true })
-      .eq("id", id)
-      .select("blogId");
-    const blogId = data?.[0]?.blogId;
-    return {
-      updateResult: {
-        type: ToastType.Success,
-        message: "پیام تایید شد",
-      },
-      blogId,
-    };
-  } catch (error) {
-    return {
-      updateResult: {
-        type: ToastType.Error,
-        message: "در تایید کامنت مشکلی ایجاد شده است",
-        error,
-      },
-    };
-  }
-}
-export async function serviceCommentsGetConfirmedMessages(): Promise<
-  serviceCommentGetMessage[]
+
+export async function getConfirmedComments(): Promise<
+  PostgrestError | CommentProps[]
 > {
-  const { data, error } = await supabase
+  const { error, data } = await supabase
     .from("comments")
     .select()
-    .eq("confirmed", true);
-
-  if (error) throw new Error("مشکلی در دریافت نظرات ایجاد شده است");
-  return data;
+    .eq("confirmed", true)
+    .single();
+  return error ?? data!;
 }
-export async function serviceCommentsSendMessage(
-  newComment: CommentFieldProps
-): Promise<ActionResult> {
-  try {
-    await supabase.from("comments").insert([newComment]);
-    return {
-      type: ToastType.Success,
-      message: "نظر ارسال شد",
-    };
-  } catch (error) {
-    return {
-      type: ToastType.Error,
-      message: "مشکلی در دریافت نظرات پیش آمده است",
-      error,
-    };
-  }
-}
-export async function serviceCommentsDeleteMessage(
+export async function getConfirmedComment(
   id: string
-): Promise<{ deleteResult: ActionResult; blogId?: string }> {
-  try {
-    const { data } = await supabase
-      .from("comments")
-      .delete()
-      .eq("id", id)
-      .select("blogId");
-    const blogId = data?.[0]?.blogId;
+): Promise<PostgrestError | CommentProps> {
+  const { error, data } = await supabase
+    .from("comments")
+    .update({ confirmed: true })
+    .eq("id", id)
+    .select()
+    .single();
+  return error ?? data!;
+}
 
-    return {
-      deleteResult: {
-        type: ToastType.Success,
-        message: "نظر با موفقیت حذف شد",
-      },
-      blogId,
-    };
-  } catch (error) {
-    return {
-      deleteResult: {
-        type: ToastType.Error,
-        message: "مشکلی در دریافت نظرات پیش آمده است",
-        error,
-      },
-    };
-  }
+export async function sendComment(
+  newComment: CommentFieldProps
+): Promise<PostgrestError | CommentProps> {
+  const { error, data } = await supabase
+    .from("comments")
+    .insert([newComment])
+    .select()
+    .single();
+  return error ?? data!;
+}
+export async function deleteComment(
+  id: string
+): Promise<PostgrestError | CommentProps> {
+  const { error, data } = await supabase
+    .from("comments")
+    .delete()
+    .eq("id", id)
+    .select()
+    .single();
+  return error ?? data!;
 }

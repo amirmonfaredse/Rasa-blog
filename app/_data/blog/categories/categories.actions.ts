@@ -5,10 +5,10 @@ import { revalidatePath } from "next/cache";
 import { ActionResult } from "next/dist/server/app-render/types";
 import { sanitizeTextOnServer } from "utility/jsDOM";
 import {
-  serviceCreateCategory,
-  serviceDeleteCategory,
-  serviceGetCategory,
-  serviceUpdateCategory,
+  createCategory,
+  deleteCategory,
+  getCategory,
+  updateCategory,
 } from "./categories.services";
 
 // ACTION for POST / New Category
@@ -18,7 +18,7 @@ export async function actionCreateCategory(formData: FormData): ActionResult {
     title: sanitizeTextOnServer(formData.get("categoryTitle") as string),
     name: sanitizeTextOnServer(formData.get("categoryValue") as string),
   };
-  await serviceCreateCategory(newCategoryFields);
+  await createCategory(newCategoryFields);
   revalidatePath("dashboard/blogs");
   revalidatePath("dashboard/blogs/categories");
   return {
@@ -30,14 +30,14 @@ export async function actionCreateCategory(formData: FormData): ActionResult {
 export async function actionUpdateCategory(formData: FormData): ActionResult {
   await secureAccess();
   const categoryId = formData.get("id") as string;
-  const category = serviceGetCategory(categoryId);
+  const category = getCategory(categoryId);
   if (!category) throw new Error("دسته بندی مورد نظر وجود ندارد");
 
   const updatedFields: CategoryFieldProps = {
     title: sanitizeTextOnServer(formData.get("categoryTitle") as string),
     name: sanitizeTextOnServer(formData.get("categoryValue") as string),
   };
-  await serviceUpdateCategory(updatedFields, categoryId);
+  await updateCategory(updatedFields, categoryId);
   revalidatePath("dashboard/blogs");
   revalidatePath("dashboard/blogs/all");
   revalidatePath("dashboard/blogs/new");
@@ -50,9 +50,9 @@ export async function actionUpdateCategory(formData: FormData): ActionResult {
 // ACTION for DELETE / Delete Category
 export async function actionDeleteCategory(id: string): ActionResult {
   await secureAccess();
-  const category = await serviceGetCategory(id);
+  const category = await getCategory(id);
   if (!category) throw new Error("دسته بندی مورد نظر وجود ندارد");
-  await serviceDeleteCategory(id);
+  await deleteCategory(id);
   revalidatePath("dashboard/blogs");
   revalidatePath("dashboard/blogs/all");
   revalidatePath("dashboard/blogs/new");

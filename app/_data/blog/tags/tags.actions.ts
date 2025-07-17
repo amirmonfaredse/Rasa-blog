@@ -1,9 +1,9 @@
 import { revalidatePath } from "next/cache";
 import {
-  serviceCreateTag,
-  serviceDeleteTag,
-  serviceGetTag,
-  serviceUpdateTag,
+  createTag,
+  deleteTag,
+  getTag,
+  updateTag,
 } from "./tags.services";
 import { secureAccess } from "_data/utility";
 import { ActionResult } from "next/dist/server/app-render/types";
@@ -17,7 +17,7 @@ export async function actionCreateTag(formData: FormData): ActionResult {
     title: sanitizeHTMLOnServer(formData.get("tagTitle")),
     slug: sanitizeHTMLOnServer(formData.get("tagSlug")),
   };
-  await serviceCreateTag(newField);
+  await createTag(newField);
   revalidatePath("dashboard/blogs");
   revalidatePath("dashboard/blogs/tags");
   return {
@@ -29,13 +29,13 @@ export async function actionCreateTag(formData: FormData): ActionResult {
 export async function actionUpdateTag(formData: FormData): ActionResult {
   await secureAccess();
   const tagId = formData.get("id") as string;
-  const tag = serviceGetTag(tagId);
+  const tag = getTag(tagId);
   if (!tag) throw new Error("برچسب مورد نظر وجود ندارد");
   const updatedFields: TagFieldProps = {
     title: sanitizeTextOnServer(formData.get("tagTitle") as string),
     slug: sanitizeTextOnServer(formData.get("tagSlug") as string),
   };
-  await serviceUpdateTag(updatedFields, tagId);
+  await updateTag(updatedFields, tagId);
   revalidatePath("dashboard/blogs");
   revalidatePath("dashboard/blogs/all");
   revalidatePath("dashboard/blogs/new");
@@ -48,9 +48,9 @@ export async function actionUpdateTag(formData: FormData): ActionResult {
 
 export async function actionDeleteTag(slug: string): ActionResult {
   await secureAccess();
-  const tag = await serviceGetTag(slug);
+  const tag = await getTag(slug);
   if (!tag) throw new Error("برچسب مورد نظر وجود ندارد");
-  await serviceDeleteTag(slug);
+  await deleteTag(slug);
   revalidatePath("dashboard/blogs");
   revalidatePath("dashboard/blogs/all");
   revalidatePath("dashboard/blogs/new");

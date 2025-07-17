@@ -1,62 +1,43 @@
-import { ToastType } from "@/types/app/admin/store";
-import { ActionResult, SlideFieldProps } from "../../../types/app/data/types";
+import { PostgrestError } from "@supabase/supabase-js";
+import { SlideFieldProps } from "../../../types/app/data/types";
 import { supabase } from "../supabase";
 
-export async function serviceCreateSlide(
+export async function createSlide(
   newSlide: SlideFieldProps
-): Promise<ActionResult> {
-  try {
-    await supabase.from("sliders").insert([newSlide]);
-    return {
-      type: ToastType.Success,
-      message: "اسلاید با موفقیت ایجاد شد",
-    };
-  } catch (error) {
-    console.log(error);
-    return {
-      type: ToastType.Error,
-      message: "مشکلی در فرایند ایجاد اسلاید به وجود آمده است  مجددا تلاش کنید",
-      error,
-    };
-  }
+): Promise<PostgrestError | SlideFieldProps> {
+  const { error, data } = await supabase
+    .from("sliders")
+    .insert([newSlide])
+    .select()
+    .single();
+
+  return error ?? data!;
 }
 
-export async function serviceGetSliders(): Promise<SlideFieldProps[]> {
-  const { data, error } = await supabase.from("sliders").select("*");
-  if (error) {
-    console.log(error);
-    throw new Error("مشکلی در دریافت اطلاعات اسلاید ها ایجاد شده است");
-  }
-  return data;
+export async function getSliders(): Promise<
+  PostgrestError | SlideFieldProps[]
+> {
+  const { error, data } = await supabase.from("sliders").select("*");
+  return error ?? data!;
 }
-export async function serviceGetSlider(id: string): Promise<SlideFieldProps> {
-  const { data, error } = await supabase
+export async function getSlider(
+  id: string
+): Promise<PostgrestError | SlideFieldProps> {
+  const { error, data } = await supabase
     .from("sliders")
     .select()
     .eq("id", id)
     .single();
-  if (error) {
-    console.log(error);
-    throw new Error("مشکلی در دریافت اطلاعات اسلاید ایجاد شده است");
-  }
-  return data;
+  return error ?? data!;
 }
-export async function serviceDeleteSlide(
+export async function deleteSlide(
   slideId: string
-): Promise<ActionResult> {
-  try {
-    await supabase.from("sliders").delete().eq("id", slideId);
-
-    return {
-      type: ToastType.Success,
-      message: "اسلاید با موفقیت حذف شد",
-    };
-  } catch (error) {
-    console.log(error);
-    return {
-      type: ToastType.Error,
-      message: "مشکلی در فرایند حذف اسلاید ایجاد شده است",
-      error,
-    };
-  }
+): Promise<PostgrestError | SlideFieldProps> {
+  const { error, data } = await supabase
+    .from("sliders")
+    .delete()
+    .eq("id", slideId)
+    .select()
+    .single();
+  return error ?? data!;
 }

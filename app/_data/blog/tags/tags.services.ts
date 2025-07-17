@@ -1,145 +1,90 @@
-import { ToastType } from "@/types/app/admin/store";
-import {
-  ActionResult,
-  getTaggedServiceProps,
-  getTaggingServiceProps,
-  getTagServiceProps,
-  TagFieldProps,
-} from "@/types/app/data/types";
+import { TagFieldProps, TaggedProps, TagProps } from "@/types/app/data/types";
+import { PostgrestError } from "@supabase/supabase-js";
 import { supabase } from "_data/supabase";
 
-export async function serviceCreateTag(
+export async function createTag(
   newTag: TagFieldProps
-): Promise<ActionResult> {
-  try {
-    await supabase.from("tags").insert([newTag]);
-    return {
-      type: ToastType.Success,
-      message: "برچسب جدید با موفقیت ایجاد شد",
-    };
-  } catch (error) {
-    console.log(error);
-    return {
-      type: ToastType.Error,
-      message: "در ایجاد برچسب مشکلی پیش آمده است",
-      error,
-    };
-  }
+): Promise<PostgrestError | TagProps> {
+  const { error, data } = await supabase
+    .from("tags")
+    .insert([newTag])
+    .select()
+    .single();
+  return error ?? data!;
 }
-export async function serviceGetTags(): Promise<getTagServiceProps[]> {
+export async function getTags(): Promise<PostgrestError | TagProps[]> {
   const { data, error } = await supabase.from("tags").select("*");
-  if (error) throw new Error("مشکلی در دریافت  برچسب ها ایجاد شده است");
-  return data;
+  return error ?? data!;
 }
 
-export async function serviceGetTag(
+export async function getTag(
   tagId: string
-): Promise<getTagServiceProps> {
+): Promise<PostgrestError | TagProps> {
   const { data, error } = await supabase
     .from("tags")
     .select()
     .eq("id", tagId)
     .single();
-  if (error) {
-    console.log(error);
-    throw new Error("مشکلی در دریافت  برچسب ایجاد شده است");
-  }
-  return data;
+  return error ?? data!;
 }
 
-export async function serviceUpdateTag(
+export async function updateTag(
   updatedField: TagFieldProps,
   id: string
-): Promise<ActionResult> {
-  try {
-    await supabase.from("tags").update(updatedField).eq("id", id);
-    return {
-      type: ToastType.Success,
-      message: "برچسب بروزرسانی شد",
-    };
-  } catch (error) {
-    console.log(error);
-    return {
-      type: ToastType.Error,
-      message: "مشکلی در بروزرسانی  برچسب ایجاد شده است",
-      error,
-    };
-  }
+): Promise<PostgrestError | TagProps> {
+  const { data, error } = await supabase
+    .from("tags")
+    .update(updatedField)
+    .eq("id", id)
+    .select()
+    .single();
+  return error ?? data!;
 }
-export async function serviceDeleteTag(id: string): Promise<ActionResult> {
-  try {
-    await supabase.from("tags").delete().eq("id", id);
-    return {
-      type: ToastType.Success,
-      message: "برچسب با موفقیت حذف شد",
-    };
-  } catch (error) {
-    console.log(error);
-    return {
-      type: ToastType.Error,
-      message: "در حذف برچسب مشکلی ایجاد شده است",
-      error,
-    };
-  }
+export async function deleteTag(
+  id: string
+): Promise<PostgrestError | TagProps> {
+  const { data, error } = await supabase
+    .from("tags")
+    .delete()
+    .eq("id", id)
+    .select()
+    .single();
+  return error ?? data!;
 }
 
-export async function serviceTagging(
-  newField: getTaggingServiceProps
-): Promise<ActionResult> {
-  try {
-    await supabase.from("tagging-blogs").insert([newField]);
-    return {
-      type: ToastType.Success,
-      message: "برچسب گذاری با موفقیت تکمیل شد",
-    };
-  } catch (error) {
-    console.log(error);
-    return {
-      type: ToastType.Error,
-      message: "مشکلی در فرایند برچسب گذاری ایجاد شده است",
-      error,
-    };
-  }
+export async function tagging(
+  newField: TaggedProps
+): Promise<PostgrestError | TaggedProps> {
+  const { data, error } = await supabase
+    .from("tagging-blogs")
+    .insert([newField])
+    .select()
+    .single();
+  return error ?? data!;
 }
-export async function serviceDeleteRelationalTagged(
+export async function deleteTagged(
   blogId: string
-): Promise<ActionResult> {
-  try {
-    await supabase.from("tagging-blogs").delete().eq("blogId", Number(blogId));
-
-    return {
-      type: ToastType.Success,
-      message: "برچسب گذاری با موفقیت حذف شد",
-    };
-  } catch (error) {
-    console.log(error);
-    return {
-      type: ToastType.Error,
-      message: "مشکلی در حذف برچسب گذاری ها ایجاد شده است",
-      error,
-    };
-  }
+): Promise<PostgrestError | TaggedProps> {
+  const { data, error } = await supabase
+    .from("tagging-blogs")
+    .delete()
+    .eq("blogId", blogId)
+    .select()
+    .single();
+  return error ?? data!;
 }
-export async function serviceGetTaggeds(): Promise<getTaggedServiceProps[]> {
+export async function getTaggedList(): Promise<PostgrestError | TaggedProps[]> {
   const { data, error } = await supabase.from("tagging-blogs").select("*");
-  if (error) {
-    console.log(error);
-    throw new Error("مشکلی در دریافت برچسب ها ایجاد شده است");
-  }
-  return data;
+  return error ?? data!;
 }
-// CHANGE  OR MANAGE IT ON API
-export async function serviceGetTagBySlug(
+
+export async function getTagBySlug(
   slug: string
-): Promise<getTagServiceProps> {
+): Promise<PostgrestError | TagProps> {
   const { data, error } = await supabase
     .from("tags")
     .select()
     .eq("slug", slug)
     .single();
-  if (error) {
-    console.log(error);
-    throw new Error("مشکلی در دریافت تگ ایجاد شده است");
-  }
-  return data;
+  return error ?? data!;
 }

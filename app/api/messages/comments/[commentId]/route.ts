@@ -1,8 +1,8 @@
 import { ActionResult } from "@/types/app/data/types";
 import {
-  serviceCommentsConfirmMessage,
-  serviceCommentsDeleteMessage,
-  serviceCommentsGetMessage,
+  getConfirmedComment,
+  deleteComment,
+  getComment,
 } from "_data/messages/messageServices";
 import { secureAccess } from "_data/utility";
 import { revalidateComments } from "_lib/utility/messages.utils";
@@ -13,7 +13,7 @@ export async function GET({
 }: {
   params: { commentId: string };
 }): Promise<Response> {
-  const comment = await serviceCommentsGetMessage(params.commentId);
+  const comment = await getComment(params.commentId);
   return NextResponse.json(comment);
 }
 export async function DELETE({
@@ -23,7 +23,7 @@ export async function DELETE({
 }): Promise<Response> {
   await secureAccess();
   const commentId = params.commentId;
-  const { deleteResult, blogId } = await serviceCommentsDeleteMessage(
+  const { deleteResult, blogId } = await deleteComment(
     commentId
   );
   if (blogId) revalidateComments(blogId);
@@ -37,7 +37,7 @@ export async function PUT({
 }): Promise<Response> {
   await secureAccess();
   const commentId = params.commentId;
-  const { updateResult, blogId } = await serviceCommentsConfirmMessage(
+  const { updateResult, blogId } = await getConfirmedComment(
     commentId
   );
   if (blogId) revalidateComments(blogId);

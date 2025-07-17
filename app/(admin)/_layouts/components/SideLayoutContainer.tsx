@@ -1,13 +1,13 @@
 "use client";
 
-import { useSliderContext } from "(admin)/_providers/NavigationProvider";
+import { useAdminStore } from "_lib/store/store";
 
 function SideLayoutContainer({ children }: { children: React.ReactNode }) {
-  const { openDrawer } = useSliderContext();
+  const drawer = useAdminStore.use.drawerIsOpen();
 
   return (
     <div
-      style={{ right: openDrawer ? 0 : -240 }}
+      style={{ right: drawer ? 0 : -240 }}
       className="top-20 absolute md:static md:flex duration-300"
     >
       {children}

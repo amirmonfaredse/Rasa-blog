@@ -1,7 +1,7 @@
 import { ActionResult } from "@/types/app/data/types";
 import {
-  serviceContactDeleteMessage,
-  serviceContactGetMessage,
+  deleteMessage,
+  getMessage,
 } from "_data/messages/messageServices";
 import { secureAccess } from "_data/utility";
 import { revalidateContacts } from "_lib/utility/messages.utils";
@@ -12,7 +12,7 @@ export async function GET({
 }: {
   params: { messageId: string };
 }): Promise<Response> {
-  const message = await serviceContactGetMessage(params.messageId);
+  const message = await getMessage(params.messageId);
   return NextResponse.json(message);
 }
 export async function DELETE({
@@ -22,7 +22,7 @@ export async function DELETE({
 }): Promise<Response> {
   await secureAccess();
   const messageId = params.messageId;
-  const deleteResult = await serviceContactDeleteMessage(messageId);
+  const deleteResult = await deleteMessage(messageId);
   revalidateContacts();
   return NextResponse.json<ActionResult[]>([deleteResult]);
 }

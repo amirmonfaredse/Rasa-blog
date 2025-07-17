@@ -26,20 +26,20 @@ import {
   validateUrl,
 } from "../utility";
 import {
-  serviceCreateBlog,
-  serviceDeleteBlog,
-  serviceGetBlog,
-  serviceUpdateBlog,
+  createBlog,
+  deleteBlog,
+  getBlog,
+  updateBlog,
 } from "./blogServices";
 import {
-  serviceCategorizing,
-  serviceDeleteRelationalCategorizeds,
-  serviceGetCategory,
+  categorize,
+  deleteCategorized,
+  getCategory,
 } from "./categories/categories.services";
 import {
-  serviceDeleteRelationalTagged,
-  serviceGetTag,
-  serviceTagging,
+  deleteTagged,
+  getTag,
+  tagging,
 } from "./tags/tags.services";
 
 // ACTION for POST / New Post
@@ -51,7 +51,7 @@ export async function actionCreateBlog(
   await secureAccess();
   const blogId = idRand();
   const blogFields: BlogFieldProps = extractBlogFields(formData, blogId);
-  const blogCreated = await serviceCreateBlog(blogFields);
+  const blogCreated = await createBlog(blogFields);
   revalidateBlogs();
   if (blogCreated) {
     await handleCategorizing(formData, blogId);
@@ -67,7 +67,7 @@ export async function actionCreateBlog(
 export async function actionUpdateBlog(_: any, formData: FormData) {
   await secureAccess();
   const blogId: string = formData.get("id") as string;
-  const blog = await serviceGetBlog(blogId);
+  const blog = await getBlog(blogId);
   if (!blog) throw new Error("پست مورد نظر وجود ندارد");
   const image = encodeURI(formData.get("blogImage") as string);
   validateUrl(image);
@@ -84,28 +84,28 @@ export async function actionUpdateBlog(_: any, formData: FormData) {
     image,
   };
 
-  const updatedBlog = await serviceUpdateBlog(blogId, updatedFields);
+  const updatedBlog = await updateBlog(blogId, updatedFields);
   const tags = secureTagList(getTags);
   const categories = await secureAList(formData.getAll("blogCategory") as []);
   if (updatedBlog) {
-    await serviceDeleteRelationalCategorizeds(blogId);
-    await serviceDeleteRelationalTagged(blogId);
+    await deleteCategorized(blogId);
+    await deleteTagged(blogId);
     try {
       let tasks = categories.map(async (catId) => {
-        await serviceGetCategory(catId);
+        await getCategory(catId);
         const newCategorizingField: newCategorizingFieldProps = {
           categoryId: catId,
           blogId,
         };
-        return await serviceCategorizing(newCategorizingField);
+        return await categorize(newCategorizingField);
       });
       const tagTasks = tags.map(async (tag) => {
-        await serviceGetTag(tag.id);
+        await getTag(tag.id);
         const newTaggingField: TaggingFieldProps = {
           tagId: tag.id,
           blogId,
         };
-        return await serviceTagging(newTaggingField);
+        return await tagging(newTaggingField);
       });
       tasks = [...tasks, ...tagTasks];
       await Promise.all(tasks);
@@ -131,9 +131,9 @@ export async function actionUpdateBlog(_: any, formData: FormData) {
 
 export async function actionDeleteBlog(id: string): Promise<ActionResult> {
   await secureAccess();
-  const blog = await serviceGetBlog(id);
+  const blog = await getBlog(id);
   if (!blog) throw new Error("این پست وجود ندارد");
-  await serviceDeleteBlog(blog.id);
+  await deleteBlog(blog.id);
   revalidatePath("dashboard/blogs");
   return {
     status: "success",

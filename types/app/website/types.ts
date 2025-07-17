@@ -1,5 +1,5 @@
 import { Dispatch, MouseEventHandler, SetStateAction } from "react";
-import { CategoryFieldProps, getCategorizedServiceProps } from "../data/types";
+import { CategoryFieldProps, CategorizedProps } from "../data/types";
 
 export type PostCardUtilityProps = {
   children?: React.ReactNode;
@@ -81,5 +81,5 @@ export type BlogContextType = {
 };
 export type SidebarBlogProps = {
   categories: CategoryFieldProps[];
-  categorized: getCategorizedServiceProps[];
+  categorized: CategorizedProps[];
 };

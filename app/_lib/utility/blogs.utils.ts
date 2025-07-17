@@ -6,10 +6,10 @@ import {
   TaggingFieldProps,
 } from "@/types/app/data/types";
 import {
-  serviceCategorizing,
-  serviceGetCategory,
+  categorize,
+  getCategory,
 } from "_data/blog/categories/categories.services";
-import { serviceGetTag, serviceTagging } from "_data/blog/tags/tags.services";
+import { getTag, tagging } from "_data/blog/tags/tags.services";
 import {
   getPersianDate,
   idRand,
@@ -60,9 +60,9 @@ export async function handleCategorizing(
     const categories = await secureAList(formData.getAll("blogCategory") as []);
     const categoriesTasks = categories.map(async (catId: string) => {
       try {
-        await serviceGetCategory(catId);
+        await getCategory(catId);
         const newFields = extractCategorizingFields(catId, blogId);
-        return serviceCategorizing(newFields);
+        return categorize(newFields);
       } catch (error) {
         return {
           type: ToastType.Error,
@@ -96,9 +96,9 @@ export async function handleTagging(formData: FormData, blogId: string) {
     const tagsString = JSON.parse(formData.get("blogTags") as string);
     const tags = await secureTagList(tagsString);
     const tagTasks = tags.map(async (tag: TagFieldProps) => {
-      await serviceGetTag(tag.id);
+      await getTag(tag.id);
       const newField = extractTaggingFields(tag.id, blogId);
-      return serviceTagging(newField);
+      return tagging(newField);
     });
     await Promise.all([...tagTasks]);
     return {

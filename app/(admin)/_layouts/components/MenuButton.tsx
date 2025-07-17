@@ -1,18 +1,18 @@
 "use client";
 
-import { useSliderContext } from "(admin)/_providers/NavigationProvider";
-
+import { useAdminStore } from "_lib/store/store";
 
 function MenuButton() {
-  const { openDrawer, setOpenDrawer } = useSliderContext();
+  const drawer = useAdminStore.use.drawerIsOpen();
+  const onDrawer = useAdminStore.use.onDrawer();
 
   const onClickDrawer: React.MouseEventHandler<HTMLDivElement> = () => {
-    setOpenDrawer(!openDrawer);
+    onDrawer(drawer);
   };
   return (
     <div
       onClick={onClickDrawer}
-      className="fixed top-12 right-0 flex md:hidden  bg-cles-700 shadow-xl p-2 rounded-l-lg z-30"
+      className="fixed top-12 right-0 flex md:hidden  bg-cles-700 shadow-xl p-2 rounded-l-lg z-30 cursor-pointer"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

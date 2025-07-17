@@ -1,7 +1,7 @@
 import { ActionResult } from "@/types/app/data/types";
 import {
-  serviceCommentsGetMessages,
-  serviceCommentsSendMessage,
+  getComments,
+  sendComment,
 } from "_data/messages/messageServices";
 import { idRand } from "_data/utility";
 import { extractCommentFields, revalidateComments } from "_lib/utility/messages.utils";
@@ -9,7 +9,7 @@ import { NextResponse } from "next/server";
 import { sanitizeHTMLOnServer } from "utility/jsDOM";
 
 export async function GET(): Promise<Response> {
-  const comments = await serviceCommentsGetMessages();
+  const comments = await getComments();
   return NextResponse.json(comments);
 }
 export async function POST(request: Request): Promise<Response> {
@@ -17,7 +17,7 @@ export async function POST(request: Request): Promise<Response> {
   const messId = idRand();
   const blogId = sanitizeHTMLOnServer(formData.get("blogId"));
   const newFields = extractCommentFields(formData, messId, blogId);
-  const result = await serviceCommentsSendMessage(newFields);
+  const result = await sendComment(newFields);
   revalidateComments(blogId);
   return NextResponse.json<ActionResult[]>([result]);
 }

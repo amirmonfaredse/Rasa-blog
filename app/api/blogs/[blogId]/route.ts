@@ -1,11 +1,11 @@
 import { ActionResult } from "@/types/app/data/types";
 import {
-  serviceDeleteBlog,
-  serviceGetBlog,
-  serviceUpdateBlog,
+  deleteBlog,
+  getBlog,
+  updateBlog,
 } from "_data/blog/blogServices";
-import { serviceDeleteRelationalCategorizeds } from "_data/blog/categories/categories.services";
-import { serviceDeleteRelationalTagged } from "_data/blog/tags/tags.services";
+import { deleteCategorized } from "_data/blog/categories/categories.services";
+import { deleteTagged } from "_data/blog/tags/tags.services";
 import { secureAccess } from "_data/utility";
 import {
   extractBlogFields,
@@ -16,18 +16,18 @@ import {
 import { NextResponse } from "next/server";
 
 export async function GET({ params }: { params: { blogId: string } }) {
-  const blog = await serviceGetBlog(params.blogId);
+  const blog = await getBlog(params.blogId);
   return NextResponse.json(blog);
 }
 export async function PUT(request: Request): Promise<Response> {
   await secureAccess();
   const formData = await request.formData();
   const blogId = formData.get("id") as string;
-  await serviceGetBlog(blogId);
+  await getBlog(blogId);
   const blogFields = extractBlogFields(formData, blogId);
-  const updateResult = await serviceUpdateBlog(blogFields, blogId);
-  await serviceDeleteRelationalCategorizeds(blogId);
-  await serviceDeleteRelationalTagged(blogId);
+  const updateResult = await updateBlog(blogFields, blogId);
+  await deleteCategorized(blogId);
+  await deleteTagged(blogId);
   const categorizingResult = await handleCategorizing(formData, blogId);
   const taggingResult = await handleTagging(formData, blogId);
   revalidateBlogs();
@@ -44,7 +44,7 @@ export async function DELETE({
 }): Promise<Response> {
   await secureAccess();
   const blogId = params.blogId;
-  const deleteResult = await serviceDeleteBlog(blogId);
+  const deleteResult = await deleteBlog(blogId);
   revalidateBlogs();
   return NextResponse.json<ActionResult[]>([deleteResult]);
 }
