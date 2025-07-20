@@ -1,5 +1,5 @@
 "use client";
-import { ActionResult } from "@/types/app/data/types";
+import { ActionResult, CategorizedProps } from "@/types/app/data/types";
 import "client-only";
 import { create } from "zustand";
 import { combine, devtools } from "zustand/middleware";

@@ -8,7 +8,7 @@ import {
   deleteMessage,
   getMessage,
   sendMessage,
-} from "./messageServices";
+} from "./message.services";
 import { sanitizeHTMLOnServer } from "../../utility/jsDOM";
 import { secureAccess } from "../utility";
 import {

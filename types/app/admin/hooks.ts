@@ -46,7 +46,7 @@ export type useCategoryResult = {
   isError: string;
 };
 export type useCategorizedResult = {
-  categorizeds: CategorizedProps[];
+  categorized: CategorizedProps[];
   isLoading: boolean;
   isError: string;
 };

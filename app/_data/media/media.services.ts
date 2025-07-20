@@ -1,11 +1,10 @@
 import { StorageError } from "@supabase/storage-js";
+import { PostgrestError } from "@supabase/supabase-js";
 import {
-  ActionResult,
   FilesUrlProps,
-  ImageFieldProps,
+  ImageFieldProps
 } from "../../../types/app/data/types";
 import { supabase } from "../supabase";
-import { PostgrestError } from "@supabase/supabase-js";
 
 export async function UploadFile(
   filePath: string,

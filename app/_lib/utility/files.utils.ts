@@ -4,7 +4,7 @@ import { ActionResult, ImageFieldProps } from "@/types/app/data/types";
 import {
   addFileToUrlList,
   getFileUrl,
-} from "_data/media/mediaServices";
+} from "_data/media/media.services";
 import { revalidatePath } from "next/cache";
 
 export function ValidateImageFile(file: File): ActionResult | undefined {

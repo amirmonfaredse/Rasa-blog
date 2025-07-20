@@ -3,7 +3,7 @@ import {
   getConfirmedComment,
   deleteComment,
   getComment,
-} from "_data/messages/messageServices";
+} from "_data/messages/message.services";
 import { secureAccess } from "_data/utility";
 import { revalidateComments } from "_lib/utility/messages.utils";
 import { NextResponse } from "next/server";

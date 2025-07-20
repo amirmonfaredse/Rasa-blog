@@ -9,7 +9,7 @@ export function useCreateBlog() {
     (url: string, { arg }: { arg: FormData }) =>
       PostFormData<ActionResult[]>(url, arg)
   );
-  return { trigger, data, error, isMutating };
+  return { trigger, response: data, error, isMutating };
 }
 export function useCreateCategory() {
   const { trigger, data, error, isMutating } = useSWRMutation(
@@ -18,7 +18,7 @@ export function useCreateCategory() {
       PostFormData<ActionResult[]>(url, arg);
     }
   );
-  return { trigger, data, error, isMutating };
+  return { trigger, response: data, error, isMutating };
 }
 
 export function useCreateTag() {
@@ -28,7 +28,7 @@ export function useCreateTag() {
       PostFormData<ActionResult[]>(url, arg);
     }
   );
-  return { trigger, data, error, isMutating };
+  return { trigger, response: data, error, isMutating };
 }
 export function useCreateImage() {
   const { trigger, data, error, isMutating } = useSWRMutation(
@@ -37,7 +37,7 @@ export function useCreateImage() {
       PostFormData<ActionResult[]>(url, arg);
     }
   );
-  return { trigger, data, error, isMutating };
+  return { trigger, response: data, error, isMutating };
 }
 export function useCreateContact() {
   const { trigger, data, error, isMutating } = useSWRMutation(
@@ -46,7 +46,7 @@ export function useCreateContact() {
       PostFormData<ActionResult[]>(url, arg);
     }
   );
-  return { trigger, data, error, isMutating };
+  return { trigger, response: data, error, isMutating };
 }
 export function useCreateComment() {
   const { trigger, data, error, isMutating } = useSWRMutation(
@@ -55,7 +55,7 @@ export function useCreateComment() {
       PostFormData<ActionResult[]>(url, arg);
     }
   );
-  return { trigger, data, error, isMutating };
+  return { trigger, response: data, error, isMutating };
 }
 export function useCreateSlider() {
   const { trigger, data, error, isMutating } = useSWRMutation(
@@ -64,7 +64,7 @@ export function useCreateSlider() {
       PostFormData<ActionResult[]>(url, arg);
     }
   );
-  return { trigger, data, error, isMutating };
+  return { trigger, response: data, error, isMutating };
 }
 export function useUpdateBlog(id: string) {
   const { trigger, data, error, isMutating } = useSWRMutation(
@@ -73,7 +73,7 @@ export function useUpdateBlog(id: string) {
       PutFormData<ActionResult[]>(url, arg);
     }
   );
-  return { trigger, data, error, isMutating };
+  return { trigger, response: data, error, isMutating };
 }
 export function useUpdateCategory(id: string) {
   const { trigger, data, error, isMutating } = useSWRMutation(
@@ -82,7 +82,7 @@ export function useUpdateCategory(id: string) {
       PutFormData<ActionResult[]>(url, arg);
     }
   );
-  return { trigger, data, error, isMutating };
+  return { trigger, response: data, error, isMutating };
 }
 export function useUpdateTag(id: string) {
   const { trigger, data, error, isMutating } = useSWRMutation(
@@ -91,7 +91,7 @@ export function useUpdateTag(id: string) {
       PutFormData<ActionResult[]>(url, arg);
     }
   );
-  return { trigger, data, error, isMutating };
+  return { trigger, response: data, error, isMutating };
 }
 export function useUpdateContact(id: string) {
   const { trigger, data, error, isMutating } = useSWRMutation(
@@ -100,7 +100,7 @@ export function useUpdateContact(id: string) {
       PutFormData<ActionResult[]>(url, arg);
     }
   );
-  return { trigger, data, error, isMutating };
+  return { trigger, response: data, error, isMutating };
 }
 // WATCH THIS !
 export function useUpdateComment(id: string) {
@@ -110,7 +110,7 @@ export function useUpdateComment(id: string) {
       PutFormData<ActionResult[]>(url, arg);
     }
   );
-  return { trigger, data, error, isMutating };
+  return { trigger, response: data, error, isMutating };
 }
 
 export function useDeleteBlog(id: string) {
@@ -120,7 +120,7 @@ export function useDeleteBlog(id: string) {
       PutFormData<ActionResult[]>(url);
     }
   );
-  return { trigger, data, error, isMutating };
+  return { trigger, response: data, error, isMutating };
 }
 export function useDeleteCategory(id: string) {
   const { trigger, data, error, isMutating } = useSWRMutation(
@@ -129,7 +129,7 @@ export function useDeleteCategory(id: string) {
       DeleteData<ActionResult[]>(url);
     }
   );
-  return { trigger, data, error, isMutating };
+  return { trigger, response: data, error, isMutating };
 }
 export function useDeleteTag(id: string) {
   const { trigger, data, error, isMutating } = useSWRMutation(
@@ -138,7 +138,7 @@ export function useDeleteTag(id: string) {
       DeleteData<ActionResult[]>(url);
     }
   );
-  return { trigger, data, error, isMutating };
+  return { trigger, response: data, error, isMutating };
 }
 export function useDeleteContact(id: string) {
   const { trigger, data, error, isMutating } = useSWRMutation(
@@ -147,7 +147,7 @@ export function useDeleteContact(id: string) {
       DeleteData<ActionResult[]>(url);
     }
   );
-  return { trigger, data, error, isMutating };
+  return { trigger, response: data, error, isMutating };
 }
 export function useDeleteComment(id: string) {
   const { trigger, data, error, isMutating } = useSWRMutation(
@@ -156,7 +156,7 @@ export function useDeleteComment(id: string) {
       DeleteData<ActionResult[]>(url);
     }
   );
-  return { trigger, data, error, isMutating };
+  return { trigger, response: data, error, isMutating };
 }
 export function useDeleteSlider(id: string) {
   const { trigger, data, error, isMutating } = useSWRMutation(
@@ -165,5 +165,5 @@ export function useDeleteSlider(id: string) {
       DeleteData<ActionResult[]>(url);
     }
   );
-  return { trigger, data, error, isMutating };
+  return { trigger, response: data, error, isMutating };
 }

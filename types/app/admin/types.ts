@@ -1,12 +1,11 @@
 import { Dispatch, SetStateAction } from "react";
 import {
-  ActionResult,
   BlogFieldProps,
   CategorizedProps,
-  getCategoryServiceProps,
+  CategoryFieldProps,
+  SlideFieldProps,
   TaggedProps,
   TagProps,
-  SlideFieldProps,
 } from "../data/types";
 
 export type SideLayoutProps = {
@@ -34,7 +33,7 @@ export type TagInputProps = {
   tagged?: any[];
 };
 export type EditPostFormProps = {
-  categories: getCategoryServiceProps[];
+  categories: CategoryFieldProps[];
   blog: BlogFieldProps;
   tagList: TagProps[];
   categorized: CategorizedProps[];
@@ -42,10 +41,9 @@ export type EditPostFormProps = {
 };
 export type TextEditorEditBlogProps = {
   defaultContent: string;
-  formState: ActionResult;
 };
 export type NewPostFormProps = {
-  categories: getCategoryServiceProps[];
+  categories: CategoryFieldProps[];
   tagList: TagProps[];
 };
 export type SliderItemProps = {

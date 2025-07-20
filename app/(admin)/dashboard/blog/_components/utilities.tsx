@@ -24,7 +24,6 @@ export function Input({
   name,
   hidden = false,
   readOnly = false,
-  value,
 }: {
   className?: string;
   required?: boolean;
@@ -33,7 +32,6 @@ export function Input({
   name?: string;
   hidden?: boolean;
   readOnly?: boolean;
-  value?: string | number;
 }) {
   return (
     <input
@@ -43,7 +41,6 @@ export function Input({
       name={name}
       type={type}
       defaultValue={defaultValue}
-      value={value}
       className={`w-full border-2 border-ghost-1000 text-ghost-900 h-12 rounded-sm p-2 ${className}`}
     />
   );

@@ -9,7 +9,7 @@ export async function createBlog(
   newBlog: BlogFieldProps
 ): Promise<PostgrestError | BlogFieldProps> {
   const { error, data } = await supabase
-    .from("blog")
+    .from("blogs")
     .insert([newBlog])
     .select()
     .single();
@@ -17,7 +17,7 @@ export async function createBlog(
 }
 
 export async function getBlogs(): Promise<PostgrestError | BlogFieldProps[]> {
-  const { data, error } = await supabase.from("blog").select("*");
+  const { data, error } = await supabase.from("blogs").select("*");
   return error ?? data!;
 }
 
@@ -25,7 +25,7 @@ export async function getBlog(
   id: string
 ): Promise<PostgrestError | BlogFieldProps> {
   const { data, error } = await supabase
-    .from("blog")
+    .from("blogs")
     .select()
     .eq("id", id)
     .single();
@@ -37,7 +37,7 @@ export async function updateBlog(
   id: string
 ): Promise<PostgrestError | BlogFieldProps> {
   const { data, error } = await supabase
-    .from("blog")
+    .from("blogs")
     .update(updatedFields)
     .eq("id", id)
     .select()
@@ -49,7 +49,7 @@ export async function deleteBlog(
   blogId: string
 ): Promise<PostgrestError | BlogFieldProps> {
   const { data, error } = await supabase
-    .from("blog")
+    .from("blogs")
     .delete()
     .eq("id", blogId)
     .select()

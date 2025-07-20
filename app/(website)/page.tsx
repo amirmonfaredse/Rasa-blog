@@ -7,7 +7,7 @@ import {
   PostContainer,
   SliderContainer,
 } from "./_components/utilities/utilities";
-import { getBlogs } from "_data/blog/blogServices";
+import { getBlogs } from "_data/blog/blogs.services";
 
 export default async function Page() {
   const blogs = (await getBlogs()).slice(0, 5);

@@ -6,12 +6,12 @@ import { Input, Label } from "../_components/utilities";
 import ReleaseButton from "./ReleaseButton";
 
 export default function Page() {
-  const { trigger, data, isMutating } = useCreateBlog();
+  const { trigger, response, isMutating } = useCreateBlog();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const results = await trigger(formData);
+    await trigger(formData);
   };
 
   return (

@@ -2,7 +2,7 @@ import { ActionResult } from "@/types/app/data/types";
 import {
   getComments,
   sendComment,
-} from "_data/messages/messageServices";
+} from "_data/messages/message.services";
 import { idRand } from "_data/utility";
 import { extractCommentFields, revalidateComments } from "_lib/utility/messages.utils";
 import { NextResponse } from "next/server";

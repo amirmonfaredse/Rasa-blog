@@ -1,5 +1,5 @@
 import PostCard from "@/app/(website)/_components/cards/PostCard";
-import { getBlogs } from "_data/blog/blogServices";
+import { getBlogs } from "_data/blog/blogs.services";
 import {
   getTagBySlug,
   getTaggedList,

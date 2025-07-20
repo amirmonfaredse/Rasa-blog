@@ -5,7 +5,7 @@ import {
   addFileToUrlList,
   getFileUrl,
   UploadFile,
-} from "./mediaServices";
+} from "./media.services";
 import { ImageFieldProps } from "@/types/app/data/types";
 
 const allowedImageTypes = ["image/png", "image/jpeg", "image/jpg"];

@@ -56,7 +56,7 @@ export async function tagging(
   newField: TaggedProps
 ): Promise<PostgrestError | TaggedProps> {
   const { data, error } = await supabase
-    .from("tagging-blogs")
+    .from("tagged")
     .insert([newField])
     .select()
     .single();
@@ -66,7 +66,7 @@ export async function deleteTagged(
   blogId: string
 ): Promise<PostgrestError | TaggedProps> {
   const { data, error } = await supabase
-    .from("tagging-blogs")
+    .from("tagged")
     .delete()
     .eq("blogId", blogId)
     .select()
@@ -74,7 +74,7 @@ export async function deleteTagged(
   return error ?? data!;
 }
 export async function getTaggedList(): Promise<PostgrestError | TaggedProps[]> {
-  const { data, error } = await supabase.from("tagging-blogs").select("*");
+  const { data, error } = await supabase.from("tagged").select("*");
   return error ?? data!;
 }
 

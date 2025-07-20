@@ -2,7 +2,7 @@ import { ActionResult } from "@/types/app/data/types";
 import {
   getFiles,
   UploadFile,
-} from "_data/media/mediaServices";
+} from "_data/media/media.services";
 import { secureAccess } from "_data/utility";
 import {
   addImageToList,

@@ -1,6 +1,6 @@
 import {
     getConfirmedComments
-} from "_data/messages/messageServices";
+} from "_data/messages/message.services";
 import { NextResponse } from "next/server";
 
 export async function GET() {

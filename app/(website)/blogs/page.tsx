@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { BlogContextProvider } from "../_providers/BlogProvider";
 import BlogList from "./_components/BlogList";
 import Sidebar from "./_components/Sidebar";
-import { getBlogs } from "_data/blog/blogServices";
+import { getBlogs } from "_data/blog/blogs.services";
 import {
   getCategories,
   getCategorizedList,

@@ -1,12 +1,11 @@
 import { ActionResult } from "@/types/app/data/types";
 
-import { createBlog, getBlogs } from "_data/blog/blogServices";
+import { createBlog, getBlogs } from "_data/blog/blogs.services";
 import { idRand, secureAccess } from "_data/utility";
 import {
   extractBlogFields,
   handleCategorizing,
-  handleTagging,
-  revalidateBlogs,
+  revalidateBlogs
 } from "_lib/utility/blogs.utils";
 import { NextResponse } from "next/server";
 

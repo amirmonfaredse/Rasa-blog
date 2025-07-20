@@ -2,7 +2,7 @@ import { ActionResult } from "@/types/app/data/types";
 import {
   getMessages,
   sendMessage,
-} from "_data/messages/messageServices";
+} from "_data/messages/message.services";
 import { idRand, secureAccess } from "_data/utility";
 import { extractMessageFields } from "_lib/utility/messages.utils";
 import { NextResponse } from "next/server";

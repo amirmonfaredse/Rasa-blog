@@ -30,7 +30,7 @@ import {
   deleteBlog,
   getBlog,
   updateBlog,
-} from "./blogServices";
+} from "./blogs.services";
 import {
   categorize,
   deleteCategorized,

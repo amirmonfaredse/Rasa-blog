@@ -9,7 +9,6 @@ import {
   useCommentsResult,
   useConfirmedCommentsResult,
   useImageFilesResult,
-  useImageFileURLResult,
   useMessageResult,
   useMessagesResult,
   useSliderResult,
@@ -30,8 +29,11 @@ export function useBlogs(): useBlogsResult {
     isError: error,
   };
 }
-export function useBlog(id: string): useBlogResult {
-  const { data, error, isLoading } = useSWR(`/blogs/${id}`, fetcher);
+export function useBlog(id?: string): useBlogResult {
+  const { data, error, isLoading } = useSWR(
+    !!id ? `/blogs/${id}` : null,
+    fetcher
+  );
   return {
     blog: data,
     isLoading,
@@ -46,12 +48,12 @@ export function useCategory(id: string): useCategoryResult {
   const { data, error, isLoading } = useSWR(`/blogs/categories/${id}`, fetcher);
   return { category: data, isLoading, isError: error };
 }
-export function useCategorizeds(): useCategorizedResult {
+export function useCategorized(id: string): useCategorizedResult {
   const { data, error, isLoading } = useSWR(
-    "/blogs/categories/categorizeds",
+    !!id ? `/blogs/categories/categorized/${id}` : null,
     fetcher
   );
-  return { categorizeds: data, isLoading, isError: error };
+  return { categorized: data, isLoading, isError: error };
 }
 export function useTags(): useTagsResult {
   const { data, error, isLoading } = useSWR("/api/blogs/tags", fetcher);
