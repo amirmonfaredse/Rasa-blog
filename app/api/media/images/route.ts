@@ -1,15 +1,12 @@
 import {
-  ActionResult,
   FilesUrlProps,
-  UplaodResult,
+  UplaodResult
 } from "@/types/app/data/types";
-import { getFiles, UploadFile } from "_data/services/media.services";
+import { getFiles } from "_data/services/media.services";
 import { secureAccess } from "_data/utility";
 import {
   addImageToList,
-  BufferingFile,
-  revalidateMedia,
-  ValidateImageFile,
+  revalidateMedia
 } from "_lib/utility/files.utils";
 import { NextResponse } from "next/server";
 

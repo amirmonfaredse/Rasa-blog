@@ -59,7 +59,7 @@ export type CommentFieldProps = {
   confirmed: boolean;
 };
 export type SlideFieldProps = {
-  id?: string;
+  id: string;
   title: string;
   image: string;
   bgColor: string;
