@@ -1,30 +1,22 @@
-import { ActionResult } from "@/types/app/data/types";
+import { BlogFieldProps } from "@/types/app/data/types";
 
-import { createBlog, getBlogs } from "_data/blog/blogs.services";
-import { idRand, secureAccess } from "_data/utility";
-import {
-  extractBlogFields,
-  handleCategorizing,
-  revalidateBlogs
-} from "_lib/utility/blogs.utils";
+import { createBlog, getBlogs } from "_data/services/blogs.services";
+import { secureAccess } from "_data/utility";
+import { extractBlogFields, revalidateBlogs } from "_lib/utility/blogs.utils";
 import { NextResponse } from "next/server";
 
-export async function GET() {
-  const blogs = await getBlogs();
-  return NextResponse.json(blogs);
+export async function GET(): Promise<Response> {
+  const result = await getBlogs();
+  if ("code" in result) throw result;
+  return NextResponse.json<BlogFieldProps[]>(result);
 }
 export async function POST(request: Request): Promise<Response> {
   await secureAccess();
   const formData = await request.formData();
-  const blogId = idRand();
-  const blogFields = extractBlogFields(formData, blogId);
-  const blogResult = await createBlog(blogFields);
-  const categorizingResult = await handleCategorizing(formData, blogId);
-  // const taggingResult = await handleTagging(formData, blogId);
+
+  const newFields = extractBlogFields(formData);
+  const result = await createBlog(newFields);
+  if ("code" in result) throw result;
   revalidateBlogs();
-  return NextResponse.json<ActionResult[]>([
-    blogResult,
-    categorizingResult,
-    // taggingResult,
-  ]);
+  return NextResponse.json<BlogFieldProps>(result);
 }

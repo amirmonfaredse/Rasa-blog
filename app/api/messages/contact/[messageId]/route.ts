@@ -1,8 +1,5 @@
-import { ActionResult } from "@/types/app/data/types";
-import {
-  deleteMessage,
-  getMessage,
-} from "_data/messages/message.services";
+import { ActionResult, MessageProps } from "@/types/app/data/types";
+import { deleteMessage, getMessage } from "_data/services/message.services";
 import { secureAccess } from "_data/utility";
 import { revalidateContacts } from "_lib/utility/messages.utils";
 import { NextResponse } from "next/server";
@@ -10,19 +7,22 @@ import { NextResponse } from "next/server";
 export async function GET({
   params,
 }: {
-  params: { messageId: string };
+  params: Promise<{ messageId: string }>;
 }): Promise<Response> {
-  const message = await getMessage(params.messageId);
-  return NextResponse.json(message);
+  const { messageId } = await params;
+  const result = await getMessage(messageId);
+  if ("code" in result) throw result;
+  return NextResponse.json<MessageProps>(result);
 }
 export async function DELETE({
   params,
 }: {
-  params: { messageId: string };
+  params: Promise<{ messageId: string }>;
 }): Promise<Response> {
   await secureAccess();
-  const messageId = params.messageId;
-  const deleteResult = await deleteMessage(messageId);
+  const { messageId } = await params;
+  const result = await deleteMessage(messageId);
+  if ("code" in result) throw result;
   revalidateContacts();
-  return NextResponse.json<ActionResult[]>([deleteResult]);
+  return NextResponse.json<MessageProps>(result);
 }

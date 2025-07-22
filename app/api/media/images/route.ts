@@ -1,8 +1,9 @@
-import { ActionResult } from "@/types/app/data/types";
 import {
-  getFiles,
-  UploadFile,
-} from "_data/media/media.services";
+  ActionResult,
+  FilesUrlProps,
+  UplaodResult,
+} from "@/types/app/data/types";
+import { getFiles, UploadFile } from "_data/services/media.services";
 import { secureAccess } from "_data/utility";
 import {
   addImageToList,
@@ -13,20 +14,26 @@ import {
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const images = await getFiles();
-  return NextResponse.json(images);
+  const result = await getFiles();
+  if ("code" in result) throw result;
+  return NextResponse.json<FilesUrlProps[]>(result);
 }
 
 export async function POST(request: Request): Promise<Response> {
   await secureAccess();
   const formData = await request.formData();
-  const image = formData.get("imageFile") as File;
-  const validateResult = ValidateImageFile(image);
-  if (validateResult)
-    return NextResponse.json<ActionResult[]>([validateResult]);
-  const { name, file, size, type } = await BufferingFile(image);
-  const uploadResult = await UploadFile(name, file);
-  const addToListResult = await addImageToList(name, size, type);
+  const uploadResult = await fetch(`${process.env.BASE_URL}/api/media/upload`, {
+    method: "POST",
+    body: formData,
+  });
+  if ("message" in uploadResult) throw uploadResult;
+
+  const data: UplaodResult = await uploadResult.json();
+  const { name, url, size, type } = data;
+
+  const addToListResult = await addImageToList(name, url, size, type);
   revalidateMedia();
-  return NextResponse.json<ActionResult[]>([uploadResult, addToListResult]);
+  if ("code" in addToListResult) throw addToListResult;
+
+  return NextResponse.json<FilesUrlProps>(addToListResult);
 }

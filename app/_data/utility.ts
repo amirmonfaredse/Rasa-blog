@@ -1,10 +1,31 @@
 import persianDate from "persian-date";
 
+import type {
+  BlogFieldProps,
+  CategorizedProps,
+  CategoryFieldProps,
+  TaggedProps,
+  TaggingFieldProps,
+} from "@/types/app/data/types";
+import { PostgrestError } from "@supabase/supabase-js";
 import { sanitizeTextOnServer } from "../utility/jsDOM";
 import { auth } from "./auth";
 
 export async function secureAList(list: []) {
   return list.map((item: any) => sanitizeTextOnServer(item));
+}
+type Result =
+  | PostgrestError
+  | CategorizedProps
+  | CategoryFieldProps
+  | BlogFieldProps
+  | TaggedProps
+  | TaggingFieldProps;
+
+export function throwIfError(
+  result: Result
+): asserts result is Exclude<Result, PostgrestError> {
+  if ("code" in result) throw result;
 }
 
 export async function secureAccess() {
@@ -18,20 +39,7 @@ export async function secureAccess() {
   );
   if (!isUserValid) throw new Error("شما مجاز به انجام این اقدام نیستید");
 }
-interface TagListProps {
-  id: string;
-  title: string;
-  slug: string;
-}
-export async function secureTagList(list: []): Promise<TagListProps[]> {
-  return list.map((item: TagListProps) => {
-    return {
-      id: item.id,
-      title: sanitizeTextOnServer(item.title),
-      slug: sanitizeTextOnServer(item.slug),
-    };
-  });
-}
+
 export function validateUrl(image: string): string {
   try {
     new URL(image);

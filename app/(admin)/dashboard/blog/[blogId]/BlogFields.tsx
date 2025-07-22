@@ -10,7 +10,7 @@ export default function BlogFields() {
   return (
     <div className="flex flex-col gap-5">
       {blog && (
-        <>  
+        <>
           <Input
             required
             hidden

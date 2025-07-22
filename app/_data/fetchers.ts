@@ -44,8 +44,11 @@ export function useCategories(): useCategoriesResult {
   const { data, error, isLoading } = useSWR("/blogs/categories", fetcher);
   return { categories: data, isLoading, isError: error };
 }
-export function useCategory(id: string): useCategoryResult {
-  const { data, error, isLoading } = useSWR(`/blogs/categories/${id}`, fetcher);
+export function useCategory(id: string | null): useCategoryResult {
+  const { data, error, isLoading } = useSWR(
+    !!id ? `/blogs/categories/${id}` : null,
+    fetcher
+  );
   return { category: data, isLoading, isError: error };
 }
 export function useCategorized(id: string): useCategorizedResult {

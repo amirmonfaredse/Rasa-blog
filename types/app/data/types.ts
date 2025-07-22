@@ -86,10 +86,10 @@ export type TaggedProps = {
 };
 
 export type FilesUrlProps = {
-  id?: string;
+  id: string;
   url: string;
   name: string;
-  size: string;
+  size: number;
   type: string;
 };
 export type MessageProps = {
@@ -107,4 +107,10 @@ export type CommentProps = {
   message: string;
   blogId: string;
   confirmed: boolean;
+};
+export type UplaodResult = {
+  name: string;
+  url: string;
+  size: number;
+  type: string;
 };

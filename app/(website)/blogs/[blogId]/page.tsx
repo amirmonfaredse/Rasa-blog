@@ -1,5 +1,5 @@
-import { getBlog } from "_data/blog/blogs.services";
-import { getConfirmedComments } from "_data/messages/message.services";
+import { getBlog } from "_data/services/blogs.services";
+import { getConfirmedComments } from "_data/services/message.services";
 import { sanitizeHTMLOnServer } from "@/app/utility/jsDOM";
 import Image from "next/image";
 import CommentForm from "./CommentForm";

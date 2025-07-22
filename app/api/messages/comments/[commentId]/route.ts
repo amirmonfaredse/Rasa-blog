@@ -1,9 +1,9 @@
-import { ActionResult } from "@/types/app/data/types";
+import { ActionResult, CommentProps } from "@/types/app/data/types";
 import {
-  getConfirmedComment,
+  confirmComment,
   deleteComment,
   getComment,
-} from "_data/messages/message.services";
+} from "_data/services/message.services";
 import { secureAccess } from "_data/utility";
 import { revalidateComments } from "_lib/utility/messages.utils";
 import { NextResponse } from "next/server";
@@ -11,35 +11,39 @@ import { NextResponse } from "next/server";
 export async function GET({
   params,
 }: {
-  params: { commentId: string };
+  params: Promise<{ commentId: string }>;
 }): Promise<Response> {
-  const comment = await getComment(params.commentId);
-  return NextResponse.json(comment);
+  const { commentId } = await params;
+  const result = await getComment(commentId);
+  if ("code" in result) throw result;
+  return NextResponse.json<CommentProps>(result);
 }
 export async function DELETE({
   params,
 }: {
-  params: { commentId: string };
+  params: Promise<{ commentId: string }>;
 }): Promise<Response> {
   await secureAccess();
-  const commentId = params.commentId;
-  const { deleteResult, blogId } = await deleteComment(
-    commentId
-  );
+  const { commentId } = await params;
+
+  const result = await deleteComment(commentId);
+  if ("code" in result) throw result;
+  const { blogId } = result;
   if (blogId) revalidateComments(blogId);
-  return NextResponse.json<ActionResult[]>([deleteResult]);
+  return NextResponse.json<CommentProps>(result);
 }
 
 export async function PUT({
   params,
 }: {
-  params: { commentId: string };
+  params: Promise<{ commentId: string }>;
 }): Promise<Response> {
   await secureAccess();
-  const commentId = params.commentId;
-  const { updateResult, blogId } = await getConfirmedComment(
-    commentId
-  );
+  const { commentId } = await params;
+  const result = await confirmComment(commentId);
+  if ("code" in result) throw result;
+  const { blogId } = result;
+
   if (blogId) revalidateComments(blogId);
-  return NextResponse.json<ActionResult[]>([updateResult]);
+  return NextResponse.json<CommentProps>(result);
 }

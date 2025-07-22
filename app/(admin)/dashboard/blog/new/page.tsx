@@ -17,7 +17,7 @@ export default function Page() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-full h-fit flex flex-col justify-center items-center py-5 pt-10 md:pt-5 px-1"
+      className="w-full h-fit flex flex-col justify-center items-start py-5 pt-10 md:pt-5 px-1"
     >
       <div className="w-[95%] lg:w-[90%] flex flex-col gap-5">
         <Label title="عنوان">

@@ -1,25 +1,13 @@
-import { ToastType } from "@/types/app/admin/store";
 import { BufferingFileResult } from "@/types/app/admin/types";
-import { ActionResult, ImageFieldProps } from "@/types/app/data/types";
-import {
-  addFileToUrlList,
-  getFileUrl,
-} from "_data/media/media.services";
+import { ActionResult, FilesUrlProps } from "@/types/app/data/types";
+import { PostgrestError } from "@supabase/supabase-js";
+import { addFileToUrlList } from "_data/services/media.services";
+import { idRand } from "_data/utility";
 import { revalidatePath } from "next/cache";
 
-export function ValidateImageFile(file: File): ActionResult | undefined {
+export function ValidateImageFile(file: File) {
   const allowTypes = ["image/png", "image/jpeg", "image/jpg"];
-
-  if (!allowTypes.includes(file.type))
-    return {
-      type: ToastType.Error,
-      message: "فرمت مجاز تصاویر png , jpg , jpeg است",
-    };
-  if (file.size > 5_242_880)
-    return {
-      type: ToastType.Error,
-      message: "حداکثر حجم فایل باید کمتر از5 مگابایت باشد",
-    };
+  if (!allowTypes.includes(file.type) || file.size > 5_242_880) throw file;
 }
 
 export async function BufferingFile(file: File): Promise<BufferingFileResult> {
@@ -35,11 +23,12 @@ export async function BufferingFile(file: File): Promise<BufferingFileResult> {
 }
 export async function addImageToList(
   name: string,
+  url: string,
   size: number,
   type: string
-): Promise<ActionResult> {
-  const url = await getFileUrl(name);
+): Promise<PostgrestError | FilesUrlProps> {
   const imageFields = {
+    id: idRand(),
     url,
     name,
     size,

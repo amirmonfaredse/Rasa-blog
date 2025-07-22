@@ -1,4 +1,5 @@
-import { CategoryFieldProps } from "@/types/app/data/types";
+import { CategorizedProps, CategoryFieldProps } from "@/types/app/data/types";
+import { idRand } from "_data/utility";
 import { revalidatePath } from "next/cache";
 import { sanitizeTextOnServer } from "utility/jsDOM";
 
@@ -12,7 +13,16 @@ export function extractCategoryFields(
     name: sanitizeTextOnServer(formData.get("categoryValue") as string),
   };
 }
-
+export function extractCategorizingFields(
+  formData: FormData
+): CategorizedProps[] {
+  const categories = formData.getAll("blogCategory") as [];
+  return categories.map((cat: CategorizedProps) => ({
+    id: idRand(),
+    categoryId: cat.categoryId,
+    blogId: cat.blogId,
+  }));
+}
 export function revalidateCategories() {
   revalidatePath("dashboard/blogs");
   revalidatePath("dashboard/blogs/all");

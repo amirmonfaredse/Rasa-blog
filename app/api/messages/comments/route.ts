@@ -1,23 +1,24 @@
-import { ActionResult } from "@/types/app/data/types";
+import { CommentProps } from "@/types/app/data/types";
+import { getComments, sendComment } from "_data/services/message.services";
+import { secureAccess } from "_data/utility";
 import {
-  getComments,
-  sendComment,
-} from "_data/messages/message.services";
-import { idRand } from "_data/utility";
-import { extractCommentFields, revalidateComments } from "_lib/utility/messages.utils";
+  extractCommentFields,
+  revalidateComments,
+} from "_lib/utility/messages.utils";
 import { NextResponse } from "next/server";
-import { sanitizeHTMLOnServer } from "utility/jsDOM";
 
 export async function GET(): Promise<Response> {
-  const comments = await getComments();
-  return NextResponse.json(comments);
+  const result = await getComments();
+  if ("code" in result) throw result;
+  return NextResponse.json<CommentProps[]>(result);
 }
 export async function POST(request: Request): Promise<Response> {
+  await secureAccess();
   const formData = await request.formData();
-  const messId = idRand();
-  const blogId = sanitizeHTMLOnServer(formData.get("blogId"));
-  const newFields = extractCommentFields(formData, messId, blogId);
+  const newFields = extractCommentFields(formData);
   const result = await sendComment(newFields);
+  if ("code" in result) throw result;
+  const { blogId } = result;
   revalidateComments(blogId);
-  return NextResponse.json<ActionResult[]>([result]);
+  return NextResponse.json<CommentProps>(result);
 }

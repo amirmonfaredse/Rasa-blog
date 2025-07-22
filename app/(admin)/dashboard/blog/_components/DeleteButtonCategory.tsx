@@ -1,13 +1,14 @@
 "use client";
 
-import { actionDeleteCategory } from "_data/blog/categories/categories.actions";
+import { useDeleteCategory } from "_data/mutate";
 
 function DeleteButtonCategory({ catId }: { catId: string }) {
+  const { trigger } = useDeleteCategory(catId);
   return (
     <button
       onClick={async () => {
         const confirmed = confirm("مطمئنی میخای حذفش کنی؟");
-        if (confirmed) actionDeleteCategory(catId);
+        if (confirmed) trigger();
       }}
       className="text-xs mx-2 text-red-700"
     >

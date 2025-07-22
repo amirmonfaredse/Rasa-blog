@@ -1,20 +1,17 @@
-import { ActionResult } from "@/types/app/data/types";
-import {
-  getMessages,
-  sendMessage,
-} from "_data/messages/message.services";
-import { idRand, secureAccess } from "_data/utility";
+import { MessageFieldProps, MessageProps } from "@/types/app/data/types";
+import { getMessages, sendMessage } from "_data/services/message.services";
 import { extractMessageFields } from "_lib/utility/messages.utils";
 import { NextResponse } from "next/server";
 
-export async function GET() {
-  const messages = await getMessages();
-  return NextResponse.json(messages);
+export async function GET(): Promise<Response> {
+  const result = await getMessages();
+  if ("code" in result) throw result;
+  return NextResponse.json<MessageProps[]>(result);
 }
 export async function POST(request: Request): Promise<Response> {
   const formData = await request.formData();
-  const messId = idRand();
-  const newFields = extractMessageFields(formData, messId);
-  const messageResult = await sendMessage(newFields);
-  return NextResponse.json<ActionResult[]>([messageResult]);
+  const newFields = extractMessageFields(formData);
+  const result = await sendMessage(newFields);
+  if ("code" in result) throw result;
+  return NextResponse.json<MessageFieldProps>(result);
 }

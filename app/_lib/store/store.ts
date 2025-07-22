@@ -1,22 +1,19 @@
 "use client";
-import { ActionResult, CategorizedProps } from "@/types/app/data/types";
 import "client-only";
 import { create } from "zustand";
 import { combine, devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import { createSelectors } from "./selectors";
 
-export type NotifProps = {
-  notifId: string;
-  data: ActionResult;
-};
 export type StateType = {
   drawerIsOpen: boolean;
-  notifs: NotifProps[];
+  categoryFormMode: boolean;
+  tagFormMode: boolean;
 };
 const initState: StateType = {
   drawerIsOpen: false,
-  notifs: [],
+  categoryFormMode: true,
+  tagFormMode: true,
 };
 
 const useStoreBase = create(
@@ -26,6 +23,14 @@ const useStoreBase = create(
         onDrawer: (prevState: boolean) =>
           set((state) => {
             state.drawerIsOpen = !prevState;
+          }),
+        onCategoryForm: () =>
+          set((state) => {
+            state.categoryFormMode = !state.categoryFormMode;
+          }),
+        onTagForm: () =>
+          set((state) => {
+            state.tagFormMode = !state.tagFormMode;
           }),
       }))
     )

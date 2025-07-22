@@ -1,29 +1,23 @@
 import { CommentFieldProps, MessageFieldProps } from "@/types/app/data/types";
+import { idRand } from "_data/utility";
 import { revalidatePath } from "next/cache";
 import { sanitizeHTMLOnServer } from "utility/jsDOM";
 
-export function extractMessageFields(
-  formData: FormData,
-  messId: string
-): MessageFieldProps {
+export function extractMessageFields(formData: FormData): MessageFieldProps {
   return {
-    id: messId,
+    id: idRand(),
     fullName: formData.get("fullName") as string,
     email: formData.get("email") as string,
     message: formData.get("message") as string,
   };
 }
-export function extractCommentFields(
-  formData: FormData,
-  messId: string,
-  blogId: string
-): CommentFieldProps {
+export function extractCommentFields(formData: FormData): CommentFieldProps {
   return {
-    id: messId,
+    id: idRand(),
     fullName: sanitizeHTMLOnServer(formData.get("fullName") as string),
     email: sanitizeHTMLOnServer(formData.get("email") as string),
     message: sanitizeHTMLOnServer(formData.get("message") as string),
-    blogId,
+    blogId: sanitizeHTMLOnServer(formData.get("blogId") as string),
     confirmed: false,
   };
 }

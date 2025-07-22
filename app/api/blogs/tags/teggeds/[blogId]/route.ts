@@ -1,30 +1,25 @@
-import { CategorizedProps } from "@/types/app/data/types";
-import {
-  deleteCategorized,
-  getCategorized,
-} from "_data/services/categories.services";
+import { TaggedProps } from "@/types/app/data/types";
+import { deleteTagged, getTagged } from "_data/services/tags.services";
 import { secureAccess } from "_data/utility";
 import { NextResponse } from "next/server";
 
 export async function GET(
   _request: Request,
   { params }: { params: Promise<{ blogId: string }> }
-) {
+): Promise<Response> {
   const { blogId } = await params;
-  let result = await getCategorized(blogId);
+  let result = await getTagged(blogId);
   if ("code" in result) throw result;
-
-  return NextResponse.json<CategorizedProps[]>(result);
+  return NextResponse.json<TaggedProps[]>(result);
 }
-
 export async function DELETE(
   _request: Request,
   { params }: { params: Promise<{ blogId: string }> }
-) {
+): Promise<Response> {
   await secureAccess();
 
   const { blogId } = await params;
-  const deleteResult = await deleteCategorized(blogId);
-  if ("code" in deleteResult) throw deleteResult;
-  return NextResponse.json<CategorizedProps[]>(deleteResult);
+  const result = await deleteTagged(blogId);
+  if ("code" in result) throw result;
+  return NextResponse.json<TaggedProps[]>(result);
 }

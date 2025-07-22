@@ -53,28 +53,37 @@ export async function deleteTag(
 }
 
 export async function tagging(
-  newField: TaggedProps
-): Promise<PostgrestError | TaggedProps> {
+  newField: TaggedProps[]
+): Promise<PostgrestError | TaggedProps[]> {
   const { data, error } = await supabase
     .from("tagged")
     .insert([newField])
-    .select()
-    .single();
+    .select();
+
   return error ?? data!;
 }
 export async function deleteTagged(
   blogId: string
-): Promise<PostgrestError | TaggedProps> {
+): Promise<PostgrestError | TaggedProps[]> {
   const { data, error } = await supabase
     .from("tagged")
     .delete()
     .eq("blogId", blogId)
-    .select()
-    .single();
+    .select();
+
   return error ?? data!;
 }
 export async function getTaggedList(): Promise<PostgrestError | TaggedProps[]> {
   const { data, error } = await supabase.from("tagged").select("*");
+  return error ?? data!;
+}
+export async function getTagged(
+  blogId: string
+): Promise<PostgrestError | TaggedProps[]> {
+  const { data, error } = await supabase
+    .from("tagged")
+    .select()
+    .eq("blogId", blogId);
   return error ?? data!;
 }
 

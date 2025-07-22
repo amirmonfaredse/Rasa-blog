@@ -3,7 +3,7 @@ import {
   CommentFieldProps,
   CommentProps,
   MessageFieldProps,
-  MessageProps
+  MessageProps,
 } from "../../../types/app/data/types";
 import { supabase } from "../supabase";
 
@@ -68,11 +68,11 @@ export async function getConfirmedComments(): Promise<
   const { error, data } = await supabase
     .from("comments")
     .select()
-    .eq("confirmed", true)
-    .single();
+    .eq("confirmed", true);
+
   return error ?? data!;
 }
-export async function getConfirmedComment(
+export async function confirmComment(
   id: string
 ): Promise<PostgrestError | CommentProps> {
   const { error, data } = await supabase

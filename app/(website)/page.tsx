@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getSliders } from "../_data/pages/pages.services";
+import { getSliders } from "../_data/services/pages.services";
 import MainSlider from "./_components/MainSlider";
 import PostCard from "./_components/cards/PostCard";
 import Devider from "./_components/utilities/Devider";
@@ -7,7 +7,7 @@ import {
   PostContainer,
   SliderContainer,
 } from "./_components/utilities/utilities";
-import { getBlogs } from "_data/blog/blogs.services";
+import { getBlogs } from "_data/services/blogs.services";
 
 export default async function Page() {
   const blogs = (await getBlogs()).slice(0, 5);

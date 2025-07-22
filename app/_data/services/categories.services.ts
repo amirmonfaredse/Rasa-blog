@@ -32,7 +32,6 @@ export async function getCategory(
   return error ?? data!;
 }
 
-// PUT / Category
 export async function updateCategory(
   updatedFields: CategoryFieldProps,
   id: string
@@ -46,7 +45,6 @@ export async function updateCategory(
   return error ?? data!;
 }
 
-// DELETE / Category
 export async function deleteCategory(
   id: string
 ): Promise<PostgrestError | CategoryFieldProps> {
@@ -59,13 +57,12 @@ export async function deleteCategory(
   return error ?? data!;
 }
 export async function categorize(
-  newField: CategorizedProps
-): Promise<PostgrestError | CategorizedProps> {
+  newFields: CategorizedProps[]
+): Promise<PostgrestError | CategorizedProps[]> {
   const { error, data } = await supabase
     .from("categorized")
-    .insert([newField])
-    .select()
-    .single();
+    .insert([newFields])
+    .select();
   return error ?? data!;
 }
 export async function getCategorizedList(): Promise<
@@ -74,14 +71,23 @@ export async function getCategorizedList(): Promise<
   const { data, error } = await supabase.from("categorized").select("*");
   return error ?? data!;
 }
+export async function getCategorized(
+  blogId: string
+): Promise<PostgrestError | CategorizedProps[]> {
+  const { data, error } = await supabase
+    .from("categorized")
+    .select()
+    .eq("blogId", blogId);
+  return error ?? data!;
+}
 export async function deleteCategorized(
   blogId: string
-): Promise<PostgrestError | CategorizedProps> {
+): Promise<PostgrestError | CategorizedProps[]> {
   const { error, data } = await supabase
     .from("categorized")
     .delete()
     .eq("blogId", blogId)
-    .select()
-    .single();
+    .select();
+
   return error ?? data!;
 }

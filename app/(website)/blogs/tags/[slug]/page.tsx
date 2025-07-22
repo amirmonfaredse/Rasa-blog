@@ -1,9 +1,9 @@
 import PostCard from "@/app/(website)/_components/cards/PostCard";
-import { getBlogs } from "_data/blog/blogs.services";
+import { getBlogs } from "_data/services/blogs.services";
 import {
   getTagBySlug,
   getTaggedList,
-} from "_data/blog/tags/tags.services";
+} from "_data/services/tags.services";
 
 export default async function Page({
   params,
