@@ -1,13 +1,13 @@
 "use client";
+import { UseUpsertCategory } from "@/types/app/admin/types";
 import {
   BlogFieldProps,
-  CategoryFieldProps,
+  CategoryFieldsProps,
   CommentFieldProps,
   MessageFieldProps,
   SlideFieldProps,
   TagFieldProps,
 } from "@/types/app/data/types";
-import { PostgrestError } from "@supabase/supabase-js";
 import { DeleteData, PostFormData, PutFormData } from "_data/http";
 import { mutate } from "swr";
 import useSWRMutation from "swr/mutation";
@@ -16,20 +16,6 @@ export function useCreateBlog() {
   const { trigger, data, error, isMutating } = useSWRMutation(
     "/blogs",
     PostFormData
-  );
-  return { trigger, response: data, error, isMutating };
-}
-export function useCreateCategory() {
-  const { trigger, data, error, isMutating } = useSWRMutation(
-    "/blogs/categories",
-    PostFormData,
-    {
-      populateCache: (PostFormData, categories) => [
-        ...categories,
-        PostFormData,
-      ],
-      revalidate: false,
-    }
   );
   return { trigger, response: data, error, isMutating };
 }
@@ -89,22 +75,46 @@ export function useUpdateBlog(id: string | null) {
   );
   return { trigger, response: data, error, isMutating };
 }
-export function useUpdateCategory(id: string | null) {
-  const { trigger, data, error, isMutating } = useSWRMutation(
-    !!id ? `/blogs/categories/${id}` : null,
-    PutFormData,
+
+export function useUpsertCategory(id: string): UseUpsertCategory {
+  const create = useSWRMutation(
+    !!id ? null : "/blogs/categories",
+    PostFormData,
     {
-      populateCache: (PutFormData, categories) => {
-        const filteredCats = categories.filter(
-          (cat: CategoryFieldProps) => cat.id !== PutFormData.id
-        );
-        return [...filteredCats, PutFormData];
-      },
+      populateCache: (PostFormData, categories) => [
+        ...categories,
+        PostFormData,
+      ],
       revalidate: false,
     }
   );
-  return { trigger, response: data, error, isMutating };
+  const update = useSWRMutation(
+    !!id ? `/blogs/categories/${id}` : null,
+    PutFormData,
+    {
+      onSuccess: (data) => {
+        mutate(
+          "/blogs/categories",
+          (cats = []) => {
+            const filtered = cats.filter(
+              (cat: CategoryFieldsProps) => cat.id !== data.id
+            );
+            return [...filtered, data];
+          },
+          false
+        );
+      },
+    }
+  );
+
+  return {
+    trigger: !!id ? update.trigger : create.trigger,
+    response: !!id ? update.data : create.data,
+    error: !!id ? update.error : create.error,
+    isMutating: !!id ? update.isMutating : create.isMutating,
+  };
 }
+
 export function useUpdateTag(id: string | null) {
   const { trigger, data, error, isMutating } = useSWRMutation(
     !!id ? `/blogs/tags/${id}` : null,
@@ -177,12 +187,15 @@ export function useDeleteCategory(id: string | null) {
     `/blogs/categories/${id}`,
     DeleteData,
     {
-      populateCache: (DeleteData, categories) => {
-        const filteredCats = categories.filter(
-          (cat: CategoryFieldProps) => cat.id !== DeleteData.id
+      onSuccess: (data) => {
+        mutate(
+          "/blogs/categories",
+          (cats = []) =>
+            cats.filter((cat: CategoryFieldsProps) => cat.id !== data.id),
+          false
         );
-        return [...filteredCats];
       },
+
       revalidate: false,
     }
   );

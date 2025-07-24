@@ -27,7 +27,7 @@ export type UpdatedFieldsProps = {
   content: string;
   image: string;
 };
-export type CategoryFieldProps = {
+export type CategoryFieldsProps = {
   id: string;
   title: string;
   name: string;

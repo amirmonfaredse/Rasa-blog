@@ -1,6 +1,6 @@
 import {
   BlogFieldProps,
-  CategoryFieldProps,
+  CategoryFieldsProps,
   CommentFieldProps,
   CategorizedProps,
   ImageFieldProps,
@@ -36,12 +36,12 @@ export type useTaggedsResult = {
   isError: string;
 };
 export type useCategoriesResult = {
-  categories: CategoryFieldProps[];
+  categories: CategoryFieldsProps[];
   isLoading: boolean;
   isError: string;
 };
 export type useCategoryResult = {
-  category: CategoryFieldProps;
+  category: CategoryFieldsProps;
   isLoading: boolean;
   isError: string;
 };

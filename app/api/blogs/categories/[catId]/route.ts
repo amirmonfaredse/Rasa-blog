@@ -1,4 +1,4 @@
-import { CategoryFieldProps } from "@/types/app/data/types";
+import { CategoryFieldsProps } from "@/types/app/data/types";
 import {
   deleteCategory,
   getCategory,
@@ -18,7 +18,7 @@ export async function GET(
   const result = await getCategory(catId);
   throwIfError(result);
 
-  return NextResponse.json<CategoryFieldProps>(result);
+  return NextResponse.json<CategoryFieldsProps>(result);
 }
 export async function PUT(request: Request): Promise<Response> {
   await secureAccess();
@@ -29,7 +29,7 @@ export async function PUT(request: Request): Promise<Response> {
   const result = await updateCategory(newFields, catId);
   revalidateCategories();
   if ("code" in result) throw result;
-  return NextResponse.json<CategoryFieldProps>(result);
+  return NextResponse.json<CategoryFieldsProps>(result);
 }
 export async function DELETE(
   request: Request,
@@ -43,5 +43,5 @@ export async function DELETE(
   const { catId } = await params;
   const result = await deleteCategory(catId);
   if ("code" in result) throw result;
-  return NextResponse.json<CategoryFieldProps>(result);
+  return NextResponse.json<CategoryFieldsProps>(result);
 }

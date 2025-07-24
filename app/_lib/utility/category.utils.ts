@@ -1,4 +1,4 @@
-import { CategorizedProps, CategoryFieldProps } from "@/types/app/data/types";
+import { CategorizedProps, CategoryFieldsProps } from "@/types/app/data/types";
 import { idRand } from "_data/utility";
 import { revalidatePath } from "next/cache";
 import { sanitizeTextOnServer } from "utility/jsDOM";
@@ -6,7 +6,7 @@ import { sanitizeTextOnServer } from "utility/jsDOM";
 export function extractCategoryFields(
   formData: FormData,
   catId: string
-): CategoryFieldProps {
+): CategoryFieldsProps {
   return {
     id: catId,
     title: sanitizeTextOnServer(formData.get("categoryTitle") as string),

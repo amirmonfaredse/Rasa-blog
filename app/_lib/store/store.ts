@@ -1,19 +1,52 @@
 "use client";
+import { CategoryFieldsProps } from "@/types/app/data/types";
 import "client-only";
 import { create } from "zustand";
 import { combine, devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import { createSelectors } from "./selectors";
+import {
+  CategoryManagerProps,
+  Mode,
+  StateType,
+  TitlesPostMode,
+  TitlesPutMode,
+} from "./types";
 
-export type StateType = {
-  drawerIsOpen: boolean;
-  categoryFormMode: boolean;
-  tagFormMode: boolean;
+export const createInitCategory = () => ({
+  id: String(Math.floor(Math.random() * 10000)),
+  title: "",
+  name: "",
+});
+export const initStateTag = {
+  id: "",
+  title: "",
+  slug: "",
 };
-const initState: StateType = {
+
+const titlePresets: Record<Mode, CategoryManagerProps["titleValues"]> = {
+  [Mode.Post]: {
+    headerTitle: TitlesPostMode.Header,
+    buttonTitle: TitlesPostMode.Button,
+  },
+  [Mode.Put]: {
+    headerTitle: TitlesPutMode.Header,
+    buttonTitle: TitlesPutMode.Button,
+  },
+};
+
+export const initState: StateType = {
   drawerIsOpen: false,
-  categoryFormMode: true,
-  tagFormMode: true,
+  catId: "",
+  categoryManager: {
+    formMode: Mode.Post,
+    fieldsValues: createInitCategory(),
+    titleValues: {
+      headerTitle: TitlesPostMode.Header,
+      buttonTitle: TitlesPostMode.Button,
+    },
+  },
+  tagFields: initStateTag,
 };
 
 const useStoreBase = create(
@@ -24,14 +57,26 @@ const useStoreBase = create(
           set((state) => {
             state.drawerIsOpen = !prevState;
           }),
-        onCategoryForm: () =>
+        setCatId: (catId: string = "") =>
           set((state) => {
-            state.categoryFormMode = !state.categoryFormMode;
+            state.catId = catId;
           }),
-        onTagForm: () =>
+        onCatFormMode: (newMode: Mode) =>
           set((state) => {
-            state.tagFormMode = !state.tagFormMode;
+            state.categoryManager.formMode = newMode;
+            state.categoryManager.titleValues = titlePresets[newMode];
           }),
+        onCatFields: (cat?: CategoryFieldsProps) =>
+          set((state) => {
+            cat
+              ? (state.categoryManager.fieldsValues = cat)
+              : (state.categoryManager.fieldsValues = createInitCategory());
+          }),
+        // onTagForm: (newMode: Mode, formFields: TagFieldProps) =>
+        //   set((state) => {
+        //     state.formModes.tag = newMode;
+        //     state.tagFields = formFields;
+        //   }),
       }))
     )
   )

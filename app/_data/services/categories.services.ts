@@ -1,11 +1,11 @@
-import { CategorizedProps, CategoryFieldProps } from "@/types/app/data/types";
+import { CategorizedProps, CategoryFieldsProps } from "@/types/app/data/types";
 import { type PostgrestError } from "@supabase/supabase-js";
 
 import { supabase } from "_data/supabase";
 
 export async function createCategory(
-  newCategory: CategoryFieldProps
-): Promise<PostgrestError | CategoryFieldProps> {
+  newCategory: CategoryFieldsProps
+): Promise<PostgrestError | CategoryFieldsProps> {
   const { data, error } = await supabase
     .from("categories")
     .insert([newCategory])
@@ -15,14 +15,14 @@ export async function createCategory(
 }
 
 export async function getCategories(): Promise<
-  PostgrestError | CategoryFieldProps[]
+  PostgrestError | CategoryFieldsProps[]
 > {
   const { data, error } = await supabase.from("categories").select("*");
   return error ?? data!;
 }
 export async function getCategory(
   catId: string
-): Promise<PostgrestError | CategoryFieldProps> {
+): Promise<PostgrestError | CategoryFieldsProps> {
   const { data, error } = await supabase
     .from("categories")
     .select()
@@ -33,9 +33,9 @@ export async function getCategory(
 }
 
 export async function updateCategory(
-  updatedFields: CategoryFieldProps,
+  updatedFields: CategoryFieldsProps,
   id: string
-): Promise<PostgrestError | CategoryFieldProps> {
+): Promise<PostgrestError | CategoryFieldsProps> {
   const { error, data } = await supabase
     .from("categories")
     .update(updatedFields)
@@ -47,7 +47,7 @@ export async function updateCategory(
 
 export async function deleteCategory(
   id: string
-): Promise<PostgrestError | CategoryFieldProps> {
+): Promise<PostgrestError | CategoryFieldsProps> {
   const { error, data } = await supabase
     .from("categories")
     .delete()

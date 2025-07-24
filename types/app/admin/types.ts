@@ -2,11 +2,12 @@ import { Dispatch, SetStateAction } from "react";
 import {
   BlogFieldProps,
   CategorizedProps,
-  CategoryFieldProps,
+  CategoryFieldsProps,
   SlideFieldProps,
   TaggedProps,
   TagProps,
 } from "../data/types";
+import { PostgrestError } from "@supabase/supabase-js";
 
 export type SideLayoutProps = {
   title: string;
@@ -33,7 +34,7 @@ export type TagInputProps = {
   tagged?: any[];
 };
 export type EditPostFormProps = {
-  categories: CategoryFieldProps[];
+  categories: CategoryFieldsProps[];
   blog: BlogFieldProps;
   tagList: TagProps[];
   categorized: CategorizedProps[];
@@ -43,7 +44,7 @@ export type TextEditorEditBlogProps = {
   defaultContent: string;
 };
 export type NewPostFormProps = {
-  categories: CategoryFieldProps[];
+  categories: CategoryFieldsProps[];
   tagList: TagProps[];
 };
 export type SliderItemProps = {
@@ -55,4 +56,10 @@ export type BufferingFileResult = {
   file: Buffer;
   size: number;
   type: string;
+};
+export type UseUpsertCategory = {
+  trigger: (formData: FormData) => Promise<CategoryFieldsProps>;
+  response: CategoryFieldsProps | undefined;
+  error: PostgrestError | undefined;
+  isMutating: boolean;
 };

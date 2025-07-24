@@ -1,4 +1,4 @@
-import { ActionResult, CategoryFieldProps } from "@/types/app/data/types";
+import { ActionResult, CategoryFieldsProps } from "@/types/app/data/types";
 import {
   createCategory,
   deleteCategory,
@@ -16,7 +16,7 @@ import { NextResponse } from "next/server";
 export async function GET() {
   const result = await getCategories();
   if ("code" in result) throw result;
-  return NextResponse.json<CategoryFieldProps[]>(result);
+  return NextResponse.json<CategoryFieldsProps[]>(result);
 }
 export async function POST(request: Request): Promise<Response> {
   await secureAccess();
@@ -26,5 +26,5 @@ export async function POST(request: Request): Promise<Response> {
   const result = await createCategory(newField);
   revalidateCategories();
   if ("code" in result) throw result;
-  return NextResponse.json<CategoryFieldProps>(result);
+  return NextResponse.json<CategoryFieldsProps>(result);
 }

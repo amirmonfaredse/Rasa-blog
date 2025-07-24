@@ -32,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl" className={`${NotoFont.className}`}>
       <body className="w-full h-screen  bg-white overflow-x-hidden">
-        <SWRConfig>
+        <SWRConfig value={{ errorRetryCount: 5 }}>
           <ToastContainer />
           <div className="w-full flex flex-col items-start justify-start relative">
             <MenuButton />

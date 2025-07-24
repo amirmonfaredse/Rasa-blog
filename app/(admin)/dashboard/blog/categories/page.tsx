@@ -1,17 +1,17 @@
 "use client";
 import { useCategories } from "_data/fetchers";
 import { useAdminStore } from "_lib/store/store";
-import { useRouter } from "next/navigation";
+import { Mode } from "_lib/store/types";
 import DeleteButtonCategory from "../_components/DeleteButtonCategory";
-import EditCategoryForm from "./EditCategoryForm";
-import NewCategoryForm from "./NewCategoryForm";
+import CategoryForm from "./CategoryForm";
 
 export default function Page() {
   const { categories } = useCategories();
-  const categoryFormMode = useAdminStore.use.categoryFormMode();
-  const onFormMode = useAdminStore.use.onCategoryForm();
+  const onFormMode = useAdminStore.use.onCatFormMode();
+  const onCatFields = useAdminStore.use.onCatFields();
 
-  const router = useRouter();
+  const setCatId = useAdminStore.use.setCatId();
+
   return (
     <div className="w-full flex flex-col lg:flex-row gap-10">
       <div className="w-full lg:w-[50%] py-5 px-2 flex flex-col gap-5">
@@ -31,8 +31,9 @@ export default function Page() {
               <div>
                 <button
                   onClick={() => {
-                    onFormMode();
-                    router.push(`?catId=${cat.id}`);
+                    onFormMode(Mode.Put);
+                    onCatFields(cat);
+                    setCatId(cat.id);
                   }}
                   className="text-xs mx-2 "
                 >
@@ -43,7 +44,7 @@ export default function Page() {
             </div>
           ))}
       </div>
-      {categoryFormMode ? <NewCategoryForm /> : <EditCategoryForm />}
+      <CategoryForm />
     </div>
   );
 }

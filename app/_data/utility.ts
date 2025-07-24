@@ -3,7 +3,7 @@ import persianDate from "persian-date";
 import type {
   BlogFieldProps,
   CategorizedProps,
-  CategoryFieldProps,
+  CategoryFieldsProps,
   TaggedProps,
   TaggingFieldProps,
 } from "@/types/app/data/types";
@@ -17,7 +17,7 @@ export async function secureAList(list: []) {
 type Result =
   | PostgrestError
   | CategorizedProps
-  | CategoryFieldProps
+  | CategoryFieldsProps
   | BlogFieldProps
   | TaggedProps
   | TaggingFieldProps;

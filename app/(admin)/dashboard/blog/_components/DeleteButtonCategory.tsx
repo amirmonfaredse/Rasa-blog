@@ -1,6 +1,7 @@
 "use client";
 
 import { useDeleteCategory } from "_data/mutate";
+import { mutate } from "swr";
 
 function DeleteButtonCategory({ catId }: { catId: string }) {
   const { trigger } = useDeleteCategory(catId);

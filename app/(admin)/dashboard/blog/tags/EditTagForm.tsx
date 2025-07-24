@@ -1,6 +1,5 @@
 import { useUpdateTag } from "_data/mutate";
 import { useSearchParams } from "next/navigation";
-import React from "react";
 import SpinnerLoader from "utility/SpinnerLoader";
 
 export default function EditTagForm() {

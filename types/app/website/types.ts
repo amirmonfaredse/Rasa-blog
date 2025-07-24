@@ -1,5 +1,5 @@
 import { Dispatch, MouseEventHandler, SetStateAction } from "react";
-import { CategoryFieldProps, CategorizedProps } from "../data/types";
+import { CategoryFieldsProps, CategorizedProps } from "../data/types";
 
 export type PostCardUtilityProps = {
   children?: React.ReactNode;
@@ -80,6 +80,6 @@ export type BlogContextType = {
   setCheckedList: Dispatch<SetStateAction<string[]>>;
 };
 export type SidebarBlogProps = {
-  categories: CategoryFieldProps[];
+  categories: CategoryFieldsProps[];
   categorized: CategorizedProps[];
 };
