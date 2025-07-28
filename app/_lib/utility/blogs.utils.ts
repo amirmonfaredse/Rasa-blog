@@ -8,9 +8,12 @@ export function revalidateBlogs() {
   revalidatePath("dashboard/blogs/all");
 }
 
-export function extractBlogFields(formData: FormData): BlogFieldProps {
+export function extractBlogFields(
+  formData: FormData,
+  id: string | undefined = undefined
+): BlogFieldProps {
   return {
-    id: idRand(),
+    id: id ?? idRand(),
     created_at: getPersianDate(),
     author: "امیررضا منفرد",
     title: sanitizeTextOnServer(formData.get("blogTitle") as string),

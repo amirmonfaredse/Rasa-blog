@@ -1,13 +1,14 @@
 "use client";
 
-import { actionRemoveSlide } from "@/app/_data/pages/pagesActions";
+import { useDeleteSlider } from "_data/mutate";
 
 export default function RemoveSlide({ id }: { id: string }) {
+  const { trigger } = useDeleteSlider(id);
   return (
     <div
       onClick={async () => {
         const confirmed = confirm("مطمئنی؟");
-        if (confirmed) await actionRemoveSlide(id);
+        if (confirmed) trigger();
       }}
       className="cursor-pointer hover:scale-105 duration-200"
     >

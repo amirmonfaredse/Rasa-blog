@@ -4,6 +4,7 @@ import {
   CategorizedProps,
   CategoryFieldsProps,
   SlideFieldProps,
+  TagFieldProps,
   TaggedProps,
   TagProps,
 } from "../data/types";
@@ -60,6 +61,18 @@ export type BufferingFileResult = {
 export type UseUpsertCategory = {
   trigger: (formData: FormData) => Promise<CategoryFieldsProps>;
   response: CategoryFieldsProps | undefined;
+  error: PostgrestError | undefined;
+  isMutating: boolean;
+};
+export type UseUpsertTag = {
+  trigger: (formData: FormData) => Promise<TagFieldProps>;
+  response: TagFieldProps | undefined;
+  error: PostgrestError | undefined;
+  isMutating: boolean;
+};
+export type UseUpsertSlider = {
+  trigger: (formData: FormData) => Promise<SlideFieldProps>;
+  response: SlideFieldProps | undefined;
   error: PostgrestError | undefined;
   isMutating: boolean;
 };

@@ -1,5 +1,9 @@
 "use client";
-import { UseUpsertCategory } from "@/types/app/admin/types";
+import {
+  UseUpsertCategory,
+  UseUpsertSlider,
+  UseUpsertTag,
+} from "@/types/app/admin/types";
 import {
   BlogFieldProps,
   CategoryFieldsProps,
@@ -20,17 +24,6 @@ export function useCreateBlog() {
   return { trigger, response: data, error, isMutating };
 }
 
-export function useCreateTag() {
-  const { trigger, data, error, isMutating } = useSWRMutation(
-    "/blogs/tags",
-    PostFormData,
-    {
-      populateCache: (PostFormData, tags) => [...tags, PostFormData],
-      revalidate: false,
-    }
-  );
-  return { trigger, response: data, error, isMutating };
-}
 export function useCreateImage() {
   const { trigger, data, error, isMutating } = useSWRMutation(
     "/media/images",
@@ -56,17 +49,6 @@ export function useCreateComment() {
   );
   return { trigger, response: data, error, isMutating };
 }
-export function useCreateSlider() {
-  const { trigger, data, error, isMutating } = useSWRMutation(
-    "/pages",
-    PostFormData,
-    {
-      populateCache: (PostFormData, sliders) => [...sliders, PostFormData],
-      revalidate: false,
-    }
-  );
-  return { trigger, response: data, error, isMutating };
-}
 
 export function useUpdateBlog(id: string | null) {
   const { trigger, data, error, isMutating } = useSWRMutation(
@@ -81,7 +63,7 @@ export function useUpsertCategory(id: string): UseUpsertCategory {
     !!id ? null : "/blogs/categories",
     PostFormData,
     {
-      populateCache: (PostFormData, categories) => [
+      populateCache: (PostFormData, categories = []) => [
         ...categories,
         PostFormData,
       ],
@@ -104,6 +86,7 @@ export function useUpsertCategory(id: string): UseUpsertCategory {
           false
         );
       },
+      revalidate: false,
     }
   );
 
@@ -115,22 +98,66 @@ export function useUpsertCategory(id: string): UseUpsertCategory {
   };
 }
 
-export function useUpdateTag(id: string | null) {
-  const { trigger, data, error, isMutating } = useSWRMutation(
+export function useUpsertTag(id: string): UseUpsertTag {
+  const create = useSWRMutation(!!id ? null : "/blogs/tags", PostFormData, {
+    populateCache: (PostFormData, tags = []) => [...tags, PostFormData],
+    revalidate: false,
+  });
+  const update = useSWRMutation(
     !!id ? `/blogs/tags/${id}` : null,
     PutFormData,
     {
-      populateCache: (PutFormData, tags) => {
-        const filteredTags = tags.filter(
-          (tag: TagFieldProps) => tag.id !== PutFormData.id
+      onSuccess: (data) => {
+        mutate(
+          "/blogs/tags",
+          (tags = []) => {
+            const filtered = tags.filter(
+              (tag: TagFieldProps) => tag.id !== data.id
+            );
+            return [...filtered, data];
+          },
+          false
         );
-        return [...filteredTags, PutFormData];
       },
       revalidate: false,
     }
   );
-  return { trigger, response: data, error, isMutating };
+  return {
+    trigger: !!id ? update.trigger : create.trigger,
+    response: !!id ? update.data : create.data,
+    error: !!id ? update.error : create.error,
+    isMutating: !id ? update.isMutating : create.isMutating,
+  };
 }
+
+export function useUpsertSlider(id: string): UseUpsertSlider {
+  const create = useSWRMutation(!!id ? null : "/pages", PostFormData, {
+    populateCache: (PostFormData, sliders = []) => [...sliders, PostFormData],
+    revalidate: false,
+  });
+  const update = useSWRMutation(!!id ? `/pages/${id}` : null, PutFormData, {
+    onSuccess: (data) => {
+      mutate(
+        "/pages",
+        (sliders = []) => {
+          const filtered = sliders.filter(
+            (slide: SlideFieldProps) => slide.id !== data.id
+          );
+          return [...filtered, data];
+        },
+        false
+      );
+    },
+    revalidate: false,
+  });
+  return {
+    trigger: !!id ? update.trigger : create.trigger,
+    response: !!id ? update.data : create.data,
+    error: !!id ? update.error : create.error,
+    isMutating: !!id ? update.isMutating : create.isMutating,
+  };
+}
+
 export function useUpdateContact(id: string | null) {
   const { trigger, data, error, isMutating } = useSWRMutation(
     `/messages/contact/${id}`,
@@ -147,17 +174,22 @@ export function useUpdateContact(id: string | null) {
   );
   return { trigger, response: data, error, isMutating };
 }
-// WATCH THIS !
 export function useUpdateComment(id: string | null) {
   const { trigger, data, error, isMutating } = useSWRMutation(
     `/messages/comments/${id}`,
     PutFormData,
     {
-      populateCache: (PutFormData, comments) => {
-        const filteredComments = comments.filter(
-          (comment: CommentFieldProps) => comment.id !== PutFormData.id
+      onSuccess: (data) => {
+        mutate(
+          "/messages/comments",
+          (comments = []) => {
+            const filtered = comments.filter(
+              (comment: CommentFieldProps) => comment.id !== data.id
+            );
+            return [...filtered, data];
+          },
+          false
         );
-        return [...filteredComments, PutFormData];
       },
       revalidate: false,
     }
@@ -170,11 +202,13 @@ export function useDeleteBlog(id: string | null) {
     `/blogs/${id}`,
     DeleteData,
     {
-      populateCache: (DeleteData, blogs) => {
-        const filteredBlogs = blogs.filter(
-          (blog: BlogFieldProps) => blog.id !== DeleteData.id
+      onSuccess: (data) => {
+        mutate(
+          "/blogs",
+          (blogs = []) =>
+            blogs.filter((blog: BlogFieldProps) => blog.id !== data.id),
+          false
         );
-        return [...filteredBlogs];
       },
       revalidate: false,
     }
@@ -204,14 +238,16 @@ export function useDeleteCategory(id: string | null) {
 }
 export function useDeleteTag(id: string | null) {
   const { trigger, data, error, isMutating } = useSWRMutation(
-    `/blogs/tags/${id}`,
+    !!id ? `/blogs/tags/${id}` : null,
     DeleteData,
     {
-      populateCache: (DeleteData, tags) => {
-        const filteredTags = tags.filter(
-          (tag: TagFieldProps) => tag.id !== DeleteData.id
+      onSuccess: (data) => {
+        mutate(
+          "/blogs/tags",
+          (tags = []) =>
+            tags.filter((tag: TagFieldProps) => tag.id !== data.id),
+          false
         );
-        return [...filteredTags];
       },
       revalidate: false,
     }
@@ -223,11 +259,15 @@ export function useDeleteContact(id: string | null) {
     `/messages/contact/${id}`,
     DeleteData,
     {
-      populateCache: (DeleteData, contacts) => {
-        const filteredContacts = contacts.filter(
-          (contact: MessageFieldProps) => contact.id !== DeleteData.id
+      onSuccess: (data) => {
+        mutate(
+          "/messages/contact/",
+          (contacts = []) =>
+            contacts.filter(
+              (contact: MessageFieldProps) => contact.id !== data.id
+            ),
+          false
         );
-        return [...filteredContacts];
       },
       revalidate: false,
     }
@@ -239,11 +279,15 @@ export function useDeleteComment(id: string | null) {
     `/messages/comments/${id}`,
     DeleteData,
     {
-      populateCache: (DeleteData, comments) => {
-        const filteredComments = comments.filter(
-          (comment: CommentFieldProps) => comment.id !== DeleteData.id
+      onSuccess: (data) => {
+        mutate(
+          "/messages/comments/",
+          (comments = []) =>
+            comments.filter(
+              (comment: CommentFieldProps) => comment.id !== data.id
+            ),
+          false
         );
-        return [...filteredComments];
       },
       revalidate: false,
     }
@@ -252,14 +296,16 @@ export function useDeleteComment(id: string | null) {
 }
 export function useDeleteSlider(id: string | null) {
   const { trigger, data, error, isMutating } = useSWRMutation(
-    `/pages${id}`,
+    `/pages/${id}`,
     DeleteData,
     {
-      populateCache: (DeleteData, sliders) => {
-        const filteredSliders = sliders.filter(
-          (slider: SlideFieldProps) => slider.id !== DeleteData.id
+      onSuccess: (data) => {
+        mutate(
+          "/pages",
+          (sliders = []) =>
+            sliders.filter((slider: SlideFieldProps) => slider.id !== data.id),
+          false
         );
-        return [...filteredSliders];
       },
       revalidate: false,
     }

@@ -5,10 +5,10 @@ import { sanitizeHTMLOnServer } from "utility/jsDOM";
 
 export function extractTagFields(
   formData: FormData,
-  tagId: string
+  id: string | undefined = undefined
 ): TagFieldProps {
   return {
-    id: tagId,
+    id: id ?? idRand(),
     title: sanitizeHTMLOnServer(formData.get("tagTitle") as string),
     slug: sanitizeHTMLOnServer(formData.get("tagSlug") as string),
   };

@@ -20,10 +20,17 @@ export async function GET(
 
   return NextResponse.json<CategoryFieldsProps>(result);
 }
-export async function PUT(request: Request): Promise<Response> {
+export async function PUT(
+  request: Request,
+  {
+    params,
+  }: {
+    params: Promise<{ catId: string }>;
+  }
+): Promise<Response> {
   await secureAccess();
+  const { catId } = await params;
   const formData = await request.formData();
-  const catId = formData.get("id") as string;
   await getCategory(catId);
   const newFields = extractCategoryFields(formData, catId);
   const result = await updateCategory(newFields, catId);
@@ -32,7 +39,7 @@ export async function PUT(request: Request): Promise<Response> {
   return NextResponse.json<CategoryFieldsProps>(result);
 }
 export async function DELETE(
-  request: Request,
+  _request: Request,
   {
     params,
   }: {

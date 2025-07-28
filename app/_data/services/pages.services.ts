@@ -30,6 +30,18 @@ export async function getSlider(
     .single();
   return error ?? data!;
 }
+export async function updateSlide(
+  updatedFields: SlideFieldProps,
+  id: string
+): Promise<PostgrestError | SlideFieldProps> {
+  const { data, error } = await supabase
+    .from("sliders")
+    .update(updatedFields)
+    .eq("id", id)
+    .select()
+    .single();
+  return error ?? data!;
+}
 export async function deleteSlide(
   slideId: string
 ): Promise<PostgrestError | SlideFieldProps> {

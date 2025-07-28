@@ -15,23 +15,30 @@ export async function GET(
   return NextResponse.json<BlogFieldProps>(result);
 }
 
-export async function PUT(request: Request): Promise<Response> {
+export async function PUT(
+  request: Request,
+  { params }: { params: Promise<{ blogId: string }> }
+): Promise<Response> {
   await secureAccess();
+  const { blogId } = await params;
+
   const formData = await request.formData();
-  const blogId = formData.get("id") as string;
   const newFields = extractBlogFields(formData, blogId);
   const result = await updateBlog(newFields, blogId);
   if ("code" in result) throw result;
   revalidateBlogs();
   return NextResponse.json<BlogFieldProps>(result);
 }
-export async function DELETE({
-  params,
-}: {
-  params: { blogId: string };
-}): Promise<Response> {
+export async function DELETE(
+  _request: Request,
+  {
+    params,
+  }: {
+    params: Promise<{ blogId: string }>;
+  }
+): Promise<Response> {
   await secureAccess();
-  const blogId = params.blogId;
+  const { blogId } = await params;
   const result = await deleteBlog(blogId);
   revalidateBlogs();
   if ("code" in result) throw result;

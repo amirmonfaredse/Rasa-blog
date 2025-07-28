@@ -1,7 +1,7 @@
 import { type PostgrestError } from "@supabase/supabase-js";
 import {
   BlogFieldProps,
-  UpdatedFieldsProps,
+  UpdatedBlogProps,
 } from "../../../types/app/data/types";
 import { supabase } from "../supabase";
 
@@ -33,7 +33,7 @@ export async function getBlog(
 }
 
 export async function updateBlog(
-  updatedFields: UpdatedFieldsProps,
+  updatedFields: UpdatedBlogProps,
   id: string
 ): Promise<PostgrestError | BlogFieldProps> {
   const { data, error } = await supabase

@@ -5,10 +5,10 @@ import { sanitizeTextOnServer } from "utility/jsDOM";
 
 export function extractCategoryFields(
   formData: FormData,
-  catId: string
+  id: string | undefined = undefined
 ): CategoryFieldsProps {
   return {
-    id: catId,
+    id: id ?? idRand(),
     title: sanitizeTextOnServer(formData.get("categoryTitle") as string),
     name: sanitizeTextOnServer(formData.get("categoryValue") as string),
   };

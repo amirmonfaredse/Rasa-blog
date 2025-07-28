@@ -1,10 +1,7 @@
-import { ActionResult, CategoryFieldsProps } from "@/types/app/data/types";
+import { CategoryFieldsProps } from "@/types/app/data/types";
 import {
   createCategory,
-  deleteCategory,
-  getCategories,
-  getCategory,
-  updateCategory,
+  getCategories
 } from "_data/services/categories.services";
 import { idRand, secureAccess } from "_data/utility";
 import {

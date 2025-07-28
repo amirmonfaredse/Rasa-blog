@@ -13,7 +13,8 @@ import type {
   useMessagesResult,
   useSliderResult,
   useSlidersResult,
-  useTaggedsResult,
+  useTaggedListResult,
+  useTaggedResult,
   useTagResult,
   useTagsResult,
 } from "@/types/app/admin/hooks";
@@ -59,9 +60,10 @@ export function useCategorized(id: string | null): useCategorizedResult {
   return { categorized: data, isLoading, isError: error };
 }
 export function useTags(): useTagsResult {
-  const { data, error, isLoading } = useSWR("/api/blogs/tags", fetcher);
+  const { data, error, isLoading } = useSWR("/blogs/tags", fetcher);
   return { tags: data, isLoading, isError: error };
 }
+
 export function useTag(id: string | null): useTagResult {
   const { data, error, isLoading } = useSWR(
     !!id ? `/blogs/tags/${id}` : null,
@@ -70,9 +72,16 @@ export function useTag(id: string | null): useTagResult {
   return { tag: data, isLoading, isError: error };
 }
 
-export function useTaggeds(): useTaggedsResult {
+export function useTaggedList(): useTaggedListResult {
   const { data, error, isLoading } = useSWR("/blogs/tags/taggeds", fetcher);
-  return { taggeds: data, isLoading, isError: error };
+  return { taggedList: data, isLoading, isError: error };
+}
+export function useTagged(id: string | null): useTaggedResult {
+  const { data, error, isLoading } = useSWR(
+    !!id ? `/blogs/tags/taggeds/${id}` : null,
+    fetcher
+  );
+  return { tagged: data, isLoading, isError: error };
 }
 
 export function useImageFiles(): useImageFilesResult {

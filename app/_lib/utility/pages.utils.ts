@@ -1,13 +1,16 @@
 import { SlideFieldProps } from "@/types/app/data/types";
-import { idRand } from "_data/utility";
+import { idRand, validateUrl } from "_data/utility";
 import { revalidatePath } from "next/cache";
 import { sanitizeTextOnServer } from "utility/jsDOM";
 
-export function extractSlideFields(formData: FormData): SlideFieldProps {
+export function extractSlideFields(
+  formData: FormData,
+  id: string | undefined = undefined
+): SlideFieldProps {
   return {
-    id: idRand(),
+    id: id ?? idRand(),
     title: sanitizeTextOnServer(formData.get("titleSlide") as string),
-    image: sanitizeTextOnServer(formData.get("imageSlide") as string),
+    image: validateUrl(formData.get("imageSlide") as string),
     bgColor: sanitizeTextOnServer(formData.get("bgColor") as string),
     textColor: sanitizeTextOnServer(formData.get("textColor") as string),
     type: sanitizeTextOnServer(formData.get("typeSlide") as string),

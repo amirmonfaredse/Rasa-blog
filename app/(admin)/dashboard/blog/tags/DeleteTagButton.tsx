@@ -2,8 +2,8 @@
 
 import { useDeleteTag } from "_data/mutate";
 
-function DeleteTagButton({ slug }: { slug: string }) {
-  const { trigger } = useDeleteTag(slug);
+function DeleteTagButton({ tagId }: { tagId: string }) {
+  const { trigger } = useDeleteTag(tagId);
   return (
     <button
       onClick={async () => {

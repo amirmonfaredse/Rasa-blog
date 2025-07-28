@@ -30,8 +30,13 @@ export type useTagResult = {
   isLoading: boolean;
   isError: string;
 };
-export type useTaggedsResult = {
-  taggeds: TaggingFieldProps[];
+export type useTaggedResult = {
+  tagged: TaggingFieldProps[];
+  isLoading: boolean;
+  isError: string;
+};
+export type useTaggedListResult = {
+  taggedList: TaggingFieldProps[];
   isLoading: boolean;
   isError: string;
 };

@@ -1,4 +1,4 @@
-import { ActionResult, CommentProps } from "@/types/app/data/types";
+import { CommentProps } from "@/types/app/data/types";
 import {
   confirmComment,
   deleteComment,
@@ -8,21 +8,27 @@ import { secureAccess } from "_data/utility";
 import { revalidateComments } from "_lib/utility/messages.utils";
 import { NextResponse } from "next/server";
 
-export async function GET({
-  params,
-}: {
-  params: Promise<{ commentId: string }>;
-}): Promise<Response> {
+export async function GET(
+  _request: Request,
+  {
+    params,
+  }: {
+    params: Promise<{ commentId: string }>;
+  }
+): Promise<Response> {
   const { commentId } = await params;
   const result = await getComment(commentId);
   if ("code" in result) throw result;
   return NextResponse.json<CommentProps>(result);
 }
-export async function DELETE({
-  params,
-}: {
-  params: Promise<{ commentId: string }>;
-}): Promise<Response> {
+export async function DELETE(
+  _request: Request,
+  {
+    params,
+  }: {
+    params: Promise<{ commentId: string }>;
+  }
+): Promise<Response> {
   await secureAccess();
   const { commentId } = await params;
 
@@ -33,11 +39,14 @@ export async function DELETE({
   return NextResponse.json<CommentProps>(result);
 }
 
-export async function PUT({
-  params,
-}: {
-  params: Promise<{ commentId: string }>;
-}): Promise<Response> {
+export async function PUT(
+  _request: Request,
+  {
+    params,
+  }: {
+    params: Promise<{ commentId: string }>;
+  }
+): Promise<Response> {
   await secureAccess();
   const { commentId } = await params;
   const result = await confirmComment(commentId);

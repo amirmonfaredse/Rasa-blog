@@ -19,7 +19,7 @@ export type TaggingFieldProps = {
   blogId: string;
 };
 
-export type UpdatedFieldsProps = {
+export type UpdatedBlogProps = {
   id: string;
   author: string;
   description: string;
