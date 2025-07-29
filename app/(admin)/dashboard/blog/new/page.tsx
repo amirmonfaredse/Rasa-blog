@@ -1,18 +1,35 @@
 "use client";
-import { useCreateBlog } from "_data/mutate";
+import { useCategorizing, useCreateBlog, useTagging } from "_data/mutate";
 import CategoriesList from "../_components/CategoriesList";
-import TextEditorCreateBlog from "../_components/TextEditorCreateBlog";
+import TextEditorCreateBlog from "../_components/textEditor/TextEditorCreateBlog";
 import { Input, Label } from "../_components/utilities";
-import ReleaseButton from "./ReleaseButton";
-import TagInputCreate from "../_components/tagInput/TagInput";
+import TagInputCreate from "../_components/tagInput/TagInputCreate";
+import ReleaseButton from "../_components/buttons/ReleaseButton";
 
 export default function Page() {
-  const { trigger, response, isMutating } = useCreateBlog();
-
+  const {
+    trigger: createBlog,
+    response: blog,
+    isMutating: isCreatingBlog,
+  } = useCreateBlog();
+  const {
+    trigger: categorize,
+    response: categorized,
+    isMutating: isCategorizing,
+  } = useCategorizing();
+  const {
+    trigger: tagging,
+    response: tagged,
+    isMutating: isTagging,
+  } = useTagging();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    await trigger(formData);
+    const blogRes = await createBlog(formData);
+    if (blogRes) {
+      await categorize({ formData, exteraId: blogRes.id });
+      await tagging({ formData, exteraId: blogRes.id });
+    }
   };
 
   return (
@@ -36,7 +53,7 @@ export default function Page() {
       </div>
       <TextEditorCreateBlog />
       <TagInputCreate />
-      <ReleaseButton pending={isMutating} />
+      <ReleaseButton pending={isCreatingBlog} />
     </form>
   );
 }

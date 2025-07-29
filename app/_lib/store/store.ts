@@ -3,6 +3,7 @@ import {
   CategoryFieldsProps,
   SlideFieldProps,
   TagFieldProps,
+  TaggingFieldProps,
 } from "@/types/app/data/types";
 import "client-only";
 import { create } from "zustand";
@@ -58,7 +59,6 @@ const useStoreBase = create(
                 ? (state.categoryManager.fieldsValues = cat)
                 : (state.categoryManager.fieldsValues = createInitCategory());
             }),
-
           setSliderId: (sliderId: string = "") =>
             set((state) => {
               state.sliderId = sliderId;
@@ -126,6 +126,13 @@ const useStoreBase = create(
           onClearAllSelectedTags: () =>
             set((state) => {
               state.tagInputManager.selectedTags = [];
+            }),
+          onDefaultTagging: (tagged: TaggingFieldProps[]) =>
+            set((state) => {
+              const filtering = state.tagInputManager.allTags.filter((tag) =>
+                tagged.some((t) => t.tagId === tag.id)
+              );
+              state.tagInputManager.selectedTags = filtering;
             }),
         }))
       )

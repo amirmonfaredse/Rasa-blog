@@ -12,7 +12,12 @@ import {
   SlideFieldProps,
   TagFieldProps,
 } from "@/types/app/data/types";
-import { DeleteData, PostFormData, PutFormData } from "_data/http";
+import {
+  DeleteData,
+  PostDataWithId,
+  PostFormData,
+  PutFormData,
+} from "_data/http";
 import { mutate } from "swr";
 import useSWRMutation from "swr/mutation";
 
@@ -23,7 +28,20 @@ export function useCreateBlog() {
   );
   return { trigger, response: data, error, isMutating };
 }
-
+export function useCategorizing() {
+  const { trigger, data, error, isMutating } = useSWRMutation(
+    "/blogs/categories/categorized",
+    PostDataWithId
+  );
+  return { trigger, response: data, error, isMutating };
+}
+export function useTagging() {
+  const { trigger, data, error, isMutating } = useSWRMutation(
+    "/blogs/tags/taggeds",
+    PostDataWithId
+  );
+  return { trigger, response: data, error, isMutating };
+}
 export function useCreateImage() {
   const { trigger, data, error, isMutating } = useSWRMutation(
     "/media/images",

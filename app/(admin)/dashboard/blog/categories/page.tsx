@@ -2,7 +2,7 @@
 import { useCategories } from "_data/fetchers";
 import { useAdminStore } from "_lib/store/store";
 import { Mode } from "_lib/store/types";
-import DeleteButtonCategory from "../_components/DeleteButtonCategory";
+import DeleteButtonCategory from "../_components/buttons/DeleteButtonCategory";
 import CategoryForm from "./CategoryForm";
 
 export default function Page() {

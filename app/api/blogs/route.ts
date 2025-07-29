@@ -13,7 +13,6 @@ export async function GET(): Promise<Response> {
 export async function POST(request: Request): Promise<Response> {
   await secureAccess();
   const formData = await request.formData();
-
   const newFields = extractBlogFields(formData);
   const result = await createBlog(newFields);
   if ("code" in result) throw result;

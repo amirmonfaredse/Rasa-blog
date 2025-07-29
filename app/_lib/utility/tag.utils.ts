@@ -15,10 +15,12 @@ export function extractTagFields(
 }
 export function extractTaggedFields(formData: FormData): TaggingFieldProps[] {
   const tags = JSON.parse(formData.get("blogTags") as string);
+  const blogId = formData.get("exteraId") as string;
+
   return tags.map((tag: TaggingFieldProps) => ({
     id: idRand(),
-    tagId: sanitizeHTMLOnServer(tag.tagId),
-    blogId: sanitizeHTMLOnServer(tag.blogId),
+    tagId: sanitizeHTMLOnServer(tag.id),
+    blogId,
   }));
 }
 

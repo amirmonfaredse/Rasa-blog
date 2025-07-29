@@ -17,10 +17,12 @@ export function extractCategorizingFields(
   formData: FormData
 ): CategorizedProps[] {
   const categories = formData.getAll("blogCategory") as [];
-  return categories.map((cat: CategorizedProps) => ({
+  const blogId = formData.get("exteraId") as string;
+
+  return categories.map((cat: string) => ({
     id: idRand(),
-    categoryId: cat.categoryId,
-    blogId: cat.blogId,
+    categoryId: cat,
+    blogId,
   }));
 }
 export function revalidateCategories() {

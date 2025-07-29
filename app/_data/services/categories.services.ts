@@ -61,7 +61,7 @@ export async function categorize(
 ): Promise<PostgrestError | CategorizedProps[]> {
   const { error, data } = await supabase
     .from("categorized")
-    .insert([newFields])
+    .insert(newFields)
     .select();
   return error ?? data!;
 }

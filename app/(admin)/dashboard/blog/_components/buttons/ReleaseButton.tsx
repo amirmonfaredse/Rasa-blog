@@ -1,4 +1,4 @@
-import SpinnerLoader from "../../../../utility/SpinnerLoader";
+import SpinnerLoader from "utility/SpinnerLoader";
 
 function ReleaseButton({ pending }: { pending: boolean }) {
   return (

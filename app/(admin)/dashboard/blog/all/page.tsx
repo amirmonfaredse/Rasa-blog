@@ -2,7 +2,7 @@
 import { BlogFieldProps } from "@/types/app/data/types";
 import { useBlogs } from "_data/fetchers";
 import Link from "next/link";
-import DeleteButtonBlog from "../_components/DeleteButtonBlog";
+import DeleteButtonBlog from "../_components/buttons/DeleteButtonBlog";
 import { Td, Th } from "../_components/Table";
 
 export default function Page() {

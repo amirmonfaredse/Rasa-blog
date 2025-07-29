@@ -57,7 +57,7 @@ export async function tagging(
 ): Promise<PostgrestError | TaggedProps[]> {
   const { data, error } = await supabase
     .from("tagged")
-    .insert([newField])
+    .insert(newField)
     .select();
 
   return error ?? data!;
