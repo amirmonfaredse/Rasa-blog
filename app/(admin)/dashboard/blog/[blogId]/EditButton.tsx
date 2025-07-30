@@ -1,4 +1,4 @@
-import SpinnerLoader from "../../../../utility/SpinnerLoader";
+import SpinnerLoader from "../../../../utility/loaders/SpinnerLoader";
 
 function EditButton({ isMutating }: { isMutating: boolean }) {
   return (

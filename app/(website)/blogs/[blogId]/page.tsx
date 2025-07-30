@@ -1,6 +1,6 @@
 import { getBlog } from "_data/services/blogs.services";
 import { getConfirmedComments } from "_data/services/message.services";
-import { sanitizeHTMLOnServer } from "@/app/utility/jsDOM";
+import { sanitizeHTMLOnServer } from "utility/validation/jsDOM";
 import Image from "next/image";
 import CommentForm from "./CommentForm";
 import ShowComments from "./ShowComments";

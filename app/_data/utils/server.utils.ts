@@ -1,4 +1,4 @@
-import { sanitizeTextOnServer } from "../../utility/jsDOM";
+import { sanitizeTextOnServer } from "../../utility/validation/jsDOM";
 import { auth } from "../auth";
 export async function secureAccess() {
   const session = await auth();

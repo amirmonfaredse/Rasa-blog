@@ -1,6 +1,6 @@
 "use client";
 
-import SpinnerLoader from "@/app/utility/SpinnerLoader";
+import SpinnerLoader from "utility/loaders/SpinnerLoader";
 import { useSendComment } from "_data/mutate";
 import { Bounce, ToastContainer } from "react-toastify";
 

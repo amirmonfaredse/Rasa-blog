@@ -2,6 +2,7 @@ import { newPersianDate } from "_data/utils/data.utils";
 import Image from "next/image";
 import Link from "next/link";
 import { auth, signOut } from "../../_data/auth";
+import SignInButton from "./components/SignOutButton";
 
 export default async function Header() {
   const { user } = await auth();
@@ -28,11 +29,7 @@ export default async function Header() {
             <Link href="/">صفحه اصلی</Link>
           </li>
           <li className=" text-blue-800 text-sm hover:text-blue-500 transition-colors">
-            <button
-              onClick={async () => await signOut({ redirectTo: "/login" })}
-            >
-              خروج
-            </button>
+            <SignInButton />
           </li>
         </ul>
       </div>

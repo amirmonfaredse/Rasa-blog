@@ -1,7 +1,7 @@
 import { TagFieldProps, TaggingFieldProps } from "@/types/app/data/types";
 import { idRand } from "_data/utils/server.utils";
 import { revalidatePath } from "next/cache";
-import { sanitizeHTMLOnServer } from "utility/jsDOM";
+import { sanitizeHTMLOnServer } from "utility/validation/jsDOM";
 
 export function extractTagFields(
   formData: FormData,

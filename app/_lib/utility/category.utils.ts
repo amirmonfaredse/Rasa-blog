@@ -1,7 +1,7 @@
 import { CategorizedProps, CategoryFieldsProps } from "@/types/app/data/types";
 import { idRand } from "_data/utils/server.utils";
 import { revalidatePath } from "next/cache";
-import { sanitizeTextOnServer } from "utility/jsDOM";
+import { sanitizeTextOnServer } from "utility/validation/jsDOM";
 
 export function extractCategoryFields(
   formData: FormData,

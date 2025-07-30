@@ -1,6 +1,6 @@
 import "../../styles/globals.css";
 import { Noto_Sans_Arabic } from "next/font/google";
-import LoadClarity from "../utility/LoadClarity";
+import LoadClarity from "../utility/manitoring/LoadClarity";
 import Footer from "./_layouts/Footer";
 import Header from "./_layouts/Header";
 import { Toaster } from "react-hot-toast";

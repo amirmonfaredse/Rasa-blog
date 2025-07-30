@@ -1,6 +1,6 @@
 "use client";
 
-import SpinnerLoader from "@/app/utility/SpinnerLoader";
+import SpinnerLoader from "utility/loaders/SpinnerLoader";
 import { useSendMessage } from "_data/mutate";
 import InputBlackBorder from "./InputBlackBorder";
 import TextAreaBlackBorder from "./TextAreaBlackBorder";

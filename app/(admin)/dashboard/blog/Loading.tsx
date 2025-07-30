@@ -1,4 +1,4 @@
-import SpinnerLoader from "../../../utility/SpinnerLoader";
+import SpinnerLoader from "../../../utility/loaders/SpinnerLoader";
 
 export default function Loading() {
   return <SpinnerLoader />;

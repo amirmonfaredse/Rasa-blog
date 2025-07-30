@@ -2,7 +2,7 @@ import { Chewy, Noto_Sans_Arabic } from "next/font/google";
 import "./_styles/styles.css";
 
 import { SWRConfig } from "swr";
-import ToastContainer from "./_components/ToastContainer";
+import ToastContainer from "../utility/Toast/components/ToastContainer";
 import Header from "./_layouts/Header";
 import SideLayout from "./_layouts/SideLayout";
 import MenuButton from "./_layouts/components/MenuButton";

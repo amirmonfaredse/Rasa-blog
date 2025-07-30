@@ -1,7 +1,7 @@
 "use client";
 
-import { generateErrorMessage } from "@/app/utility/generateErrorMessage";
-import { validateInput } from "@/app/utility/validateInput";
+import { generateErrorMessage } from "utility/validation/generateErrorMessage";
+import { validateInput } from "utility/validation/validateInput";
 import { TextAreaBlackBorderProps } from "@/types/app/website/types";
 import { useState } from "react";
 

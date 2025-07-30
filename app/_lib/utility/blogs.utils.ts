@@ -1,7 +1,7 @@
 import { BlogFieldProps } from "@/types/app/data/types";
 import { getPersianDate, idRand, validateUrl } from "_data/utils/server.utils";
 import { revalidatePath } from "next/cache";
-import { sanitizeHTMLOnServer, sanitizeTextOnServer } from "utility/jsDOM";
+import { sanitizeHTMLOnServer, sanitizeTextOnServer } from "utility/validation/jsDOM";
 export function revalidateBlogs() {
   revalidatePath("dashboard/blogs");
   revalidatePath("dashboard/blogs/new");
