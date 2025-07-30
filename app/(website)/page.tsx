@@ -10,8 +10,12 @@ import {
 import { getBlogs } from "_data/services/blogs.services";
 
 export default async function Page() {
-  const blogs = (await getBlogs()).slice(0, 5);
+  const blogs = await getBlogs();
+  if ("code" in blogs) throw new Error("Error");
+
   const sliders = await getSliders();
+  if ("code" in sliders) throw new Error("Error");
+
   return (
     <div className="flex flex-col justify-start items-center ">
       {/*
@@ -38,18 +42,20 @@ export default async function Page() {
         className="w-full h-32 flex items-center gap-4 mt-8"
       />
       <PostContainer className="w-full sm:w-[90%] h-fit flex flex-col  items-start justify-start gap-10 sm:gap-16 mb-10">
-        {blogs.length > 0 ? (
-          blogs?.map((blog, index) => (
-            <PostCard
-              id={blog.id}
-              title={blog.title}
-              author={blog.author}
-              created_at={blog.created_at}
-              image={blog.image}
-              content={blog.content}
-              key={`blog-${blog.id}-${index}`}
-            />
-          ))
+        {blogs && blogs.length > 0 ? (
+          blogs
+            .slice(0, 5)
+            ?.map((blog, index) => (
+              <PostCard
+                id={blog.id}
+                title={blog.title}
+                author={blog.author}
+                created_at={blog.created_at}
+                image={blog.image}
+                content={blog.content}
+                key={`blog-${blog.id}-${index}`}
+              />
+            ))
         ) : (
           <div>پستی وجود ندارد ...</div>
         )}

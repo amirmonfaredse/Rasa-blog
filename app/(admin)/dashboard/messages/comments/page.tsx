@@ -1,6 +1,6 @@
 "use client";
 import { useComments } from "_data/fetchers";
-import ConfirmCommentButton from "./ConfirmCommentButton";
+import ConfirmButton from "./ConfirmButton";
 import DeleteCommentButton from "./DeleteCommentButton";
 
 export default function Page() {
@@ -8,7 +8,7 @@ export default function Page() {
   return (
     <div className="flex flex-col w-full h-full text-ghost-1000 ">
       <h1 className="w-full h-28 flex items-center text-2xl">نظرات</h1>
-      {comments.length > 0 ? (
+      {comments &&
         comments.map((comment, index) => (
           <div
             key={`${comment.id}-${index}`}
@@ -57,13 +57,10 @@ export default function Page() {
             </div>
             <div className="w-full flex gap-5 mt-5">
               <DeleteCommentButton id={comment.id} />
-              {!comment.confirmed && <ConfirmCommentButton id={comment.id} />}
+              {!comment.confirmed && <ConfirmButton id={comment.id} />}
             </div>
           </div>
-        ))
-      ) : (
-        <div className="text-ghost-900">نظری ثبت نشده است</div>
-      )}
+        ))}
     </div>
   );
 }

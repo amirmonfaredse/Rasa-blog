@@ -1,6 +1,6 @@
 import { TaggedProps } from "@/types/app/data/types";
 import { getTaggedList, tagging } from "_data/services/tags.services";
-import { secureAccess } from "_data/utility";
+import { secureAccess } from "_data/utils/server.utils";
 import { extractTaggedFields } from "_lib/utility/tag.utils";
 import { NextResponse } from "next/server";
 

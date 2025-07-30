@@ -4,7 +4,7 @@ import {
   getSlider,
   updateSlide,
 } from "_data/services/pages.services";
-import { secureAccess } from "_data/utility";
+import { secureAccess } from "_data/utils/server.utils";
 import {
   extractSlideFields,
   revalidateSliders,

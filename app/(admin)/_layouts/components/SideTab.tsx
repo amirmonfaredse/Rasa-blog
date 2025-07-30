@@ -1,28 +1,26 @@
 "use client";
 import { SideTabProps } from "@/types/app/admin/types";
+import { useAdminStore } from "_lib/store/store";
 import { motion } from "motion/react";
 import Link from "next/link";
-import { MouseEventHandler, useState } from "react";
 
 export default function SideTab({ title, href = "/", subs }: SideTabProps) {
-  const [openList, setOpenList] = useState<boolean>(false);
-  const onNavClick: MouseEventHandler<HTMLAnchorElement> = () => {
-    setOpenList(!openList);
-  };
+  const listIsOpen = useAdminStore.use.sideListIsOpen();
+  const onSideList = useAdminStore.use.onSideList();
 
   return (
     <motion.div className="flex flex-col justify-center items-center duration-200">
       <Link
         href={href}
-        onClick={onNavClick}
+        onClick={() => onSideList()}
         className="flex justify-center items-center w-[200px] h-[50px] bg-ghost-800 shadow-md  text-ghost-100  m-2 rounded-full hover:scale-x-95 hover:shadow-2xl duration-300  cursor-pointer"
       >
         {title}
       </Link>
       <div className="w-full h-full flex flex-col items-center justify-start overflow-hidden">
-        {openList &&
-          subs?.length > 0 &&
-          subs.map((sub, index) => (
+        {listIsOpen &&
+          subs &&
+          subs?.map((sub, index) => (
             <motion.div
               initial={{ top: -200, position: "relative" }}
               animate={{

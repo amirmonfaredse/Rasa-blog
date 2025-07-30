@@ -1,5 +1,6 @@
 "use client";
 
+import { useAdminStore } from "_lib/store/store";
 import { MouseEventHandler, useState } from "react";
 
 function Accordion({
@@ -9,16 +10,13 @@ function Accordion({
   title?: string;
   children: React.ReactNode;
 }) {
-  const [openAcc, setOpenAcc] = useState<boolean>(true);
-  const onOpenAcc: MouseEventHandler<HTMLDivElement> = () => {
-    setOpenAcc(!openAcc);
-  };
-
+  const accIsOpen = useAdminStore.use.accordionIsOpen();
+  const onAccordion = useAdminStore.use.onAccordion();
   return (
     <div className="w-[95%] lg:w-full flex flex-col">
       <div
-        style={{ borderColor: openAcc && "white" }}
-        onClick={onOpenAcc}
+        style={{ borderColor: accIsOpen ? "white" : "" }}
+        onClick={() => onAccordion()}
         className="w-full h-14 flex items-center justify-start gap-2 px-2 md:px-10 rounded-lg border-4 border-avocado-100 text-avocado-900 group cursor-pointer hover:border-avocado-500 duration-300"
       >
         <h1>{title}</h1>
@@ -37,7 +35,7 @@ function Accordion({
           />
         </svg>
       </div>
-      {openAcc && children}
+      {accIsOpen && children}
     </div>
   );
 }

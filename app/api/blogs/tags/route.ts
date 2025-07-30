@@ -1,6 +1,6 @@
 import { TagFieldProps } from "@/types/app/data/types";
 import { createTag, getTags } from "_data/services/tags.services";
-import { idRand, secureAccess } from "_data/utility";
+import { idRand, secureAccess } from "_data/utils/server.utils";
 import { extractTagFields, revalidateTags } from "_lib/utility/tag.utils";
 import { NextResponse } from "next/server";
 

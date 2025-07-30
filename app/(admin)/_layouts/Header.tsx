@@ -1,12 +1,11 @@
-import { signOutAction } from "_data/actions";
+import { newPersianDate } from "_data/utils/data.utils";
 import Image from "next/image";
 import Link from "next/link";
-import persianDate from "persian-date";
-import { auth } from "../../_data/auth";
+import { auth, signOut } from "../../_data/auth";
 
 export default async function Header() {
   const { user } = await auth();
-  const date = new persianDate(new Date()).format("dddd  |   D - MMMM - YYYY");
+  const date = newPersianDate();
   return (
     <div className="w-full h-[5%] flex items-center justify-end p-2 bg-white shadow-md">
       <div className="w-full flex justify-between items-center ">
@@ -29,9 +28,11 @@ export default async function Header() {
             <Link href="/">صفحه اصلی</Link>
           </li>
           <li className=" text-blue-800 text-sm hover:text-blue-500 transition-colors">
-            <form action={signOutAction}>
-              <button>خروج</button>
-            </form>
+            <button
+              onClick={async () => await signOut({ redirectTo: "/login" })}
+            >
+              خروج
+            </button>
           </li>
         </ul>
       </div>

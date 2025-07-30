@@ -1,5 +1,5 @@
 import { BlogFieldProps } from "@/types/app/data/types";
-import { getPersianDate, idRand, validateUrl } from "_data/utility";
+import { getPersianDate, idRand, validateUrl } from "_data/utils/server.utils";
 import { revalidatePath } from "next/cache";
 import { sanitizeHTMLOnServer, sanitizeTextOnServer } from "utility/jsDOM";
 export function revalidateBlogs() {

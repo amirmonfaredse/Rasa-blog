@@ -17,8 +17,13 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   const blogs = await getBlogs();
+  if ("code" in blogs) throw new Error("Error");
+
   const categories = await getCategories();
+  if ("code" in categories) throw new Error("Error");
+
   const categorized = await getCategorizedList();
+  if ("code" in categorized) throw new Error("Error");
 
   return (
     <div className="w-full h-full flex flex-col sm:flex-row justify-between">

@@ -1,32 +1,18 @@
 "use client";
 
-import { actionCommentsSendMessage } from "@/app/_data/messages/messageActions";
 import SpinnerLoader from "@/app/utility/SpinnerLoader";
-import { useActionState, useEffect } from "react";
-import { Bounce, toast, ToastContainer } from "react-toastify";
+import { useSendComment } from "_data/mutate";
+import { Bounce, ToastContainer } from "react-toastify";
 
 export default function CommentForm({ blogId }: { blogId: string }) {
-  const [state, formAction, pending] = useActionState(
-    actionCommentsSendMessage,
-    {
-      status: "",
-      message: "",
-    }
-  );
-  useEffect(() => {
-    if (state?.message?.length > 0) {
-      if (state?.status === "error") toast.error(state?.message);
-      if (state?.status === "success") {
-        toast.success(state.message);
-      }
-    }
-  }, [state]);
-
+  const { trigger, response, isMutating } = useSendComment();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData();
+    await trigger({ formData, exteraId: blogId });
+  };
   return (
-    <form
-      action={formAction}
-      className="w-full flex flex-col items-start px-2 md:px-0 mt-5 md:mt-2 md:my-5 "
-    >
+    <form className="w-full flex flex-col items-start px-2 md:px-0 mt-5 md:mt-2 md:my-5 ">
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -87,9 +73,9 @@ export default function CommentForm({ blogId }: { blogId: string }) {
       <button
         className="w-full h-[40px] bg-cles-400 text-white  py-2 px-4 my-4 rounded-md cursor-pointer hover:bg-folly-300 transition-colors duration-400"
         type="submit"
-        disabled={pending}
+        disabled={isMutating}
       >
-        {pending ? <SpinnerLoader /> : "ارسال پیام"}
+        {isMutating ? <SpinnerLoader /> : "ارسال پیام"}
       </button>
     </form>
   );

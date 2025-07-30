@@ -3,7 +3,7 @@ import {
   createCategory,
   getCategories
 } from "_data/services/categories.services";
-import { idRand, secureAccess } from "_data/utility";
+import { idRand, secureAccess } from "_data/utils/server.utils";
 import {
   extractCategoryFields,
   revalidateCategories,

@@ -1,5 +1,5 @@
 import { SlideFieldProps } from "@/types/app/data/types";
-import { idRand, validateUrl } from "_data/utility";
+import { idRand, validateUrl } from "_data/utils/server.utils";
 import { revalidatePath } from "next/cache";
 import { sanitizeTextOnServer } from "utility/jsDOM";
 

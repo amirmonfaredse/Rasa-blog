@@ -4,7 +4,7 @@ import {
   deleteComment,
   getComment,
 } from "_data/services/message.services";
-import { secureAccess } from "_data/utility";
+import { secureAccess } from "_data/utils/server.utils";
 import { revalidateComments } from "_lib/utility/messages.utils";
 import { NextResponse } from "next/server";
 

@@ -1,6 +1,6 @@
 import { TaggedProps } from "@/types/app/data/types";
 import { deleteTagged, getTagged } from "_data/services/tags.services";
-import { secureAccess } from "_data/utility";
+import { secureAccess } from "_data/utils/server.utils";
 import { NextResponse } from "next/server";
 
 export async function GET(

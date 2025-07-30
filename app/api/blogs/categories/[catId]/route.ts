@@ -4,7 +4,7 @@ import {
   getCategory,
   updateCategory,
 } from "_data/services/categories.services";
-import { secureAccess, throwIfError } from "_data/utility";
+import { secureAccess, throwIfError } from "_data/utils/server.utils";
 import {
   extractCategoryFields,
   revalidateCategories,

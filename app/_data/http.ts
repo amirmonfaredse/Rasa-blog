@@ -22,6 +22,11 @@ export async function PutFormData(url: string, { arg }: { arg: FormData }) {
   const response = await api.put(url, arg);
   return response.data;
 }
+export async function PutFormWithId(url: string) {
+  const response = await api.put(url);
+  return response.data;
+}
+
 export async function DeleteData(url: string) {
   const response = await api.delete(url);
   return response.data;

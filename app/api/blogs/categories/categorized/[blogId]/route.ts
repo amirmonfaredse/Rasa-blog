@@ -3,7 +3,7 @@ import {
   deleteCategorized,
   getCategorized,
 } from "_data/services/categories.services";
-import { secureAccess } from "_data/utility";
+import { secureAccess } from "_data/utils/server.utils";
 import { NextResponse } from "next/server";
 
 export async function GET(

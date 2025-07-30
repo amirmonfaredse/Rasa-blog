@@ -3,7 +3,7 @@ import {
   categorize,
   getCategorizedList,
 } from "_data/services/categories.services";
-import { secureAccess } from "_data/utility";
+import { secureAccess } from "_data/utils/server.utils";
 import { extractCategorizingFields } from "_lib/utility/category.utils";
 import { NextResponse } from "next/server";
 

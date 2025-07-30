@@ -8,10 +8,10 @@ const authConfig = {
     }),
   ],
   callbacks: {
-    authorized({ auth, request }) {
+    authorized({ auth }) {
       return !!auth?.user;
     },
-    async signIn({ user, account, profile }) {
+    async signIn({ user }) {
       if (!process.env.ALLOWED_EMAILS) {
         console.log("لیست ایمیل های مجاز تعریف نشده است");
         return false;

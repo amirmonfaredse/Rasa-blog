@@ -17,6 +17,7 @@ import {
   PostDataWithId,
   PostFormData,
   PutFormData,
+  PutFormWithId,
 } from "_data/http";
 import { mutate } from "swr";
 import useSWRMutation from "swr/mutation";
@@ -53,17 +54,17 @@ export function useCreateImage() {
   );
   return { trigger, response: data, error, isMutating };
 }
-export function useCreateContact() {
+export function useSendMessage() {
   const { trigger, data, error, isMutating } = useSWRMutation(
     "/messages/contact",
     PostFormData
   );
   return { trigger, response: data, error, isMutating };
 }
-export function useCreateComment() {
+export function useSendComment() {
   const { trigger, data, error, isMutating } = useSWRMutation(
     "/messages/comments",
-    PostFormData
+    PostDataWithId
   );
   return { trigger, response: data, error, isMutating };
 }
@@ -192,10 +193,10 @@ export function useUpdateContact(id: string | null) {
   );
   return { trigger, response: data, error, isMutating };
 }
-export function useUpdateComment(id: string | null) {
+export function useConfirmComment(id: string | null) {
   const { trigger, data, error, isMutating } = useSWRMutation(
-    `/messages/comments/${id}`,
-    PutFormData,
+    !!id ? `/messages/comments/${id}` : null,
+    PutFormWithId,
     {
       onSuccess: (data) => {
         mutate(

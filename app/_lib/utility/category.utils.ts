@@ -1,5 +1,5 @@
 import { CategorizedProps, CategoryFieldsProps } from "@/types/app/data/types";
-import { idRand } from "_data/utility";
+import { idRand } from "_data/utils/server.utils";
 import { revalidatePath } from "next/cache";
 import { sanitizeTextOnServer } from "utility/jsDOM";
 

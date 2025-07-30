@@ -9,6 +9,8 @@ export enum Mode {
 }
 export type StateType = {
   drawerIsOpen: boolean;
+  sideListIsOpen: boolean;
+  accordionIsOpen: boolean;
   catId: string;
   tagId: string;
   sliderId: string;

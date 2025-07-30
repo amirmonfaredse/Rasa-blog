@@ -2,11 +2,12 @@
 import { useEffect, useState } from "react";
 import PostCard from "../../_components/cards/PostCard";
 import { useBlogContext } from "../../_providers/BlogProvider";
+import { BlogFieldProps } from "@/types/app/data/types";
 
-function BlogList({ blogs }) {
+function BlogList({ blogs }: { blogs: BlogFieldProps[] }) {
   const [filteredBlogs, setFilteredBlogs] = useState(blogs);
   const { searchInputValue, categorizedBlogs, checkedList } = useBlogContext();
-  console.log(categorizedBlogs)
+  console.log(categorizedBlogs);
   useEffect(() => {
     if (checkedList.length > 0) {
       setFilteredBlogs(

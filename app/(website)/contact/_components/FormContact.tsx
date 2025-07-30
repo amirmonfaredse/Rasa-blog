@@ -1,32 +1,20 @@
 "use client";
 
-import { actionContactSendMessage } from "@/app/_data/messages/messageActions";
 import SpinnerLoader from "@/app/utility/SpinnerLoader";
-import { useActionState, useEffect } from "react";
-import toast from "react-hot-toast";
+import { useSendMessage } from "_data/mutate";
 import InputBlackBorder from "./InputBlackBorder";
 import TextAreaBlackBorder from "./TextAreaBlackBorder";
 
 function FormContact() {
-  const [state, formAction, pending] = useActionState(
-    actionContactSendMessage,
-    {
-      status: "",
-      message: "",
-    }
-  );
-
-  useEffect(() => {
-    if (pending) toast("درحال ارسال");
-  }, [pending]);
-  useEffect(() => {
-    if (state?.status === "success") toast("پیام با موفقیت ارسال شد");
-    if (state?.status === "error") toast(state.message);
-  }, [state]);
-
+  const { trigger, response, isMutating } = useSendMessage();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData();
+    await trigger(formData);
+  };
   return (
     <form
-      action={formAction}
+      onSubmit={handleSubmit}
       className="w-full md:w-[50%] flex flex-col items-center px-2 md:px-0 mt-5 md:mt-2 md:mx-auto "
     >
       <label htmlFor="fullName" className="w-full">
@@ -44,9 +32,9 @@ function FormContact() {
       <TextAreaBlackBorder name="message" />
       <button
         className="w-full md:w-[300px] h-12 flex items-center justify-center  bg-ghost-800 text-ghost-100  my-4 rounded-md cursor-pointer hover:bg-ghost-600 transition-colors duration-400"
-        disabled={pending}
+        disabled={isMutating}
       >
-        {pending ? <SpinnerLoader /> : "ارسال پیام"}
+        {isMutating ? <SpinnerLoader /> : "ارسال پیام"}
       </button>
     </form>
   );

@@ -27,6 +27,8 @@ import { Mode, StateType } from "./types";
 
 export const initState: StateType = {
   drawerIsOpen: false,
+  sideListIsOpen: false,
+  accordionIsOpen: true,
   catId: "",
   tagId: "",
   sliderId: "",
@@ -45,6 +47,18 @@ const useStoreBase = create(
           onDrawer: (prevState: boolean) =>
             set((state) => {
               state.drawerIsOpen = !prevState;
+            }),
+          onSideList: (prevState?: boolean | undefined) =>
+            set((state) => {
+              prevState
+                ? (state.sideListIsOpen = !prevState)
+                : (state.sideListIsOpen = !state.sideListIsOpen);
+            }),
+          onAccordion: (prevState?: boolean | undefined) =>
+            set((state) => {
+              prevState
+                ? (state.accordionIsOpen = !prevState)
+                : (state.accordionIsOpen = !state.accordionIsOpen);
             }),
           setCatId: (catId: string = "") =>
             set((state) => {

@@ -1,6 +1,6 @@
 import { SlideFieldProps } from "@/types/app/data/types";
 import { createSlide, getSliders } from "_data/services/pages.services";
-import { secureAccess } from "_data/utility";
+import { secureAccess } from "_data/utils/server.utils";
 import {
   extractSlideFields,
   revalidateSliders,

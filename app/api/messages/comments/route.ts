@@ -1,6 +1,6 @@
 import { CommentProps } from "@/types/app/data/types";
 import { getComments, sendComment } from "_data/services/message.services";
-import { secureAccess } from "_data/utility";
+import { secureAccess } from "_data/utils/server.utils";
 import {
   extractCommentFields,
   revalidateComments,

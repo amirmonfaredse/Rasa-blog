@@ -8,7 +8,7 @@ export default function RemoveSlide({ id }: { id: string }) {
     <div
       onClick={async () => {
         const confirmed = confirm("مطمئنی؟");
-        if (confirmed) trigger();
+        if (confirmed) await trigger();
       }}
       className="cursor-pointer hover:scale-105 duration-200"
     >

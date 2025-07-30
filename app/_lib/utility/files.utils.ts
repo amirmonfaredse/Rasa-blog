@@ -2,7 +2,7 @@ import { BufferingFileResult } from "@/types/app/admin/types";
 import { FilesUrlProps } from "@/types/app/data/types";
 import { PostgrestError } from "@supabase/supabase-js";
 import { addFileToUrlList } from "_data/services/media.services";
-import { idRand } from "_data/utility";
+import { idRand } from "_data/utils/server.utils";
 import { revalidatePath } from "next/cache";
 
 export function ValidateImageFile(file: File) {

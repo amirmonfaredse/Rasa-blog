@@ -11,6 +11,8 @@ export async function generateMetadata({
 }) {
   const { blogId } = await params;
   const blog = await getBlog(blogId);
+  if ("code" in blog) throw new Error("Error");
+
   return {
     title: blog.title,
     desciption: "",
@@ -23,7 +25,9 @@ export default async function Page({
 }) {
   const { blogId } = await params;
   const blog = await getBlog(blogId);
+  if ("code" in blog) throw new Error("Error");
   const confirmedComments = await getConfirmedComments();
+  if ("code" in confirmedComments) throw new Error("Error");
 
   return (
     <div className="w-[95%] md:w-full  h-fit sm:px-10 mt-8">
@@ -45,7 +49,7 @@ export default async function Page({
       <div className="w-full h-fit my-16 flex flex-col justify-start items-start">
         <div className="w-full h-fit pb-5 flex flex-col gap-6">
           <h2 className="text-xl my-5"> نظرات شما :</h2>
-          {confirmedComments.length > 0 ? (
+          {confirmedComments && confirmedComments.length > 0 ? (
             confirmedComments.map((comment, index) => (
               <ShowComments key={`${comment.id}-${index}`} comment={comment} />
             ))

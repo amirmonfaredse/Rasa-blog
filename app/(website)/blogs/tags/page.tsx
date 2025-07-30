@@ -3,6 +3,8 @@ import Link from "next/link";
 
 export default async function Page() {
   const tags = await getTags();
+  if ("code" in tags) throw new Error("Error");
+
   return (
     <div className="w-full min-h-96 flex flex-col justify-start items-start">
       <h1 className="w-full h-[80px] text-2xl flex items-center ">
