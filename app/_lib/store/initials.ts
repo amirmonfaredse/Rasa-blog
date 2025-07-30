@@ -97,3 +97,10 @@ export const initInputTagManager = {
   isSuggestionVisible: false,
   searchTerm: "",
 };
+export const initUploadManager = {
+  name: "",
+  preview: "",
+  file: null,
+  size: 0,
+  type: "",
+};

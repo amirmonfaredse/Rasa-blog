@@ -1,5 +1,5 @@
 import { BufferingFileResult } from "@/types/app/admin/types";
-import { ActionResult, FilesUrlProps } from "@/types/app/data/types";
+import { FilesUrlProps } from "@/types/app/data/types";
 import { PostgrestError } from "@supabase/supabase-js";
 import { addFileToUrlList } from "_data/services/media.services";
 import { idRand } from "_data/utility";
@@ -7,7 +7,8 @@ import { revalidatePath } from "next/cache";
 
 export function ValidateImageFile(file: File) {
   const allowTypes = ["image/png", "image/jpeg", "image/jpg"];
-  if (!allowTypes.includes(file.type) || file.size > 5_242_880) throw file;
+  if (!allowTypes.includes(file.type) || Number(file.size) > 5_242_880)
+    throw file;
 }
 
 export async function BufferingFile(file: File): Promise<BufferingFileResult> {

@@ -3,11 +3,11 @@ import { BlogFieldProps } from "@/types/app/data/types";
 import { useBlogs } from "_data/fetchers";
 import Link from "next/link";
 import DeleteButtonBlog from "../_components/buttons/DeleteButtonBlog";
-import { Td, Th } from "../_components/Table";
+import { Td, Th } from "../_components/utilities";
 
 export default function Page() {
   const { blogs } = useBlogs();
- 
+
   return (
     <div className="w-full flex flex-col items-start justify-start mt-5">
       <div className="w-full h-fit flex ">

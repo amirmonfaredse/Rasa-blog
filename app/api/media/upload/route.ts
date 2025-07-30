@@ -1,13 +1,11 @@
 import { UplaodResult } from "@/types/app/data/types";
 import { UploadFile } from "_data/services/media.services";
-import { secureAccess } from "_data/utility";
 import { BufferingFile, ValidateImageFile } from "_lib/utility/files.utils";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request): Promise<Response> {
-  await secureAccess();
   const formData = await request.formData();
-  const image = formData.get("imageFile") as File;
+  const image = formData.get("file") as File;
   ValidateImageFile(image);
 
   const bufferResult = await BufferingFile(image);

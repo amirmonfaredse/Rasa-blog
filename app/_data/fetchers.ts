@@ -84,7 +84,7 @@ export function useTagged(id: string | null): useTaggedResult {
   return { tagged: data, isLoading, isError: error };
 }
 
-export function useImageFiles(): useImageFilesResult {
+export function  useImageFiles(): useImageFilesResult {
   const { data, error, isLoading } = useSWR("/media/images", fetcher);
   return { images: data, isLoading, isError: error };
 }

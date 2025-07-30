@@ -16,6 +16,7 @@ export type StateType = {
   tagManager: TagManagerProps;
   sliderManager: SliderManagerProps;
   tagInputManager: TagInputManager;
+  uploadManager: UploadManager;
 };
 export type TagManagerProps = {
   formMode: Mode;
@@ -74,3 +75,10 @@ export enum SliderTitlesPutMode {
   Button = "ویرایش کن",
   Header = "ویرایش کردن اسلاید",
 }
+export type UploadManager = {
+  name: string;
+  preview: string;
+  file: null | File;
+  size: number;
+  type: string;
+};

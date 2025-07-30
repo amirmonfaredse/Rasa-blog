@@ -18,6 +18,7 @@ import {
   initInputTagManager,
   initSliderManager,
   initTagManager,
+  initUploadManager,
   sliderTitlePresets,
   tagTitlePresets,
 } from "./initials";
@@ -33,6 +34,7 @@ export const initState: StateType = {
   tagManager: initTagManager,
   sliderManager: initSliderManager,
   tagInputManager: initInputTagManager,
+  uploadManager: initUploadManager,
 };
 
 const useStoreBase = create(
@@ -133,6 +135,25 @@ const useStoreBase = create(
                 tagged.some((t) => t.tagId === tag.id)
               );
               state.tagInputManager.selectedTags = filtering;
+            }),
+
+          onReadFile: (acceptedFile: File) =>
+            set((state) => {
+              const reader = new FileReader();
+              reader.readAsDataURL(acceptedFile);
+              reader.onabort = () => {};
+              reader.onerror = () => {};
+              reader.onload = () => {
+                useAdminStore.setState((state) => {
+                  state.uploadManager = {
+                    name: acceptedFile.name as string,
+                    preview: reader.result as string,
+                    file: acceptedFile as File,
+                    size: acceptedFile.size,
+                    type: acceptedFile.type as string,
+                  };
+                });
+              };
             }),
         }))
       )

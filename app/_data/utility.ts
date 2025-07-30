@@ -35,7 +35,7 @@ export async function secureAccess() {
   const allowedEmails = process.env.ALLOWED_EMAILS?.split(",");
   if (!allowedEmails) throw new Error("تنظیمات سرور ناقص است");
   const isUserValid = allowedEmails.some(
-    (email) => session.user.email === email
+    (email) => session?.user?.email === email
   );
   if (!isUserValid) throw new Error("شما مجاز به انجام این اقدام نیستید");
 }
@@ -55,3 +55,4 @@ export function getPersianDate(): string {
 export function idRand(): string {
   return String(Math.floor(Math.random() * 10000));
 }
+

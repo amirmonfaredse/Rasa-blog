@@ -1,13 +1,7 @@
-import {
-  FilesUrlProps,
-  UplaodResult
-} from "@/types/app/data/types";
+import { FilesUrlProps, UplaodResult } from "@/types/app/data/types";
 import { getFiles } from "_data/services/media.services";
 import { secureAccess } from "_data/utility";
-import {
-  addImageToList,
-  revalidateMedia
-} from "_lib/utility/files.utils";
+import { addImageToList, revalidateMedia } from "_lib/utility/files.utils";
 import { NextResponse } from "next/server";
 
 export async function GET() {
@@ -19,6 +13,7 @@ export async function GET() {
 export async function POST(request: Request): Promise<Response> {
   await secureAccess();
   const formData = await request.formData();
+
   const uploadResult = await fetch(`${process.env.BASE_URL}/api/media/upload`, {
     method: "POST",
     body: formData,

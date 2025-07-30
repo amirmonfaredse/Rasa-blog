@@ -1,7 +1,7 @@
 "use client";
 import { useImageFiles } from "_data/fetchers";
 import Image from "next/image";
-import FileUploader from "./_components/FileUploader.jsx";
+import FileUploader from "./_components/FileUploader";
 export default function Page() {
   const { images } = useImageFiles();
   return (
@@ -11,14 +11,16 @@ export default function Page() {
           لیست فایل ها
         </h1>
         <ul className="w-full flex flex-col items-start justify-start py-2 gap-2">
-          {images?.length > 0 ? (
+          {images &&
             images?.map((image, index) => (
               <li
                 key={`${image.name}-${index}`}
                 className="w-full h-28 flex justify-start items-center gap-2 bg-cles-100 rounded-lg px-2"
               >
                 <h2 className="w-1/5 text-xs">
-                  {image.name.slice(0, 10) + (image.name.length > 10 && "...")}
+                  {image &&
+                    image?.name?.slice(0, 10) +
+                      (image?.name?.length > 10 && "...")}
                 </h2>
                 <div className="w-2/5 h-[90%] relative ">
                   <Image
@@ -35,10 +37,7 @@ export default function Page() {
                   type="text"
                 />
               </li>
-            ))
-          ) : (
-            <li>تصویری وجود ندارد</li>
-          )}
+            ))}
         </ul>
       </div>
       <div className="w-full lg:w-[50%] h-auto lg:h-full  p-5 ml-5 flex items-center">
