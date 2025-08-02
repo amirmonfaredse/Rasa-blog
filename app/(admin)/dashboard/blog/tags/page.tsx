@@ -2,7 +2,7 @@
 import { useTags } from "_data/fetchers";
 import { useAdminStore } from "_lib/store/store";
 import { Mode } from "_lib/store/types";
-import DeleteTagButton from "./DeleteTagButton";
+import DeleteTagButton from "../_components/buttons/DeleteTagButton";
 import TagForm from "./TagForm";
 
 export default function Page() {

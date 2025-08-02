@@ -2,6 +2,8 @@ import {
   CategoryManagerProps,
   CategoryTitlesPostMode,
   CategoryTitlesPutMode,
+  InitInputTagManagerProps,
+  InitUploadManagerProps,
   Mode,
   SliderManagerProps,
   SliderTitlesPostMode,
@@ -90,14 +92,14 @@ export const initSliderManager: SliderManagerProps = {
     buttonTitle: SliderTitlesPostMode.Button,
   },
 };
-export const initInputTagManager = {
+export const initInputTagManager: InitInputTagManagerProps = {
   allTags: [],
   filteredTags: [],
   selectedTags: [],
   isSuggestionVisible: false,
   searchTerm: "",
 };
-export const initUploadManager = {
+export const initUploadManager: InitUploadManagerProps = {
   name: "",
   preview: "",
   file: null,

@@ -218,7 +218,7 @@ export function useConfirmComment(id: string | null) {
 
 export function useDeleteBlog(id: string | null) {
   const { trigger, data, error, isMutating } = useSWRMutation(
-    `/blogs/${id}`,
+    !!id ? `/blogs/${id}` : null,
     DeleteData,
     {
       onSuccess: (data) => {
@@ -237,7 +237,7 @@ export function useDeleteBlog(id: string | null) {
 }
 export function useDeleteCategory(id: string | null) {
   const { trigger, data, error, isMutating } = useSWRMutation(
-    `/blogs/categories/${id}`,
+    !!id ? `/blogs/categories/${id}` : null,
     DeleteData,
     {
       onSuccess: (data) => {
@@ -275,7 +275,7 @@ export function useDeleteTag(id: string | null) {
 }
 export function useDeleteContact(id: string | null) {
   const { trigger, data, error, isMutating } = useSWRMutation(
-    `/messages/contact/${id}`,
+    !!id ? `/messages/contact/${id}D` : null,
     DeleteData,
     {
       onSuccess: (data) => {
@@ -295,7 +295,7 @@ export function useDeleteContact(id: string | null) {
 }
 export function useDeleteComment(id: string | null) {
   const { trigger, data, error, isMutating } = useSWRMutation(
-    `/messages/comments/${id}`,
+    !!id ? `/messages/comments/${id}` : null,
     DeleteData,
     {
       onSuccess: (data) => {
@@ -315,7 +315,7 @@ export function useDeleteComment(id: string | null) {
 }
 export function useDeleteSlider(id: string | null) {
   const { trigger, data, error, isMutating } = useSWRMutation(
-    `/pages/${id}`,
+    !!id ? `/pages/${id}` : null,
     DeleteData,
     {
       onSuccess: (data) => {

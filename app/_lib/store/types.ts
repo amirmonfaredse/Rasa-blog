@@ -2,24 +2,13 @@ import {
   CategoryFieldsProps,
   SlideFieldProps,
   TagFieldProps,
+  TaggingFieldProps,
 } from "@/types/app/data/types";
 export enum Mode {
   Post = "POST",
   Put = "PUT",
 }
-export type StateType = {
-  drawerIsOpen: boolean;
-  sideListIsOpen: boolean;
-  accordionIsOpen: boolean;
-  catId: string;
-  tagId: string;
-  sliderId: string;
-  categoryManager: CategoryManagerProps;
-  tagManager: TagManagerProps;
-  sliderManager: SliderManagerProps;
-  tagInputManager: TagInputManager;
-  uploadManager: UploadManager;
-};
+
 export type TagManagerProps = {
   formMode: Mode;
   fieldsValues: TagFieldProps;
@@ -35,7 +24,6 @@ export type TagInputManager = {
   isSuggestionVisible: boolean;
   searchTerm: string;
 };
-
 export type CategoryManagerProps = {
   formMode: Mode;
   fieldsValues: CategoryFieldsProps;
@@ -44,6 +32,7 @@ export type CategoryManagerProps = {
     buttonTitle: CategoryTitlesPostMode.Button | CategoryTitlesPutMode.Button;
   };
 };
+
 export type SliderManagerProps = {
   formMode: Mode;
   fieldsValues: SlideFieldProps;
@@ -84,3 +73,60 @@ export type UploadManager = {
   size: number;
   type: string;
 };
+export type InitInputTagManagerProps = {
+  allTags: TagFieldProps[];
+  filteredTags: TagFieldProps[];
+  selectedTags: TagFieldProps[];
+  isSuggestionVisible: boolean;
+  searchTerm: string;
+};
+export type InitUploadManagerProps = {
+  name: string;
+  preview: string;
+  file: null | File;
+  size: number | string;
+  type: string;
+};
+export interface LayoutSliceType {
+  drawerIsOpen: boolean;
+  sideListIsOpen: boolean;
+  accordionIsOpen: boolean;
+  onDrawer: (prevState: boolean) => void;
+  onSideList: (prevState?: boolean | undefined) => void;
+  onAccordion: (prevState?: boolean | undefined) => void;
+}
+export interface UploadSliceType {
+  uploadManager: InitUploadManagerProps;
+  onReadFile: (acceptedFile: File) => void;
+}
+export interface CategorySliceType {
+  catId: string;
+  categoryManager: CategoryManagerProps;
+  setCatId: (catId?: string) => void;
+  onCatFormMode: (newMode: Mode) => void;
+  onCatFields: (cat?: CategoryFieldsProps) => void;
+}
+export interface SliderSliceType {
+  sliderId: string;
+  sliderManager: SliderManagerProps;
+  setSliderId: (sliderId: string) => void;
+  onSliderFormMode: (newMode: Mode) => void;
+  onSliderFields: (slider?: SlideFieldProps) => void;
+}
+export interface TagSliceType {
+  tagId: string;
+  tagManager: TagManagerProps;
+  setTagId: (tagId: string) => void;
+  onTagFormMode: (newMode: Mode) => void;
+  onTagFields: (tag?: TagFieldProps) => void;
+}
+export interface TagInputSliceType {
+  tagInputManager: InitInputTagManagerProps;
+  onLoadAllTags: (tags: TagFieldProps[]) => void;
+  onSearchField: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onToggleSuggestion: (visible?: boolean | undefined) => void;
+  onSelectTag: (selectedTag: TagFieldProps) => void;
+  onUnSelectTag: (unSelectedTag: TagFieldProps) => void;
+  onClearAllSelectedTags: () => void;
+  onDefaultTagging: (tagged: TaggingFieldProps[]) => void;
+}
