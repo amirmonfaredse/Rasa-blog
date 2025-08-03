@@ -19,6 +19,22 @@ import {
   PutFormData,
   PutFormWithId,
 } from "_data/http";
+import {
+  notifCategorizing,
+  notifCreateBlog,
+  notifCreateCategory,
+  notifCreateImage,
+  notifCreateSlider,
+  notifCreateTag,
+  notifSendComment,
+  notifSendMessage,
+  notifTagging,
+  notifUpdateBlog,
+  notifUpdateCategory,
+  notifUpdateSlider,
+  notifUpdateTag,
+} from "_lib/notifications/mutating/helpers/formMutate.notifs";
+import { useEffect } from "react";
 import { mutate } from "swr";
 import useSWRMutation from "swr/mutation";
 
@@ -27,6 +43,10 @@ export function useCreateBlog() {
     "/blogs",
     PostFormData
   );
+  useEffect(() => {
+    notifCreateBlog(isMutating, data, error);
+  }, [isMutating, data, error]);
+
   return { trigger, response: data, error, isMutating };
 }
 export function useCategorizing() {
@@ -34,6 +54,10 @@ export function useCategorizing() {
     "/blogs/categories/categorized",
     PostDataWithId
   );
+  useEffect(() => {
+    notifCategorizing(isMutating, data, error);
+  }, [isMutating, data, error]);
+
   return { trigger, response: data, error, isMutating };
 }
 export function useTagging() {
@@ -41,6 +65,10 @@ export function useTagging() {
     "/blogs/tags/taggeds",
     PostDataWithId
   );
+  useEffect(() => {
+    notifTagging(isMutating, data, error);
+  }, [isMutating, data, error]);
+
   return { trigger, response: data, error, isMutating };
 }
 export function useCreateImage() {
@@ -52,6 +80,10 @@ export function useCreateImage() {
       revalidate: false,
     }
   );
+  useEffect(() => {
+    notifCreateImage(isMutating, data, error);
+  }, [isMutating, data, error]);
+
   return { trigger, response: data, error, isMutating };
 }
 export function useSendMessage() {
@@ -59,6 +91,10 @@ export function useSendMessage() {
     "/messages/contact",
     PostFormData
   );
+  useEffect(() => {
+    notifSendMessage(isMutating, data, error);
+  }, [isMutating, data, error]);
+
   return { trigger, response: data, error, isMutating };
 }
 export function useSendComment() {
@@ -66,6 +102,9 @@ export function useSendComment() {
     "/messages/comments",
     PostDataWithId
   );
+  useEffect(() => {
+    notifSendComment(isMutating, data, error);
+  }, [isMutating, data, error]);
   return { trigger, response: data, error, isMutating };
 }
 
@@ -74,6 +113,10 @@ export function useUpdateBlog(id: string | null) {
     `/blogs/${id}`,
     PutFormData
   );
+  useEffect(() => {
+    notifUpdateBlog(isMutating, data, error);
+  }, [isMutating, data, error]);
+
   return { trigger, response: data, error, isMutating };
 }
 
@@ -108,7 +151,12 @@ export function useUpsertCategory(id: string): UseUpsertCategory {
       revalidate: false,
     }
   );
-
+  useEffect(() => {
+    notifCreateCategory(create.isMutating, create.data, create.error);
+  }, [create.isMutating, create.data, create.error]);
+  useEffect(() => {
+    notifUpdateCategory(update.isMutating, update.data, update.error);
+  }, [update.isMutating, update.data, update.error]);
   return {
     trigger: !!id ? update.trigger : create.trigger,
     response: !!id ? update.data : create.data,
@@ -141,6 +189,13 @@ export function useUpsertTag(id: string): UseUpsertTag {
       revalidate: false,
     }
   );
+  useEffect(() => {
+    notifCreateTag(create.isMutating, create.data, create.error);
+  }, [create.isMutating, create.data, create.error]);
+  useEffect(() => {
+    notifUpdateTag(update.isMutating, update.data, update.error);
+  }, [update.isMutating, update.data, update.error]);
+
   return {
     trigger: !!id ? update.trigger : create.trigger,
     response: !!id ? update.data : create.data,
@@ -169,6 +224,13 @@ export function useUpsertSlider(id: string): UseUpsertSlider {
     },
     revalidate: false,
   });
+  useEffect(() => {
+    notifCreateSlider(create.isMutating, create.data, create.error);
+  }, [create.isMutating, create.data, create.error]);
+  useEffect(() => {
+    notifUpdateSlider(update.isMutating, update.data, update.error);
+  }, [update.isMutating, update.data, update.error]);
+
   return {
     trigger: !!id ? update.trigger : create.trigger,
     response: !!id ? update.data : create.data,
@@ -177,22 +239,23 @@ export function useUpsertSlider(id: string): UseUpsertSlider {
   };
 }
 
-export function useUpdateContact(id: string | null) {
-  const { trigger, data, error, isMutating } = useSWRMutation(
-    `/messages/contact/${id}`,
-    PutFormData,
-    {
-      populateCache: (PutFormData, contacts) => {
-        const filteredContacts = contacts.filter(
-          (contact: MessageFieldProps) => contact.id !== PutFormData.id
-        );
-        return [...filteredContacts, PutFormData];
-      },
-      revalidate: false,
-    }
-  );
-  return { trigger, response: data, error, isMutating };
-}
+// export function useUpdateContact(id: string | null) {
+//   const { trigger, data, error, isMutating } = useSWRMutation(
+//     `/messages/contact/${id}`,
+//     PutFormData,
+//     {
+//       populateCache: (PutFormData, contacts) => {
+//         const filteredContacts = contacts.filter(
+//           (contact: MessageFieldProps) => contact.id !== PutFormData.id
+//         );
+//         return [...filteredContacts, PutFormData];
+//       },
+//       revalidate: false,
+//     }
+//   );
+//   return { trigger, response: data, error, isMutating };
+// }
+
 export function useConfirmComment(id: string | null) {
   const { trigger, data, error, isMutating } = useSWRMutation(
     !!id ? `/messages/comments/${id}` : null,
@@ -213,6 +276,7 @@ export function useConfirmComment(id: string | null) {
       revalidate: false,
     }
   );
+
   return { trigger, response: data, error, isMutating };
 }
 
@@ -275,7 +339,7 @@ export function useDeleteTag(id: string | null) {
 }
 export function useDeleteContact(id: string | null) {
   const { trigger, data, error, isMutating } = useSWRMutation(
-    !!id ? `/messages/contact/${id}D` : null,
+    !!id ? `/messages/contact/${id}` : null,
     DeleteData,
     {
       onSuccess: (data) => {

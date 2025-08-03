@@ -1,6 +1,6 @@
 "use client";
 import { useComments } from "_data/fetchers";
-import ConfirmButton from "./ConfirmButton";
+import ConfirmCommentButton from "./ConfirmCommentButton";
 import DeleteCommentButton from "./DeleteCommentButton";
 
 export default function Page() {
@@ -57,7 +57,7 @@ export default function Page() {
             </div>
             <div className="w-full flex gap-5 mt-5">
               <DeleteCommentButton id={comment.id} />
-              {!comment.confirmed && <ConfirmButton id={comment.id} />}
+              {!comment.confirmed && <ConfirmCommentButton id={comment.id} />}
             </div>
           </div>
         ))}

@@ -1,5 +1,5 @@
 "use client";
-import DeleteButton from "(admin)/dashboard/messages/DeleteButton";
+import DeleteContactButton from "(admin)/dashboard/messages/DeleteContactButton";
 import { useMessages } from "_data/fetchers";
 
 export default function Page() {
@@ -10,7 +10,7 @@ export default function Page() {
         پیام ها
       </h1>
       {messages &&
-        messages.map((mess, index) => (
+        messages?.map((mess, index) => (
           <div
             key={`${mess.id}-${index}`}
             className="w-full flex flex-col justify-start items-start  border border-avocado-400 rounded-xl p-4 "
@@ -18,7 +18,7 @@ export default function Page() {
             <div className="w-[90%] min-h-14 h-fit gap-2 md:gap-1 flex flex-col justify-center">
               <div className="flex items-center md:gap-2 md:mx-2">
                 <h3 className="text-md text-ghost-800">شناسه پیام : </h3>
-                <h4 className=" px-2 rounded-md">{mess.id}</h4>
+                <h4 className="px-2 rounded-md">{mess.id}</h4>
               </div>
               <div className="flex items-center md:gap-3 md:mx-2">
                 <h3 className="text-lg text-ghost-800">نام : </h3>
@@ -39,7 +39,7 @@ export default function Page() {
                 {mess.message}
               </p>
             </div>
-            <DeleteButton id={mess.id} />
+            <DeleteContactButton contactId={mess.id} />
           </div>
         ))}
     </div>

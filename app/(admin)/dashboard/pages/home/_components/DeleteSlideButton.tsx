@@ -1,14 +1,17 @@
 "use client";
 
 import { useDeleteSlider } from "_data/mutate";
+import ConfirmRemoveModal from "_lib/notifications/modal/ConfirmRemoveModal";
+import toast, { Toast } from "react-hot-toast";
 
-export default function RemoveSlide({ id }: { id: string }) {
+export default function DeleteSlideButton({ id }: { id: string }) {
   const { trigger } = useDeleteSlider(id);
   return (
     <div
-      onClick={async () => {
-        const confirmed = confirm("مطمئنی؟");
-        if (confirmed) await trigger();
+      onClick={() => {
+        toast((t: Toast) => <ConfirmRemoveModal t={t} trigger={trigger} />, {
+          duration: Infinity,
+        });
       }}
       className="cursor-pointer hover:scale-105 duration-200"
     >

@@ -1,27 +1,17 @@
 "use client";
 import { useCategorizing, useCreateBlog, useTagging } from "_data/mutate";
+import ReleaseButton from "../_components/buttons/ReleaseButton";
 import CategoriesList from "../_components/CategoriesList";
+import TagInputCreate from "../_components/tagInput/TagInputCreate";
 import TextEditorCreateBlog from "../_components/textEditor/TextEditorCreateBlog";
 import { Input, Label } from "../_components/utilities";
-import TagInputCreate from "../_components/tagInput/TagInputCreate";
-import ReleaseButton from "../_components/buttons/ReleaseButton";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
-  const {
-    trigger: createBlog,
-    response: blog,
-    isMutating: isCreatingBlog,
-  } = useCreateBlog();
-  const {
-    trigger: categorize,
-    response: categorized,
-    isMutating: isCategorizing,
-  } = useCategorizing();
-  const {
-    trigger: tagging,
-    response: tagged,
-    isMutating: isTagging,
-  } = useTagging();
+  const { trigger: createBlog, isMutating: isCreatingBlog } = useCreateBlog();
+  const { trigger: categorize } = useCategorizing();
+  const { trigger: tagging } = useTagging();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -30,6 +20,7 @@ export default function Page() {
       await categorize({ formData, exteraId: blogRes.id });
       await tagging({ formData, exteraId: blogRes.id });
     }
+
   };
 
   return (

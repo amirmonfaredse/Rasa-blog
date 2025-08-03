@@ -6,7 +6,7 @@ import Header from "./_layouts/Header";
 import SideLayout from "./_layouts/SideLayout";
 import MenuButton from "./_layouts/components/MenuButton";
 import SideLayoutContainer from "./_layouts/components/SideLayoutContainer";
-import ToastProvider from "_lib/notifications/modal/ToastProvider";
+import ToastProvider from "_lib/notifications/ToastProvider";
 export const metadata = {
   title: {
     template: "%s | رسا",

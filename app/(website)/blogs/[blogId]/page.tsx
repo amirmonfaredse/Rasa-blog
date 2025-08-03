@@ -60,7 +60,7 @@ export default async function Page({
           )}
         </div>
 
-        <CommentForm blogId={blog.id} />
+        <CommentForm blogId={blogId} />
       </div>
       {/* 
       <div className="w-full h-[400px] my-16">

@@ -1,7 +1,7 @@
 "use client";
 
 import { useDeleteCategory } from "_data/mutate";
-import ConfirmModal from "_lib/notifications/modal/ConfirmModal";
+import ConfirmRemoveModal from "_lib/notifications/modal/ConfirmRemoveModal";
 import toast, { Toast } from "react-hot-toast";
 
 function DeleteButtonCategory({ catId }: { catId: string }) {
@@ -9,7 +9,7 @@ function DeleteButtonCategory({ catId }: { catId: string }) {
   return (
     <button
       onClick={() => {
-        toast((t: Toast) => <ConfirmModal t={t} trigger={trigger} />, {
+        toast((t: Toast) => <ConfirmRemoveModal t={t} trigger={trigger} />, {
           duration: Infinity,
         });
       }}

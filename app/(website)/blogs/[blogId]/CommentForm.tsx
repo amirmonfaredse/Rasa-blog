@@ -1,8 +1,7 @@
 "use client";
 
-import SpinnerLoader from "utility/loaders/SpinnerLoader";
 import { useSendComment } from "_data/mutate";
-import { Bounce, ToastContainer } from "react-toastify";
+import SpinnerLoader from "utility/loaders/SpinnerLoader";
 
 export default function CommentForm({ blogId }: { blogId: string }) {
   const { trigger, response, isMutating } = useSendComment();
@@ -12,20 +11,10 @@ export default function CommentForm({ blogId }: { blogId: string }) {
     await trigger({ formData, exteraId: blogId });
   };
   return (
-    <form className="w-full flex flex-col items-start px-2 md:px-0 mt-5 md:mt-2 md:my-5 ">
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop
-        closeOnClick
-        rtl
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-        transition={Bounce}
-      />
+    <form
+      onSubmit={handleSubmit}
+      className="w-full flex flex-col items-start px-2 md:px-0 mt-5 md:mt-2 md:my-5 "
+    >
       <div className="w-full flex flex-col md:flex-row gap-5">
         <input
           defaultValue={blogId}

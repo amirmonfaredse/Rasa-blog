@@ -2,7 +2,7 @@
 import { useSliders } from "_data/fetchers";
 import { useAdminStore } from "_lib/store/store";
 import Accordion from "./_components/Accordion";
-import RemoveSlide from "./_components/RemoveSlide";
+import DeleteSlideButton from "./_components/DeleteSlideButton";
 import SliderForm from "./_components/SliderForm";
 import { Mode } from "_lib/store/types";
 
@@ -45,7 +45,7 @@ export default function Page() {
                       >
                         ویرایش
                       </button>
-                      <RemoveSlide id={slide.id} />
+                      <DeleteSlideButton id={slide.id} />
                     </div>
                   </div>
                 ))

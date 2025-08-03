@@ -5,6 +5,7 @@ import Footer from "./_layouts/Footer";
 import Header from "./_layouts/Header";
 import { Toaster } from "react-hot-toast";
 import { Metadata } from "next";
+import ToastProvider from "_lib/notifications/ToastProvider";
 export const metadata: Metadata = {
   title: {
     template: "%s | رسا",
@@ -29,7 +30,8 @@ export default function RootLayout({
         <LoadClarity />
       </head>
       <body className="flex flex-col bg-ghost-100  text-ghost-1000 min-h-screen relative overflow-x-hidden">
-        <Toaster />
+        <ToastProvider />
+
         <Header />
         <div className="w-full h-fit m-2 md:mx-8 md:my-4">
           <main className="w-full h-fit max-w-7xl mx-auto ">{children}</main>

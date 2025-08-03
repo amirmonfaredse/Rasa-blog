@@ -10,6 +10,7 @@ export async function PostDataWithId(
 ) {
   const { formData, exteraId } = arg;
   formData.append("exteraId", exteraId);
+
   const response = await api.post(url, formData);
   return response.data;
 }

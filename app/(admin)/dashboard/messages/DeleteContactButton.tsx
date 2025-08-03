@@ -1,21 +1,25 @@
 "use client";
 
-import { useDeleteBlog } from "_data/mutate";
+import { useDeleteContact } from "_data/mutate";
 import ConfirmRemoveModal from "_lib/notifications/modal/ConfirmRemoveModal";
 import toast, { Toast } from "react-hot-toast";
-export default function DeleteButtonBlog({ blogId }: { blogId: string }) {
-  const { trigger } = useDeleteBlog(blogId);
 
+export default function DeleteContactButton({
+  contactId,
+}: {
+  contactId: string;
+}) {
+  const { trigger } = useDeleteContact(contactId);
   return (
     <button
+      className="w-32 rounded-lg p-2 mt-5 bg-folly-500 text-white "
       onClick={() => {
         toast((t: Toast) => <ConfirmRemoveModal t={t} trigger={trigger} />, {
           duration: Infinity,
         });
       }}
-      className="text-xs text-red-600 hover:bg-gray-50 p-2 rounded-lg"
     >
-      حذف
+      حذف پیام
     </button>
   );
 }
