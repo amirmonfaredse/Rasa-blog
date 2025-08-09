@@ -11,9 +11,8 @@ export default function Page() {
   const onTagFields = useAdminStore.use.onTagFields();
   const setTagId = useAdminStore.use.setTagId();
   return (
-    <div className="w-full flex flex-col lg:flex-row">
-      <TagForm />
-      <div className="w-full lg:w-[50%] py-5 px-2 flex flex-col gap-5">
+    <div className="w-full flex flex-col lg:flex-row px-3 gap-4">
+      <div className="w-1/2 lg:w-[50%] py-5 px-2 flex flex-col gap-5">
         <h2 className="text-lg text-ghost-900 border border-ghost-700 px-5 py-2 rounded-md mb-4">
           همه برچسب ها{" "}
         </h2>
@@ -46,6 +45,7 @@ export default function Page() {
           <div className="text-ghost-900 text-sm">تگی یافت نشد ...</div>
         )}
       </div>
+      <TagForm />
     </div>
   );
 }

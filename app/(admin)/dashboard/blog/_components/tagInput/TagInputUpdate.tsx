@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import FilterTagList from "./FilterTagList";
 import SelectedTagList from "./SelectedTagList";
 
-export default function TagInputUpdate() {
+export default function TagInputUpdate({ field, form, ...props }: any) {
   const { tags } = useTags();
 
   const { allTags, selectedTags, searchTerm } =
@@ -17,7 +17,10 @@ export default function TagInputUpdate() {
   useEffect(() => {
     if (tags && allTags !== tags) onLoadTags(tags);
   }, [tags, allTags, onLoadTags]);
-
+  useEffect(() => {
+    form.setFieldValue(field.name, JSON.stringify(selectedTags));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedTags]);
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -34,6 +37,8 @@ export default function TagInputUpdate() {
           hidden
           readOnly
           value={JSON.stringify(selectedTags)}
+          {...field}
+          {...props}
           name="blogTags"
           type="text"
         />

@@ -9,12 +9,11 @@ export default function Page() {
   const { categories } = useCategories();
   const onFormMode = useAdminStore.use.onCatFormMode();
   const onCatFields = useAdminStore.use.onCatFields();
-
   const setCatId = useAdminStore.use.setCatId();
 
   return (
-    <div className="w-full flex flex-col lg:flex-row gap-10">
-      <div className="w-full lg:w-[50%] py-5 px-2 flex flex-col gap-5">
+    <div className="w-full flex flex-col lg:flex-row gap-10 px-2">
+      <div className="w-1/2 lg:w-[50%] py-5 px-2 flex flex-col gap-5">
         <h2 className="text-lg text-ghost-900 border border-ghost-700 px-5 py-2 rounded-md ">
           همه دسته بندی ها :
         </h2>

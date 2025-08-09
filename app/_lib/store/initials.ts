@@ -106,3 +106,30 @@ export const initUploadManager: InitUploadManagerProps = {
   size: 0,
   type: "",
 };
+
+export const initCatFields = {
+  id: "",
+  categoryTitle: "",
+  categoryValue: "",
+};
+export const initBlogForm = {
+  blogTitle: "",
+  blogDescription: "",
+  blogImage: "",
+  blogCategory: [],
+  textEditor: "",
+  blogTags: "",
+};
+export const initTagFields = {
+  id: "",
+  tagTitle: "",
+  tagSlug: "",
+};
+export const initSliderFields = {
+  id: "",
+  titleSlide: "",
+  imageSlide: "",
+  bgColor: "#000000",
+  textColor: "#000000",
+  typeSlide: "",
+};

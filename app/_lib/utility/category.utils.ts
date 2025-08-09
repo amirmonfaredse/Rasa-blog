@@ -9,8 +9,8 @@ export function extractCategoryFields(
 ): CategoryFieldsProps {
   return {
     id: id ?? idRand(),
-    title: sanitizeTextOnServer(formData.get("categoryTitle") as string),
-    name: sanitizeTextOnServer(formData.get("categoryValue") as string),
+    title: sanitizeTextOnServer(formData.get("title") as string),
+    name: sanitizeTextOnServer(formData.get("name") as string),
   };
 }
 export function extractCategorizingFields(

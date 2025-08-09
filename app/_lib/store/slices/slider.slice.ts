@@ -2,6 +2,7 @@ import { SlideFieldProps } from "@/types/app/data/types";
 import { StateCreator } from "zustand";
 import {
   createInitSlider,
+  initSliderFields,
   initSliderManager,
   sliderTitlePresets,
 } from "../initials";
@@ -11,7 +12,7 @@ import { StoreType } from "../store";
 export const sliderSlice: StateCreator<
   StoreType,
   [
-   ["zustand/subscribeWithSelector", never],
+    ["zustand/subscribeWithSelector", never],
     ["zustand/devtools", never],
     ["zustand/immer", never]
   ],
@@ -20,9 +21,10 @@ export const sliderSlice: StateCreator<
 > = (set) => ({
   sliderId: "",
   sliderManager: initSliderManager,
-  setSliderId: (sliderId: string = "") =>
+  initSliderFields: initSliderFields,
+  setSliderId: (sliderId?: string | undefined) =>
     set((state) => {
-      state.sliderId = sliderId;
+      sliderId ? (state.sliderId = sliderId) : (state.sliderId = "");
     }),
   onSliderFormMode: (newMode: Mode) =>
     set((state) => {
@@ -34,5 +36,9 @@ export const sliderSlice: StateCreator<
       slider
         ? (state.sliderManager.fieldsValues = slider)
         : (state.sliderManager.fieldsValues = createInitSlider());
+    }),
+  setInitSliderFields: (data) =>
+    set((state) => {
+      state.initSliderFields = data;
     }),
 });

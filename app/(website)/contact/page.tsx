@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
-import FormContact from "./_components/FormContact";
+import FormContact from "./FormContact";
 import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "تماس با ما",
@@ -12,6 +12,7 @@ export default function Page() {
   return (
     <Suspense>
       <div className="flex flex-col justify-center items-center md:flex-row">
+        <FormContact />
         <div className="w-[90%]  md:w-[50%] mt-5 md:mt-2 md:px-7 flex flex-col justify-center items-center shadow-xl mx-10">
           <h1 className="flex items-center text-3xl h-24">تماس با ما</h1>
           <div className="my-4 flex flex-col justify-center items-center ">
@@ -63,7 +64,6 @@ export default function Page() {
             <h4>monfared.dev@gmail.com</h4>
           </div>
         </div>
-        <FormContact />
       </div>
     </Suspense>
   );

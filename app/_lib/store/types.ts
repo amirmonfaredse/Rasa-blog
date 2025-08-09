@@ -1,4 +1,5 @@
 import {
+  BlogInitFieldsProps,
   CategoryFieldsProps,
   SlideFieldProps,
   TagFieldProps,
@@ -102,23 +103,30 @@ export interface UploadSliceType {
 export interface CategorySliceType {
   catId: string;
   categoryManager: CategoryManagerProps;
+  initCatFields: InitCatFieldsProps;
   setCatId: (catId?: string) => void;
   onCatFormMode: (newMode: Mode) => void;
   onCatFields: (cat?: CategoryFieldsProps) => void;
+  setInitCatFields: (data: InitCatFieldsProps) => void;
 }
 export interface SliderSliceType {
   sliderId: string;
   sliderManager: SliderManagerProps;
-  setSliderId: (sliderId: string) => void;
+  initSliderFields: InitSliderFields;
+  setSliderId: (sliderId?: string) => void;
   onSliderFormMode: (newMode: Mode) => void;
   onSliderFields: (slider?: SlideFieldProps) => void;
+  setInitSliderFields: (data: InitSliderFields) => void;
 }
 export interface TagSliceType {
   tagId: string;
   tagManager: TagManagerProps;
-  setTagId: (tagId: string) => void;
+  initTagFields: InitTagFieldsProps;
+
+  setTagId: (tagId?: string) => void;
   onTagFormMode: (newMode: Mode) => void;
   onTagFields: (tag?: TagFieldProps) => void;
+  setInitTagFields: (data: InitTagFieldsProps) => void;
 }
 export interface TagInputSliceType {
   tagInputManager: InitInputTagManagerProps;
@@ -130,3 +138,26 @@ export interface TagInputSliceType {
   onClearAllSelectedTags: () => void;
   onDefaultTagging: (tagged: TaggingFieldProps[]) => void;
 }
+export type InitCatFieldsProps = {
+  id?: string;
+  categoryTitle: string;
+  categoryValue: string;
+};
+export interface BlogSliceType {
+  initBlogFields: BlogInitFieldsProps;
+  setInitBlogFields: (data: BlogInitFieldsProps) => void;
+}
+
+export type InitTagFieldsProps = {
+  id: string;
+  tagTitle: string;
+  tagSlug: string;
+};
+export type InitSliderFields = {
+id: string;
+  titleSlide: string;
+  imageSlide: string;
+  bgColor: string;
+  textColor: string;
+  typeSlide: string;
+};

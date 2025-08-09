@@ -1,6 +1,11 @@
 import { TagFieldProps } from "@/types/app/data/types";
 import { StateCreator } from "zustand";
-import { createInitTag, initTagManager, tagTitlePresets } from "../initials";
+import {
+  createInitTag,
+  initTagFields,
+  initTagManager,
+  tagTitlePresets,
+} from "../initials";
 import { Mode, TagSliceType } from "../types";
 import { StoreType } from "../store";
 
@@ -16,9 +21,10 @@ export const tagSlice: StateCreator<
 > = (set) => ({
   tagId: "",
   tagManager: initTagManager,
-  setTagId: (tagId: string = "") =>
+  initTagFields: initTagFields,
+  setTagId: (tagId?: string | undefined) =>
     set((state) => {
-      state.tagId = tagId;
+      tagId ? (state.tagId = tagId) : (state.tagId = "");
     }),
   onTagFormMode: (newMode: Mode) =>
     set((state) => {
@@ -30,5 +36,9 @@ export const tagSlice: StateCreator<
       tag
         ? (state.tagManager.fieldsValues = tag)
         : (state.tagManager.fieldsValues = createInitTag());
+    }),
+  setInitTagFields: (data) =>
+    set((state) => {
+      state.initTagFields = data;
     }),
 });

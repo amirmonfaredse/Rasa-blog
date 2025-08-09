@@ -6,7 +6,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 const JoditEditor = dynamic(() => import("jodit-react"), { ssr: false });
 
-export default function TextEditorEditBlog() {
+export default function TextEditorEditBlog({ field, form, ...props }: any) {
   const { blogId } = useParams<{ blogId: string }>();
   const { blog } = useBlog(blogId);
 
@@ -28,18 +28,21 @@ export default function TextEditorEditBlog() {
   );
   useEffect(() => {
     setContent(blog?.content);
+    
   }, [blog?.content]);
 
   const handleChange = (value: string) => {
     setContent(value);
+    form.setFieldValue(field.name, value);
   };
 
   return (
     <div className="h-fit w-fit flex items-center justify-center ">
       <div className="w-[1000px] h-fit">
         <JoditEditor
+          {...field}
+          {...props}
           ref={editor}
-          name="textEditor"
           config={config}
           onBlur={handleChange}
           value={content}

@@ -34,6 +34,7 @@ import {
   notifUpdateSlider,
   notifUpdateTag,
 } from "_lib/notifications/mutating/helpers/formMutate.notifs";
+import { useAdminStore } from "_lib/store/store";
 import { useEffect } from "react";
 import { mutate } from "swr";
 import useSWRMutation from "swr/mutation";
@@ -157,6 +158,7 @@ export function useUpsertCategory(id: string): UseUpsertCategory {
   useEffect(() => {
     notifUpdateCategory(update.isMutating, update.data, update.error);
   }, [update.isMutating, update.data, update.error]);
+
   return {
     trigger: !!id ? update.trigger : create.trigger,
     response: !!id ? update.data : create.data,

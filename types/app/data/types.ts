@@ -114,3 +114,12 @@ export type UplaodResult = {
   size: number;
   type: string;
 };
+export type BlogInitFieldsProps = {
+  id?: string;
+  blogTitle: string;
+  blogDescription: string;
+  blogImage: string;
+  blogCategory: any[];
+  textEditor: string;
+  blogTags: string;
+};

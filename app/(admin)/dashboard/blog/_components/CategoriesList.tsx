@@ -4,7 +4,7 @@ import { CategoryFieldsProps } from "@/types/app/data/types";
 import { useCategories, useCategorized } from "_data/fetchers";
 import { useParams } from "next/navigation";
 
-export default function CategoriesList() {
+export default function CategoriesList({ field, form, ...props }: any) {
   const { blogId } = useParams<{ blogId: string }>();
 
   const { categories } = useCategories();
@@ -24,11 +24,12 @@ export default function CategoriesList() {
             >
               {cat.title}
               <input
+                {...field}
+                {...props}
                 type="checkbox"
                 className="flex m-2"
                 value={cat.id}
-                defaultChecked={onCheck(cat)}
-                name="blogCategory"
+                checked={onCheck(cat)}
               />
             </label>
           ))}

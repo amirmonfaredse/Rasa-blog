@@ -20,6 +20,8 @@ import type {
 } from "@/types/app/admin/hooks";
 import useSWR from "swr";
 import { api } from "./http";
+import { useEffect } from "react";
+import { useAdminStore } from "_lib/store/store";
 const fetcher = (url: string) => api.get(url).then((res) => res.data);
 
 export function useBlogs(): useBlogsResult {
@@ -35,6 +37,19 @@ export function useBlog(id: string | null): useBlogResult {
     !!id ? `/blogs/${id}` : null,
     fetcher
   );
+  const setBlogFields = useAdminStore.use.setInitBlogFields();
+  useEffect(() => {
+    if (data)
+      setBlogFields({
+        id: data.id,
+        blogTitle: data.title,
+        blogDescription: data.description,
+        blogImage: data.image,
+        blogCategory: [],
+        textEditor: data.content,
+        blogTags: "",
+      });
+  }, [data, setBlogFields]);
   return {
     blog: data,
     isLoading,
@@ -43,6 +58,7 @@ export function useBlog(id: string | null): useBlogResult {
 }
 export function useCategories(): useCategoriesResult {
   const { data, error, isLoading } = useSWR("/blogs/categories", fetcher);
+
   return { categories: data, isLoading, isError: error };
 }
 export function useCategory(id: string | null): useCategoryResult {
@@ -84,7 +100,7 @@ export function useTagged(id: string | null): useTaggedResult {
   return { tagged: data, isLoading, isError: error };
 }
 
-export function  useImageFiles(): useImageFilesResult {
+export function useImageFiles(): useImageFilesResult {
   const { data, error, isLoading } = useSWR("/media/images", fetcher);
   return { images: data, isLoading, isError: error };
 }

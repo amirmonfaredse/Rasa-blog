@@ -4,13 +4,16 @@ import { create } from "zustand";
 import { devtools, subscribeWithSelector } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 import { createSelectors } from "./selectors";
+import { blogSlice } from "./slices/blog.slice";
 import { categorySlice } from "./slices/category.slice";
 import { layoutSlice } from "./slices/layout.slice";
+import { notifsSlice, NotifsSliceType } from "./slices/notifs";
 import { sliderSlice } from "./slices/slider.slice";
 import { tagSlice } from "./slices/tag.slice";
 import { tagInputSlice } from "./slices/tagInput.slice";
 import { uploadSlice } from "./slices/upload.slice";
 import {
+  BlogSliceType,
   CategorySliceType,
   LayoutSliceType,
   SliderSliceType,
@@ -18,14 +21,14 @@ import {
   TagSliceType,
   UploadSliceType,
 } from "./types";
-import { notifsSlice, NotifsSliceType } from "./slices/notifs";
 export type StoreType = LayoutSliceType &
   CategorySliceType &
   SliderSliceType &
   TagSliceType &
   TagInputSliceType &
   UploadSliceType &
-  NotifsSliceType;
+  NotifsSliceType &
+  BlogSliceType;
 
 const useStoreBase = create<StoreType>()(
   subscribeWithSelector(
@@ -38,6 +41,7 @@ const useStoreBase = create<StoreType>()(
         ...tagSlice(...a),
         ...tagInputSlice(...a),
         ...uploadSlice(...a),
+        ...blogSlice(...a),
       }))
     )
   )
@@ -61,5 +65,3 @@ useStoreBase.subscribe(
   { fireImmediately: false }
 );
 export const useAdminStore = createSelectors(useStoreBase);
-
-

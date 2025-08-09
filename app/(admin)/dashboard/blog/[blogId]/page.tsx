@@ -1,56 +1,63 @@
 "use client";
 
-import { useUpdateBlog } from "_data/mutate";
-import { useParams } from "next/navigation";
-import TextEditorEditBlog from "../_components/textEditor/TextEditorEditBlog";
-import EditButton from "./EditButton";
 import { useBlog } from "_data/fetchers";
-import { Input, Label } from "../_components/utilities";
+import { useUpdateBlog } from "_data/mutate";
+import { useAdminStore } from "_lib/store/store";
+import TextInput from "_lib/validation/components/TextInput";
+import { BlogSchema } from "_lib/validation/schema";
+import { Field, Form, Formik } from "formik";
+import { useParams } from "next/navigation";
 import CategoriesList from "../_components/CategoriesList";
 import TagInputUpdate from "../_components/tagInput/TagInputUpdate";
+import TextEditorEditBlog from "../_components/textEditor/TextEditorEditBlog";
+import EditButton from "./EditButton";
 
 export default function Page() {
   const { blogId } = useParams<{ blogId: string }>();
   const { blog } = useBlog(blogId);
   const { trigger, response, isMutating } = useUpdateBlog(blogId);
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    await trigger(formData);
+  const blogFieldsForm = useAdminStore.use.initBlogFields();
+
+  const handleSubmit = async (values, actions) => {
+    console.log(values);
+    // e.preventDefault();
+    // const formData = new FormData(e.currentTarget);
+    // await trigger(formData);
   };
+
   return (
-    <form onSubmit={handleSubmit} className="py-5">
-      <div className="flex flex-col gap-5">
+    <Formik
+      validationSchema={BlogSchema}
+      initialValues={blogFieldsForm}
+      onSubmit={handleSubmit}
+      validateOnChange={false}
+      validateOnBlur={false}
+      enableReinitialize={true}
+    >
+      <Form className="w-full py-5">
         {blog && (
-          <>
-            <Input
-              required
-              hidden
-              name="id"
-              type="text"
-              defaultValue={blog?.id}
-              readOnly
+          <div className="w-[90%] flex flex-col gap-5">
+            <Field name="id" hidden value={blog?.id} readOnly />
+            <Field name="blogTitle" label="عنوان" component={TextInput} />
+            <Field
+              name="blogDescription"
+              label="توضیحات"
+              component={TextInput}
             />
-            <Label title="عنوان">
-              <Input required name="blogTitle" defaultValue={blog?.title} />
-            </Label>
-            <Label title="توضیحات">
-              <Input
-                required
-                name="blogDescription"
-                defaultValue={blog?.description}
-              />
-            </Label>
-            <Label title="آدرس تصویر اصلی">
-              <Input name="blogImage" defaultValue={blog?.image} />
-            </Label>
-            <CategoriesList />
-          </>
+
+            <Field
+              name="blogImage"
+              label="آدرس تصویر اصلی"
+              component={TextInput}
+            />
+            <Field name="blogCategory" component={CategoriesList} />
+
+            <Field name="textEditor" component={TextEditorEditBlog} />
+            <Field name="blogTags" component={TagInputUpdate} />
+            <EditButton isMutating={isMutating} />
+          </div>
         )}
-      </div>
-      <TextEditorEditBlog />
-      <TagInputUpdate />
-      <EditButton isMutating={isMutating} />
-    </form>
+      </Form>
+    </Formik>
   );
 }

@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import FilterTagList from "./FilterTagList";
 import SelectedTagList from "./SelectedTagList";
 
-function TagInputCreate() {
+function TagInputCreate({ field, form, ...props }: any) {
   const { tags } = useTags();
   const { allTags, selectedTags, searchTerm } =
     useAdminStore.use.tagInputManager();
@@ -17,6 +17,10 @@ function TagInputCreate() {
   useEffect(() => {
     if (tags && allTags !== tags) onLoadTags(tags);
   }, [tags, allTags, onLoadTags]);
+  useEffect(() => {
+    form.setFieldValue(field.name, JSON.stringify(selectedTags));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedTags]);
 
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -32,9 +36,9 @@ function TagInputCreate() {
         </div>
         <input
           hidden
-          readOnly
           value={JSON.stringify(selectedTags)}
-          name="blogTags"
+          {...field}
+          {...props}
           type="text"
         />
         <input
