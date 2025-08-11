@@ -1,0 +1,71 @@
+"use client";
+
+import { useSendComment } from "_data/mutate";
+import SpinnerLoader from "utility/loaders/SpinnerLoader";
+
+export default function CommentForm({ blogId }: { blogId: string }) {
+  const { trigger, response, isMutating } = useSendComment();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData();
+    await trigger({ formData, exteraId: blogId });
+  };
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="w-full flex flex-col items-start px-2 md:px-0 mt-5 md:mt-2 md:my-5 "
+    >
+      <div className="w-full flex flex-col md:flex-row gap-5">
+        <input
+          defaultValue={blogId}
+          type="number"
+          hidden
+          name="blogId"
+          required
+        />
+        <label
+          htmlFor="fullName"
+          className="w-full md:w-[50%] h-[100px] flex flex-col justify-evenly text-ghost-900"
+        >
+          نام :{" "}
+          <input
+            className="w-full border-2 border-transparent  p-2 rounded-md bg-avocado-100 outline-none focus:border-avocado-900 focus:border-2"
+            type="text"
+            name="fullName"
+            required
+          />
+        </label>
+        <label
+          htmlFor="fullName"
+          className="w-full md:w-[50%] h-[100px] flex flex-col justify-evenly "
+        >
+          ایمیل :{" "}
+          <input
+            className="w-full border-2 border-transparent  p-2 rounded-md bg-avocado-100 outline-none focus:border-avocado-900 focus:border-2"
+            type="eamil"
+            name="email"
+            required
+          />
+        </label>
+      </div>
+      <label
+        htmlFor="message"
+        className="w-full md:w-full h-fit flex flex-col justify-evenly gap-3 my-2 "
+      >
+        متن نظر :{" "}
+        <textarea
+          className="w-full h-[200px] md:h-[150px] lg:h-[100px] border-2   border-transparent md: p-2 rounded-md bg-avocado-100 outline-none focus:border-avocado-900 focus:border-2 resize-none"
+          name="message"
+        />
+      </label>
+
+      <button
+        className="w-full h-[40px] bg-cles-400 text-white  py-2 px-4 my-4 rounded-md cursor-pointer hover:bg-folly-300 transition-colors duration-400"
+        type="submit"
+        disabled={isMutating}
+      >
+        {isMutating ? <SpinnerLoader /> : "ارسال پیام"}
+      </button>
+    </form>
+  );
+}
