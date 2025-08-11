@@ -11,7 +11,7 @@ export function extractTextFromHTMLOnClientWithSlice(
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, "text/html");
     const extractedText = doc.body.textContent;
-    return extractedText.trim().slice(0, maxLength) + "...";
+    return extractedText?.trim().slice(0, maxLength) + "...";
   }
 }
 export function extractTextFromHTMLOnClient(htmlString: string) {
@@ -19,6 +19,6 @@ export function extractTextFromHTMLOnClient(htmlString: string) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, "text/html");
     const extractedText = doc.body.textContent;
-    return extractedText.trim();
+    return extractedText?.trim();
   }
 }
