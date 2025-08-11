@@ -40,7 +40,7 @@ export type TagFieldProps = {
 export type ImageFieldProps = {
   id?: string;
   url: string;
-  name?: string;
+  name: string;
   size: number;
   type: string;
 };
