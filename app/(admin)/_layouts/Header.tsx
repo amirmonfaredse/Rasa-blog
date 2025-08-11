@@ -1,11 +1,12 @@
 import { newPersianDate } from "_data/utils/date.utils";
 import Image from "next/image";
 import Link from "next/link";
-import { auth, signOut } from "../../_data/auth";
+import { auth } from "../../_data/auth";
 import SignInButton from "./components/SignOutButton";
 
 export default async function Header() {
-  const { user } = await auth();
+  const session = await auth();
+  const user = session?.user;
   const date = newPersianDate();
   return (
     <div className="w-full h-[5%] flex items-center justify-end p-2 bg-white shadow-md">
@@ -13,12 +14,12 @@ export default async function Header() {
         <div className="flex items-center justify-center gap-1 text-sm ">
           <Image
             className="rounded-full mx-2"
-            src={user.image}
-            alt={user.name}
+            src={user?.image ?? ""}
+            alt={user?.name ?? ""}
             width={30}
             height={30}
           />
-          <span className="text-folly-800">{user.name.split(" ")[0]}</span>
+          <span className="text-folly-800">{user?.name?.split(" ")[0]}</span>
           <span className="hidden md:flex">خوش آمدید!</span>
         </div>
         <div className="hidden md:flex w-fit text-sm text-ghost-1000 cursor-default">
