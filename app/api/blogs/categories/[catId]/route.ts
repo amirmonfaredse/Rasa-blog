@@ -4,11 +4,11 @@ import {
   getCategory,
   updateCategory,
 } from "_data/services/categories.services";
-import { secureAccess, throwIfError } from "_data/utils/server.utils";
 import {
   extractCategoryFields,
   revalidateCategories,
 } from "_data/utils/category.utils";
+import { secureAccess } from "_data/utils/server.utils";
 import { NextResponse } from "next/server";
 export async function GET(
   _request: Request,
@@ -16,7 +16,7 @@ export async function GET(
 ) {
   const { catId } = await params;
   const result = await getCategory(catId);
-  throwIfError(result);
+  if ("code" in result) throw result;
 
   return NextResponse.json<CategoryFieldsProps>(result);
 }

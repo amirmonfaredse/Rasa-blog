@@ -3,11 +3,11 @@ import {
   createCategory,
   getCategories,
 } from "_data/services/categories.services";
-import { idRand, secureAccess } from "_data/utils/server.utils";
 import {
   extractCategoryFields,
   revalidateCategories,
 } from "_data/utils/category.utils";
+import { idRand, secureAccess } from "_data/utils/server.utils";
 import { NextResponse } from "next/server";
 
 export async function GET() {

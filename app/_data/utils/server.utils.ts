@@ -1,5 +1,6 @@
 import { sanitizeTextOnServer } from "../../utility/validation/jsDOM";
 import { auth } from "../auth";
+
 export async function secureAccess() {
   const session = await auth();
   if (!session)
@@ -18,7 +19,7 @@ export async function secureAList(list: []) {
 
 export function validateUrl(image: string): string {
   try {
-    new URL(image);
+    new URL(image); 
     return encodeURI(image);
   } catch (error) {
     throw new Error("لینک تصویر مجاز نیست");
