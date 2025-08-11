@@ -1,18 +1,19 @@
 "use client";
 import { SideTabProps } from "@/types/app/admin/types";
-import { useAdminStore } from "_lib/store/store";
-import { motion } from "motion/react";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function SideTab({ title, href = "/", subs }: SideTabProps) {
-  const listIsOpen = useAdminStore.use.sideListIsOpen();
-  const onSideList = useAdminStore.use.onSideList();
+  const [listIsOpen, setListIsOpen] = useState<boolean>(false);
 
+  const onSideList = () => {
+    setListIsOpen(!listIsOpen);
+  };
   return (
-    <motion.div className="flex flex-col justify-center items-center duration-200">
+    <div className="flex flex-col justify-center items-center duration-200">
       <Link
         href={href}
-        onClick={() => onSideList()}
+        onClick={onSideList}
         className="flex justify-center items-center w-[200px] h-[50px] bg-ghost-800 shadow-md  text-ghost-100  m-2 rounded-full hover:scale-x-95 hover:shadow-2xl duration-300  cursor-pointer"
       >
         {title}
@@ -21,12 +22,7 @@ export default function SideTab({ title, href = "/", subs }: SideTabProps) {
         {listIsOpen &&
           subs &&
           subs?.map((sub, index) => (
-            <motion.div
-              initial={{ top: -200, position: "relative" }}
-              animate={{
-                top: 0,
-                transition: { delay: 0.09 + index / 100 },
-              }}
+            <div
               className="w-full h-10 my-1"
               key={`${index}-${Math.floor(Math.random() * 100)}`}
             >
@@ -36,9 +32,9 @@ export default function SideTab({ title, href = "/", subs }: SideTabProps) {
               >
                 {sub.title}
               </Link>
-            </motion.div>
+            </div>
           ))}
       </div>
-    </motion.div>
+    </div>
   );
 }

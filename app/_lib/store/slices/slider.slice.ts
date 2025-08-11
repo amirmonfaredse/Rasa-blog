@@ -6,7 +6,7 @@ import {
   initSliderManager,
   sliderTitlePresets,
 } from "../initials";
-import { Mode, SliderSliceType } from "../types";
+import { Mode, SliderSliceType } from "../../../../types/app/store/types";
 import { StoreType } from "../store";
 
 export const sliderSlice: StateCreator<

@@ -5,7 +5,7 @@ import {
   getComment,
 } from "_data/services/message.services";
 import { secureAccess } from "_data/utils/server.utils";
-import { revalidateComments } from "_lib/utility/messages.utils";
+import { revalidateComments } from "_data/utils/messages.utils";
 import { NextResponse } from "next/server";
 
 export async function GET(

@@ -1,13 +1,17 @@
 "use client";
-import { useEffect, useState } from "react";
-import PostCard from "../../_components/cards/PostCard";
-import { useBlogContext } from "../../_providers/BlogProvider";
 import { BlogFieldProps } from "@/types/app/data/types";
+import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
+import { useBlogContext } from "../../_providers/BlogProvider";
+
+const PostCardClient = dynamic(
+  () => import("(website)/_components/cards/PostCardClient"),
+  { ssr: false }
+);
 
 function BlogList({ blogs }: { blogs: BlogFieldProps[] }) {
   const [filteredBlogs, setFilteredBlogs] = useState(blogs);
   const { searchInputValue, categorizedBlogs, checkedList } = useBlogContext();
-  console.log(categorizedBlogs);
   useEffect(() => {
     if (checkedList.length > 0) {
       setFilteredBlogs(
@@ -23,10 +27,10 @@ function BlogList({ blogs }: { blogs: BlogFieldProps[] }) {
   }, [blogs, searchInputValue, categorizedBlogs, checkedList.length]);
 
   return (
-    <div className="w-full sm:w-[65%] md:w-[70%] h-full flex flex-col gap-12">
+    <div className="w-full sm:w-[65%] md:w-[70%] h-full flex flex-col gap-12 px-4">
       {filteredBlogs.length > 0 ? (
         filteredBlogs.map((blog, index) => (
-          <PostCard
+          <PostCardClient
             id={blog.id}
             title={blog.title}
             author={blog.author}

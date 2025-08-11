@@ -4,7 +4,7 @@ import { secureAccess } from "_data/utils/server.utils";
 import {
   extractCommentFields,
   revalidateComments,
-} from "_lib/utility/messages.utils";
+} from "_data/utils/messages.utils";
 import { NextResponse } from "next/server";
 
 export async function GET(): Promise<Response> {

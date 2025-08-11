@@ -4,11 +4,11 @@ const window = new JSDOM("").window;
 const createDOMPurify = require("dompurify");
 const DOMPurify = createDOMPurify(window);
 
-export function sanitizeHTMLOnServer(dirty) {
+export function sanitizeHTMLOnServer(dirty: string) {
   return DOMPurify.sanitize(dirty).trim();
 }
 
-export function extractTextFromHTML(html: string, maxLength: number = 550) {
+export function extractTextFromHTML(html: string, maxLength: number = 800) {
   const dom = new JSDOM(html);
   const text = dom.window.document.body.textContent || "";
   return text.trim().slice(0, maxLength) + "...";

@@ -1,7 +1,7 @@
 import { ActionResult, MessageProps } from "@/types/app/data/types";
 import { deleteMessage, getMessage } from "_data/services/message.services";
 import { secureAccess } from "_data/utils/server.utils";
-import { revalidateContacts } from "_lib/utility/messages.utils";
+import { revalidateContacts } from "_data/utils/messages.utils";
 import { NextResponse } from "next/server";
 
 export async function GET(

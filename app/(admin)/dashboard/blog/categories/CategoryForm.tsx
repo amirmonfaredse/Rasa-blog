@@ -1,7 +1,7 @@
 import { useUpsertCategory } from "_data/mutate";
 import { initCatFields } from "_lib/store/initials";
 import { useAdminStore } from "_lib/store/store";
-import { Mode } from "_lib/store/types";
+import { InitCatFieldsProps, Mode } from "@/types/app/store/types";
 import TextInput from "_lib/validation/components/TextInput";
 import { CategorySchema } from "_lib/validation/schema";
 import { Field, Form, Formik } from "formik";
@@ -28,14 +28,17 @@ export default function CategoryForm() {
     }
   }, [fieldsValues.id, fieldsValues.name, fieldsValues.title, setInitFields]);
 
-  const handleSubmit = async (values, actions) => {
-    console.log(values);
-    // e.preventDefault();
-    // const formData = new FormData(e.currentTarget);
-    // await trigger(formData);
-    // onFormMode(Mode.Post);
-    // onCatFields();
-    // setCatId();
+  const handleSubmit = async (values: InitCatFieldsProps) => {
+    const formData = new FormData();
+    Object.entries(values).forEach(([key, value]) => {
+      formData.append(key, value as string);
+    });
+
+    await trigger(formData);
+    onFormMode(Mode.Post);
+    onCatFields();
+    setCatId();
+    setInitFields(initCatFields);
   };
 
   return (

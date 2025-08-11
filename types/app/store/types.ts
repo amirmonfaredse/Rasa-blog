@@ -1,4 +1,5 @@
 import {
+  BlogFieldProps,
   BlogInitFieldsProps,
   CategoryFieldsProps,
   SlideFieldProps,
@@ -90,10 +91,8 @@ export type InitUploadManagerProps = {
 };
 export interface LayoutSliceType {
   drawerIsOpen: boolean;
-  sideListIsOpen: boolean;
   accordionIsOpen: boolean;
   onDrawer: (prevState: boolean) => void;
-  onSideList: (prevState?: boolean | undefined) => void;
   onAccordion: (prevState?: boolean | undefined) => void;
 }
 export interface UploadSliceType {
@@ -145,7 +144,9 @@ export type InitCatFieldsProps = {
 };
 export interface BlogSliceType {
   initBlogFields: BlogInitFieldsProps;
+  filteredBlogs: BlogFieldProps[];
   setInitBlogFields: (data: BlogInitFieldsProps) => void;
+  setFilteredBlogs: (blogs: BlogFieldProps[]) => void;
 }
 
 export type InitTagFieldsProps = {
@@ -154,10 +155,19 @@ export type InitTagFieldsProps = {
   tagSlug: string;
 };
 export type InitSliderFields = {
-id: string;
+  id: string;
   titleSlide: string;
   imageSlide: string;
   bgColor: string;
   textColor: string;
   typeSlide: string;
+};
+export type InitBlogFormProps = {
+  id?: string;
+  blogTitle: string;
+  blogDescription: string;
+  blogImage: string;
+  blogCategory: string[];
+  textEditor: string;
+  blogTags: string;
 };

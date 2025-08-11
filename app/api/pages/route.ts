@@ -4,7 +4,7 @@ import { secureAccess } from "_data/utils/server.utils";
 import {
   extractSlideFields,
   revalidateSliders,
-} from "_lib/utility/pages.utils";
+} from "_data/utils/pages.utils";
 import { NextResponse } from "next/server";
 
 export async function GET(): Promise<Response> {

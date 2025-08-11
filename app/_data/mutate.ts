@@ -241,22 +241,7 @@ export function useUpsertSlider(id: string): UseUpsertSlider {
   };
 }
 
-// export function useUpdateContact(id: string | null) {
-//   const { trigger, data, error, isMutating } = useSWRMutation(
-//     `/messages/contact/${id}`,
-//     PutFormData,
-//     {
-//       populateCache: (PutFormData, contacts) => {
-//         const filteredContacts = contacts.filter(
-//           (contact: MessageFieldProps) => contact.id !== PutFormData.id
-//         );
-//         return [...filteredContacts, PutFormData];
-//       },
-//       revalidate: false,
-//     }
-//   );
-//   return { trigger, response: data, error, isMutating };
-// }
+
 
 export function useConfirmComment(id: string | null) {
   const { trigger, data, error, isMutating } = useSWRMutation(

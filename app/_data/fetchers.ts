@@ -18,14 +18,15 @@ import type {
   useTagResult,
   useTagsResult,
 } from "@/types/app/admin/hooks";
+import { useAdminStore } from "_lib/store/store";
+import { useEffect } from "react";
 import useSWR from "swr";
 import { api } from "./http";
-import { useEffect } from "react";
-import { useAdminStore } from "_lib/store/store";
 const fetcher = (url: string) => api.get(url).then((res) => res.data);
 
 export function useBlogs(): useBlogsResult {
   const { data, error, isLoading } = useSWR("/blogs", fetcher);
+
   return {
     blogs: data,
     isLoading,

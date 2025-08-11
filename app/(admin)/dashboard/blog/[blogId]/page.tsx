@@ -11,6 +11,7 @@ import CategoriesList from "../_components/CategoriesList";
 import TagInputUpdate from "../_components/tagInput/TagInputUpdate";
 import TextEditorEditBlog from "../_components/textEditor/TextEditorEditBlog";
 import EditButton from "./EditButton";
+import { InitBlogFormProps } from "@/types/app/store/types";
 
 export default function Page() {
   const { blogId } = useParams<{ blogId: string }>();
@@ -18,11 +19,12 @@ export default function Page() {
   const { trigger, response, isMutating } = useUpdateBlog(blogId);
   const blogFieldsForm = useAdminStore.use.initBlogFields();
 
-  const handleSubmit = async (values, actions) => {
-    console.log(values);
-    // e.preventDefault();
-    // const formData = new FormData(e.currentTarget);
-    // await trigger(formData);
+  const handleSubmit = async (values: InitBlogFormProps) => {
+    const formData = new FormData();
+    Object.entries(values).forEach(([key, value]) => {
+      formData.append(key, value as string | Blob);
+    });
+    await trigger(formData);
   };
 
   return (

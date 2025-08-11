@@ -1,7 +1,7 @@
 import { TagFieldProps } from "@/types/app/data/types";
 import { deleteTag, getTag, updateTag } from "_data/services/tags.services";
 import { secureAccess } from "_data/utils/server.utils";
-import { extractTagFields, revalidateTags } from "_lib/utility/tag.utils";
+import { extractTagFields, revalidateTags } from "_data/utils/tag.utils";
 import { NextResponse } from "next/server";
 
 export async function GET(

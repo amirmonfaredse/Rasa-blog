@@ -20,7 +20,6 @@ function NavList({ drawerOpen, isMobileMode }: NavListProps) {
           className="w-24 h-12 relative bg-ghost-100 shadow md:shadow-none duration-300"
         >
           <NavLink
-           
             title={link.title}
             href={link.href}
             src={link.src}

@@ -1,5 +1,5 @@
 import { StateCreator } from "zustand";
-import { LayoutSliceType } from "../types";
+import { LayoutSliceType } from "../../../../types/app/store/types";
 import { StoreType } from "../store";
 
 export const layoutSlice: StateCreator<
@@ -13,17 +13,10 @@ export const layoutSlice: StateCreator<
   LayoutSliceType
 > = (set) => ({
   drawerIsOpen: false,
-  sideListIsOpen: false,
   accordionIsOpen: true,
   onDrawer: (prevState: boolean) =>
     set((state) => {
       state.drawerIsOpen = !prevState;
-    }),
-  onSideList: (prevState?: boolean | undefined) =>
-    set((state) => {
-      prevState
-        ? (state.sideListIsOpen = !prevState)
-        : (state.sideListIsOpen = !state.sideListIsOpen);
     }),
   onAccordion: (prevState?: boolean | undefined) =>
     set((state) => {

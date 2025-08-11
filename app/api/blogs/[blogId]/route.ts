@@ -1,7 +1,7 @@
 import { BlogFieldProps } from "@/types/app/data/types";
 import { deleteBlog, getBlog, updateBlog } from "_data/services/blogs.services";
 import { secureAccess } from "_data/utils/server.utils";
-import { extractBlogFields, revalidateBlogs } from "_lib/utility/blogs.utils";
+import { extractBlogFields, revalidateBlogs } from "_data/utils/blogs.utils";
 import { NextResponse } from "next/server";
 
 export async function GET(
@@ -21,7 +21,6 @@ export async function PUT(
 ): Promise<Response> {
   await secureAccess();
   const { blogId } = await params;
-
   const formData = await request.formData();
   const newFields = extractBlogFields(formData, blogId);
   const result = await updateBlog(newFields, blogId);

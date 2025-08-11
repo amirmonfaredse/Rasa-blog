@@ -19,7 +19,7 @@ function TagInputCreate({ field, form, ...props }: any) {
   }, [tags, allTags, onLoadTags]);
   useEffect(() => {
     form.setFieldValue(field.name, JSON.stringify(selectedTags));
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTags]);
 
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {

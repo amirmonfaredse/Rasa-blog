@@ -1,5 +1,8 @@
+"use client";
+import { PostCardProps } from "@/types/app/website/types";
 import Image from "next/image";
 import Link from "next/link";
+import { extractTextFromHTMLOnClientWithSlice } from "utility/validation/domPurify";
 import HeaderCard from "./HeaderCard";
 import MainCard from "./MainCard";
 import {
@@ -9,8 +12,6 @@ import {
   FooterPostContainer,
   ParagraphContainer,
 } from "./utilities/utilities";
-import { PostCardProps } from "@/types/app/website/types";
-import { extractTextFromHTML } from "utility/validation/jsDOM";
 
 export default function PostCard({
   id,
@@ -21,7 +22,7 @@ export default function PostCard({
   content,
 }: PostCardProps) {
   return (
-    <article className="w-full h-fit sm:h-fit min-h-[500px] sm:flex-row border-ghost-800 rounded-3xl sm:rounded-[50px] overflow-hidden">
+    <article className="w-fit h-fit sm:h-fit min-h-[500px] sm:flex-row border-ghost-800 rounded-3xl sm:rounded-[50px] overflow-hidden ">
       <Container className="w-full h-full flex flex-col items-center justify-between gap-1">
         <HeaderCard className="w-full h-2/5 sm:h-fit sm:p-3 flex flex-col sm:flex-row relative bg-cles-100">
           <ColHead className="w-full sm:w-2/6 lg:w-1/6 h-[200px] sm:h-[130px] relative m-2 px-2">
@@ -83,12 +84,12 @@ export default function PostCard({
           </ColHead>
         </HeaderCard>
         <MainCard className="w-full h-4/5 sm:h-fit flex flex-col justify-between">
-          <ParagraphContainer className="w-full min-h-[240px] h-[260px] sm:h-2/3 flex justify-center items-start p-3">
-            <div className="w-[90%] h-full">
-              <p className="w-full h-fit leading-10 line-clamp-6 sm:line-clamp-5 text-justify">
-                {extractTextFromHTML(content)}
+          <ParagraphContainer className="w-full  h-[300px] sm:h-[250px] flex justify-center items-start p-3">
+            <div className="w-[90%] h-fit">
+              <p className="w-full h-fit leading-9 line-clamp-6 sm:line-clamp-6 text-sm text-justify mt-4">
+                {extractTextFromHTMLOnClientWithSlice(content)}
               </p>
-            </div>
+            </div> 
           </ParagraphContainer>
           <FooterPostContainer className="w-full h-1/3 flex flex-col sm:flex-row my-6">
             <div className="w-full sm:w-1/2 h-1/2 sm:h-full flex flex-col sm:flex-row items-center justify-center px-5">

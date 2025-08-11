@@ -35,7 +35,7 @@ export function ParagraphContainer({
 }: PostCardUtilityProps) {
   return (
     <div
-      className={`w-full h-2/3 flex justify-center items-start ${className}`}
+      className={`flex justify-center items-start ${className}`}
     >
       {children}
     </div>

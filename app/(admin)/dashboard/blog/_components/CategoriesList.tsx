@@ -29,7 +29,7 @@ export default function CategoriesList({ field, form, ...props }: any) {
                 type="checkbox"
                 className="flex m-2"
                 value={cat.id}
-                checked={onCheck(cat)}
+                defaultChecked={onCheck(cat)}
               />
             </label>
           ))}

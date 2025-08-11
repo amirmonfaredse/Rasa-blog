@@ -1,4 +1,4 @@
-import { newPersianDate } from "_data/utils/data.utils";
+import { newPersianDate } from "_data/utils/date.utils";
 import Image from "next/image";
 import Link from "next/link";
 import { auth, signOut } from "../../_data/auth";

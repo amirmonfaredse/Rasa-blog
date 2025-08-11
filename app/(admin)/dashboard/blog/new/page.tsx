@@ -8,6 +8,7 @@ import CategoriesList from "../_components/CategoriesList";
 import TagInputCreate from "../_components/tagInput/TagInputCreate";
 import TextEditorCreateBlog from "../_components/textEditor/TextEditorCreateBlog";
 import TextInput from "_lib/validation/components/TextInput";
+import { InitBlogFormProps } from "@/types/app/store/types";
 export default function Page() {
   const { trigger: createBlog, isMutating: isCreatingBlog } = useCreateBlog();
   const { trigger: categorize } = useCategorizing();
@@ -21,15 +22,16 @@ export default function Page() {
     textEditor: "",
     blogTags: "",
   };
-  const handleSubmit = async (values, actions) => {
-    console.log(values);
-    console.log(actions);
-    // const formData = new FormData(e.currentTarget);
-    // const blogRes = await createBlog(formData);
-    // if (blogRes) {
-    //   await categorize({ formData, exteraId: blogRes.id });
-    //   await tagging({ formData, exteraId: blogRes.id });
-    // }
+  const handleSubmit = async (values: InitBlogFormProps) => {
+    const formData = new FormData();
+    Object.entries(values).forEach(([key, value]) => {
+      formData.append(key, value as string | Blob);
+    });
+    const blogRes = await createBlog(formData);
+    if (blogRes) {
+      await categorize({ formData, exteraId: blogRes.id });
+      await tagging({ formData, exteraId: blogRes.id });
+    }
   };
 
   return (

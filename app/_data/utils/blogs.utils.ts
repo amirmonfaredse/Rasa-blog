@@ -1,5 +1,5 @@
 import { BlogFieldProps } from "@/types/app/data/types";
-import { getPersianDate } from "_data/utils/data.utils";
+import { getPersianDate } from "_data/utils/date.utils";
 import { idRand, validateUrl } from "_data/utils/server.utils";
 import { revalidatePath } from "next/cache";
 import {

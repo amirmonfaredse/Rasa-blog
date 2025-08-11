@@ -15,11 +15,13 @@ export type InitContactProps = {
 function FormContact() {
   const { trigger, response, isMutating } = useSendMessage();
 
-  const handleSubmit = async (values, actions) => {
-    console.log(values);
-    // e.preventDefault();
-    // const formData = new FormData();
-    // await trigger(formData);
+  const handleSubmit = async (values: InitContactProps) => {
+    const formData = new FormData();
+    Object.entries(values).forEach(([key, value]) => {
+      formData.append(key, value as string | Blob);
+    });
+    await trigger(formData);
+    setInitFieldsState(initForm);
   };
   const initForm = {
     fullName: "",

@@ -1,7 +1,7 @@
 import { TagFieldProps, TaggingFieldProps } from "@/types/app/data/types";
 import { StateCreator } from "zustand";
 import { initInputTagManager } from "../initials";
-import { TagInputSliceType } from "../types";
+import { TagInputSliceType } from "../../../../types/app/store/types";
 import { StoreType } from "../store";
 
 export const tagInputSlice: StateCreator<

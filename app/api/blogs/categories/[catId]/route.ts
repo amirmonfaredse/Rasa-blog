@@ -8,7 +8,7 @@ import { secureAccess, throwIfError } from "_data/utils/server.utils";
 import {
   extractCategoryFields,
   revalidateCategories,
-} from "_lib/utility/category.utils";
+} from "_data/utils/category.utils";
 import { NextResponse } from "next/server";
 export async function GET(
   _request: Request,

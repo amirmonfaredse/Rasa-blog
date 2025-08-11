@@ -6,7 +6,7 @@ import {
   initTagManager,
   tagTitlePresets,
 } from "../initials";
-import { Mode, TagSliceType } from "../types";
+import { Mode, TagSliceType } from "../../../../types/app/store/types";
 import { StoreType } from "../store";
 
 export const tagSlice: StateCreator<

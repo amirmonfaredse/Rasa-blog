@@ -1,13 +1,13 @@
 import { CategoryFieldsProps } from "@/types/app/data/types";
 import {
   createCategory,
-  getCategories
+  getCategories,
 } from "_data/services/categories.services";
 import { idRand, secureAccess } from "_data/utils/server.utils";
 import {
   extractCategoryFields,
   revalidateCategories,
-} from "_lib/utility/category.utils";
+} from "_data/utils/category.utils";
 import { NextResponse } from "next/server";
 
 export async function GET() {

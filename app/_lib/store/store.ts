@@ -20,7 +20,7 @@ import {
   TagInputSliceType,
   TagSliceType,
   UploadSliceType,
-} from "./types";
+} from "../../../types/app/store/types";
 export type StoreType = LayoutSliceType &
   CategorySliceType &
   SliderSliceType &

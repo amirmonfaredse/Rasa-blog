@@ -1,7 +1,7 @@
 "use client";
 import { useCategories } from "_data/fetchers";
 import { useAdminStore } from "_lib/store/store";
-import { Mode } from "_lib/store/types";
+import { Mode } from "@/types/app/store/types";
 import DeleteButtonCategory from "../_components/buttons/DeleteButtonCategory";
 import CategoryForm from "./CategoryForm";
 

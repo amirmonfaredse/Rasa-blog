@@ -1,13 +1,14 @@
 import { Metadata } from "next";
 import Image from "next/image";
 import { Suspense } from "react";
+import SpinnerLoader from "utility/loaders/SpinnerLoader";
 export const metadata: Metadata = {
   title: "درباره من",
   description: "در صفحه درمورد رسا بیشتر بدانید ",
 };
 export default async function Page() {
   return (
-    <Suspense>
+    <Suspense fallback={<SpinnerLoader />}>
       <div className="w-full h-full flex flex-col justify-center items-center gap-8">
         <div className="w-full h-fit bg-ghost-100 shadow-xl py-6 px-4">
           <p className="p-2 px-5 text-lg leading-10 text-justify ">

@@ -1,23 +1,44 @@
 "use client";
 import { BlogFieldProps } from "@/types/app/data/types";
 import { useBlogs } from "_data/fetchers";
+import { useAdminStore } from "_lib/store/store";
 import Link from "next/link";
-import DeleteButtonBlog from "../_components/buttons/DeleteButtonBlog";
-import { Td, Th } from "../_components/utilities";
+import { useEffect } from "react";
+import { Th } from "../_components/utilities";
+import TRowBlog from "./_components/TRowBlog";
 
 export default function Page() {
   const { blogs } = useBlogs();
+  const filteredBlogs = useAdminStore.use.filteredBlogs();
+  const setFilteredBlogs = useAdminStore.use.setFilteredBlogs();
 
+  useEffect(() => {
+    setFilteredBlogs(blogs);
+  }, [blogs, setFilteredBlogs]);
+  
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setFilteredBlogs(
+      blogs.filter((blog) => blog.title.includes(e.target.value))
+    );
+  }
   return (
     <div className="w-full flex flex-col items-start justify-start mt-5">
-      <div className="w-full h-fit flex ">
+      <div className="w-[90%] h-10 flex justify-start items-center gap-5 ">
         <Link
-          className="w-full md:w-52  h-10 flex items-center justify-center bg-folly-500 text-white  px-5 py-1 mt-2 rounded-lg hover:bg-ghost-400 transition duration-300"
+          className="w-full h-full md:w-52 flex items-center justify-center bg-folly-500 text-white  px-5 py-1 rounded-lg hover:bg-ghost-400 transition duration-300"
           href="/dashboard/blog/new"
         >
           پست جدید
         </Link>
+        <div className="w-full h-full flex items-center justify-start">
+          <input
+            className="w-full h-full border-2 border-ghost-1000 p-2 text-sm text-ghost-900"
+            placeholder="جستجو ..."
+            onChange={handleChange}
+          />
+        </div>
       </div>
+
       <table className="w-[95%] flex flex-col overflow-x-scroll">
         <thead className="w-full">
           <tr className="w-fit h-12 flex items-center justify-start  cursor-default bg-ghost-500 text-white my-5  px-2 rounded">
@@ -28,32 +49,13 @@ export default function Page() {
             <Th center>عملیات</Th>
           </tr>
         </thead>
-        {blogs &&
-          blogs.map((blog: BlogFieldProps, index: number) => (
-            <tbody key={blog.id} className="w-fit md:w-full flex flex-col ">
-              <tr className="w-fit h-12 flex items-center justify-start cursor-default bg-ghost-100 text-ghost-600 my-5 p-2  rounded">
-                <Td row>{index + 1}</Td>
-                <Td>{blog.title}</Td>
-                <Td center>{blog.author}</Td>
-                <Td center>{blog.created_at}</Td>
-                <Td center>
-                  <Link
-                    href={`/blogs/${blog.id}`}
-                    className="w-fit md: text-xs text-green-600 p-2 rounded-lg"
-                  >
-                    مشاهده
-                  </Link>
-                  <Link
-                    href={`/dashboard/blog/${blog.id}`}
-                    className="text-xs text-green-600 p-2 rounded-lg"
-                  >
-                    ویرایش
-                  </Link>
-                  <DeleteButtonBlog blogId={blog.id} />
-                </Td>
-              </tr>
-            </tbody>
-          ))}
+        <tbody className="w-fit md:w-full flex flex-col ">
+          {blogs &&
+            filteredBlogs &&
+            filteredBlogs.map((blog: BlogFieldProps, index: number) => (
+              <TRowBlog key={blog.id} index={index} blog={blog} />
+            ))}
+        </tbody>
       </table>
     </div>
   );

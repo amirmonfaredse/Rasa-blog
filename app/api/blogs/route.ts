@@ -2,7 +2,7 @@ import { BlogFieldProps } from "@/types/app/data/types";
 
 import { createBlog, getBlogs } from "_data/services/blogs.services";
 import { secureAccess } from "_data/utils/server.utils";
-import { extractBlogFields, revalidateBlogs } from "_lib/utility/blogs.utils";
+import { extractBlogFields, revalidateBlogs } from "_data/utils/blogs.utils";
 import { NextResponse } from "next/server";
 
 export async function GET(): Promise<Response> {

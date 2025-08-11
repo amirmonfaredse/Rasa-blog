@@ -39,12 +39,12 @@ export const BlogSchema = object({
 
 export const CategorySchema = object({
   id: string(),
-  title: string()
+  categoryTitle: string()
     .min(5, "عنوان دسته بندی باید بیش از 5 کاراکتر باشد")
     .max(25, "عنوان دسته بندی باید کوتاه تر از 25 کاراکتر باشد")
     .matches(/^[\p{Script=Arabic} ]+$/u, "فقط حروف فارسی و فاصله مجاز است")
     .required("وارد کردن عنوان الزامی است"),
-  name: string()
+  categoryValue: string()
     .min(3, "شناسه دسته بندی باید بیش از 3 کاراکتر باشد")
     .max(25, "شناسه دسته بندی باید کوتاه تر از 25 کاراکتر باشد")
     .matches(
@@ -106,6 +106,9 @@ export const ContactSchema = object({
   message: string()
     .min(20, "متن پیام باید بیش از 20 کاراکتر باشد")
     .max(500, "متن پیام باید کوتاه تر از 500 کاراکتر باشد")
-    .matches(/^[\p{L}\p{N} \.,؛،!?'"()\n\r-]+$/u)
+    .matches(
+      /^[\p{L}\p{N}\p{P}\p{S}\p{Zs}]+$/u,
+      "متن پیام باید تنها شامل حروف ، اعداد و نماد های مجاز باشد"
+    )
     .required("وارد کردن پیام الزامی است"),
 });

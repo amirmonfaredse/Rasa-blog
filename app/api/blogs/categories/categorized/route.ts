@@ -4,7 +4,7 @@ import {
   getCategorizedList,
 } from "_data/services/categories.services";
 import { secureAccess } from "_data/utils/server.utils";
-import { extractCategorizingFields } from "_lib/utility/category.utils";
+import { extractCategorizingFields } from "_data/utils/category.utils";
 import { NextResponse } from "next/server";
 
 export async function GET() {

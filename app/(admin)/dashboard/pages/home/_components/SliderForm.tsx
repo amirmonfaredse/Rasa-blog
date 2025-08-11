@@ -1,7 +1,7 @@
 import { useUpsertSlider } from "_data/mutate";
 import { initSliderFields } from "_lib/store/initials";
 import { useAdminStore } from "_lib/store/store";
-import { Mode } from "_lib/store/types";
+import { InitSliderFields, Mode } from "@/types/app/store/types";
 import ColorInput from "_lib/validation/components/ColorInput";
 import TextInput from "_lib/validation/components/TextInput";
 import { SliderSchema } from "_lib/validation/schema";
@@ -39,14 +39,15 @@ export default function SliderForm() {
     fieldsValues.type,
     setInitFields,
   ]);
-  const handleSubmit = async (values, actions) => {
-    console.log(values);
-    // e.preventDefault();
-    // const formData = new FormData(e.currentTarget);
-    // await trigger(formData);
-    // onFormMode(Mode.Post);
-    // onSlideFields();
-    // setSlideId();
+  const handleSubmit = async (values: InitSliderFields) => {
+    const formData = new FormData();
+    Object.entries(values).forEach(([key, value]) => {
+      formData.append(key, value as string | Blob);
+    });
+    await trigger(formData);
+    onFormMode(Mode.Post);
+    onSlideFields();
+    setSlideId();
   };
 
   return (

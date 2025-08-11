@@ -6,7 +6,7 @@ import {
   initCategoryManager,
   initCatFields,
 } from "../initials";
-import { CategorySliceType, Mode } from "../types";
+import { CategorySliceType, Mode } from "../../../../types/app/store/types";
 import { StoreType } from "../store";
 
 export const categorySlice: StateCreator<

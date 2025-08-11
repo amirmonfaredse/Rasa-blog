@@ -1,7 +1,7 @@
 import { StateCreator } from "zustand";
 import { initUploadManager } from "../initials";
 import { StoreType, useAdminStore } from "../store";
-import { UploadSliceType } from "../types";
+import { UploadSliceType } from "../../../../types/app/store/types";
 
 export const uploadSlice: StateCreator<
   StoreType,

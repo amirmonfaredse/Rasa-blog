@@ -1,4 +1,6 @@
+import { getBlogs } from "_data/services/blogs.services";
 import Link from "next/link";
+import { extractTextFromHTML } from "utility/validation/jsDOM";
 import { getSliders } from "../_data/services/pages.services";
 import MainSlider from "./_components/MainSlider";
 import PostCard from "./_components/cards/PostCard";
@@ -7,14 +9,15 @@ import {
   PostContainer,
   SliderContainer,
 } from "./_components/utilities/utilities";
-import { getBlogs } from "_data/services/blogs.services";
 
 export default async function Page() {
   const blogs = await getBlogs();
-  if ("code" in blogs) throw new Error("Error");
+  if ("code" in blogs)
+    throw new Error("مشکلی در بارگذاری پست ها ایجاد شده است مجددا تلاش کنید");
 
   const sliders = await getSliders();
-  if ("code" in sliders) throw new Error("Error");
+  if ("code" in sliders)
+    throw new Error("مشکلی در بارگذاری پست ها ایجاد شده است مجددا تلاش کنید");
 
   return (
     <div className="flex flex-col justify-start items-center ">

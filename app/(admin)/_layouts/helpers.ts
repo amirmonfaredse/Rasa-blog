@@ -1,5 +1,5 @@
 import { SideLayoutProps } from "@/types/app/admin/types";
-
+ 
 export const blogSubLinks: SideLayoutProps[] = [
   { title: "پست جدید", path: "/dashboard/blog/new" },
   { title: "همه پست ها ", path: "/dashboard/blog/all" },

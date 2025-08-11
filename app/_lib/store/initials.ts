@@ -2,6 +2,7 @@ import {
   CategoryManagerProps,
   CategoryTitlesPostMode,
   CategoryTitlesPutMode,
+  InitBlogFormProps,
   InitInputTagManagerProps,
   InitUploadManagerProps,
   Mode,
@@ -11,7 +12,7 @@ import {
   TagManagerProps,
   TagTitlesPostMode,
   TagTitlesPutMode,
-} from "./types";
+} from "../../../types/app/store/types";
 
 export const createInitCategory = () => ({
   id: String(Math.floor(Math.random() * 10000)),
@@ -106,13 +107,13 @@ export const initUploadManager: InitUploadManagerProps = {
   size: 0,
   type: "",
 };
-
 export const initCatFields = {
   id: "",
   categoryTitle: "",
   categoryValue: "",
 };
-export const initBlogForm = {
+
+export const initBlogForm: InitBlogFormProps = {
   blogTitle: "",
   blogDescription: "",
   blogImage: "",
