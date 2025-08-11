@@ -50,7 +50,18 @@ export default async function Page() {
       <PostContainer className="w-full h-fit flex flex-col items-center justify-start gap-10 sm:gap-16 mb-10">
         <BlogContextProvider>
           <Suspense>
-            <BlogList blogs={blogs} />
+            {blogs &&
+              blogs?.map((blog, index) => (
+                <PostCard
+                  key={`${blog.id}-${index}`}
+                  id={blog.id}
+                  title={blog.title}
+                  author={blog.author}
+                  created_at={blog.created_at}
+                  image={blog.image}
+                  content={blog.content}
+                />
+              ))}
           </Suspense>
         </BlogContextProvider>{" "}
         <div className="w-full flex justify-center">
