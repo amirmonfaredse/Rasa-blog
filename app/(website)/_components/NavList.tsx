@@ -16,7 +16,9 @@ function NavList({ drawerOpen, isMobileMode }: NavListProps) {
       {navList.map((link, index) => (
         <li
           key={`${index}-${Math.floor(Math.random() * 1000)}`}
-          style={{ left: isMobileMode && (drawerOpen ? 0 : "-200px") }}
+          style={{
+            left: isMobileMode ? (drawerOpen ? "0px" : "-200px") : "0px",
+          }}
           className="w-24 h-12 relative bg-ghost-100 shadow md:shadow-none duration-300"
         >
           <NavLink
