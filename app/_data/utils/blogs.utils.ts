@@ -24,7 +24,7 @@ export function extractBlogFields(
     description: sanitizeTextOnServer(
       formData.get("blogDescription") as string
     ),
-    content: sanitizeHTMLOnServer(formData.get("textEditor")),
+    content: sanitizeHTMLOnServer(formData.get("textEditor") as string),
     image: validateUrl(formData.get("blogImage") as string),
   };
 }
